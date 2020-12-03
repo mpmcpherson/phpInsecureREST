@@ -75,6 +75,39 @@
 	},
 	"buffers":
 	[
+		{
+			"file": "api/couchTesting.php",
+			"settings":
+			{
+				"buffer_size": 2289,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"contents": "curl -X GET 'http://couchAdmin:Adein1Dva2!@localhost:5984/_users/'\n\n<?php\n\n$ch = curl_init(\"http://couchAdmin:Adein1Dva2!@localhost:5984/_users/\");\n$fp = fopen(\"example_homepage.txt\", \"w\");\n\ncurl_setopt($ch, CURLOPT_FILE, $fp);\ncurl_setopt($ch, CURLOPT_HEADER, 0);\n\ncurl_exec($ch);\nif(curl_error($ch)) {\n    fwrite($fp, curl_error($ch));\n}\ncurl_close($ch);\nfclose($fp);\n?>\n",
+			"file": "api/testing.php",
+			"file_size": 374,
+			"file_write_time": 132507371947429329,
+			"settings":
+			{
+				"buffer_size": 373,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"contents": "curl -X PUT 'http://couchAdmin:Adein1Dva2!@localhost:5984/test_db/\"001\"' -d '{ \" title \" : \" a modesta proposal \" , \" body \" : \" everyone sleeps under their desks, it is crunch time \" }'\t\n\n\n\n\n",
+			"file": "api/couchdebug",
+			"file_size": 187,
+			"file_write_time": 132513622632180785,
+			"settings":
+			{
+				"buffer_size": 192,
+				"encoding": "UTF-8",
+				"line_ending": "Unix",
+				"name": "curl -X PUT 'http://couchAdmin:Adein1Dva2!@localho"
+			}
+		}
 	],
 	"build_system": "",
 	"build_system_choices":
@@ -140,7 +173,8 @@
 	},
 	"expanded_folders":
 	[
-		"/home/michaelmcpherson/src/phpInsecureREST"
+		"/home/michaelmcpherson/src/phpInsecureREST",
+		"/home/michaelmcpherson/src/phpInsecureREST/api"
 	],
 	"file_history":
 	[
@@ -328,8 +362,96 @@
 	"groups":
 	[
 		{
+			"selected": 2,
 			"sheets":
 			[
+				{
+					"buffer": 0,
+					"file": "api/couchTesting.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2289,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.sublime-syntax",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "api/testing.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 373,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								66,
+								66
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "api/couchdebug",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 192,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								192,
+								192
+							]
+						],
+						"settings":
+						{
+							"auto_name": "curl -X PUT 'http://couchAdmin:Adein1Dva2!@localho",
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				}
 			]
 		}
 	],

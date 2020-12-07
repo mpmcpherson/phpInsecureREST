@@ -6,6 +6,7 @@ class CouchDBResponse {
     private $body = '';
 
     function __construct($response = '') {
+        //echo $response;
         $this->raw_response = $response;
         list($this->headers, $this->body) = explode("\r\n\r\n", $response);
     }

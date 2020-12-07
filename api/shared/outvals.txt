@@ -1,0 +1,42 @@
+object(CouchDBResponse)#3 (3) {
+  ["raw_response":"CouchDBResponse":private]=>
+  string(318) "HTTP/1.0 409 Conflict
+Cache-Control: must-revalidate
+Connection: close
+Content-Length: 58
+Content-Type: application/json
+Date: Mon, 07 Dec 2020 23:19:21 GMT
+Server: CouchDB/3.1.1 (Erlang OTP/20)
+X-Couch-Request-ID: 4dec258638
+X-CouchDB-Body-Time: 0
+
+{"error":"conflict","reason":"Document update conflict."}
+"
+  ["headers":"CouchDBResponse":private]=>
+  string(256) "HTTP/1.0 409 Conflict
+Cache-Control: must-revalidate
+Connection: close
+Content-Length: 58
+Content-Type: application/json
+Date: Mon, 07 Dec 2020 23:19:21 GMT
+Server: CouchDB/3.1.1 (Erlang OTP/20)
+X-Couch-Request-ID: 4dec258638
+X-CouchDB-Body-Time: 0"
+  ["body":"CouchDBResponse":private]=>
+  string(58) "{"error":"conflict","reason":"Document update conflict."}
+"
+}
+HTTP/1.0 201 Created
+Cache-Control: must-revalidate
+Connection: close
+Content-Length: 84
+Content-Type: application/json
+Date: Mon, 07 Dec 2020 23:32:35 GMT
+ETag: "1-11bcfe09336aed44fdfabf5627209fa4"
+Location: http://localhost/test_db/07-12-2020EST06:12:35
+Server: CouchDB/3.1.1 (Erlang OTP/20)
+X-Couch-Request-ID: 1dd7704e54
+X-CouchDB-Body-Time: 0
+
+{"ok":true,"id":"07-12-2020EST06:12:35","rev":"1-11bcfe09336aed44fdfabf5627209fa4"}
+{"ok":true,"id":"07-12-2020EST06:46:00","rev":"1-11bcfe09336aed44fdfabf5627209fa4"}

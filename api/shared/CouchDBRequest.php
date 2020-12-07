@@ -39,7 +39,7 @@ class CouchDBRequest {
         } else {
             $req .= "\r\n";
         }
-
+        
         return $req;
     }
 
@@ -75,6 +75,7 @@ class CouchDBRequest {
     function getResponse() {
         return $this->response;
     }
+
 }
 
 ?>

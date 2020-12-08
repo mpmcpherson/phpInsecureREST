@@ -1,0 +1,92 @@
+Cache-Control: must-revalidate
+{"ok":true,"id":"07-12-2020EST07:10:27","rev":"1-11bcfe09336aed44fdfabf5627209fa4"}
+
+
+'{"ok":true,"id":"07-12-2020EST07:11:13","rev":"1-11bcfe09336aed44fdfabf5627209fa4"}'
+
+
+'{"ok":true,"id":"07-12-2020EST07:13:43","rev":"1-11bcfe09336aed44fdfabf5627209fa4"}'
+
+
+'{"ok":true,"id":"07-12-2020EST07:14:20","rev":"1-11bcfe09336aed44fdfabf5627209fa4"}'string
+'{"ok":true,"id":"07-12-2020EST07:16:14","rev":"1-11bcfe09336aed44fdfabf5627209fa4"}'NULLNULL
+typeof body string
+val of body '{"ok":true,"id":"07-12-2020EST07:18:20","rev":"1-11bcfe09336aed44fdfabf5627209fa4"}'
+typeof decoded body NULL
+Var dump of decoded body: NULL
+
+typeof body string
+val of body '{"ok":true,"id":"07-12-2020EST07:21:32","rev":"1-11bcfe09336aed44fdfabf5627209fa4"}'
+typeof decoded body NULL
+Var dump of decoded body: NULL
+
+HTTP/1.0 201 Created
+Cache-Control: must-revalidate
+Connection: close
+Content-Length: 84
+Content-Type: application/json
+Date: Tue, 08 Dec 2020 00:21:31 GMT
+ETag: "1-11bcfe09336aed44fdfabf5627209fa4"
+Location: http://localhost/test_db/07-12-2020EST07:21:32
+Server: CouchDB/3.1.1 (Erlang OTP/20)
+X-Couch-Request-ID: cbecce45d2
+X-CouchDB-Body-Time: 0
+
+{"ok":true,"id":"07-12-2020EST07:21:32","rev":"1-11bcfe09336aed44fdfabf5627209fa4"}
+typeof testVals string{"ok":true,"id":"07-12-2020EST07:01:53","rev":"1-11bcfe09336aed44fdfabf5627209fa4"}object(stdClass)#2 (3) {
+  ["ok"]=>
+  bool(true)
+  ["id"]=>
+  string(21) "07-12-2020EST07:01:53"
+  ["rev"]=>
+  string(34) "1-11bcfe09336aed44fdfabf5627209fa4"
+}
+typeof body string
+val of body '{"ok":true,"id":"07-12-2020EST07:22:55","rev":"1-11bcfe09336aed44fdfabf5627209fa4"}'
+typeof decoded body NULL
+Var dump of decoded body: NULL
+
+
+
+testVals {"ok":true,"id":"07-12-2020EST07:01:53","rev":"1-11bcfe09336aed44fdfabf5627209fa4"}typeof testVals stringobject(stdClass)#2 (3) {
+  ["ok"]=>
+  bool(true)
+  ["id"]=>
+  string(21) "07-12-2020EST07:01:53"
+  ["rev"]=>
+  string(34) "1-11bcfe09336aed44fdfabf5627209fa4"
+}
+typeof body string
+val of body {"ok":true,"id":"07-12-2020EST07:23:25","rev":"1-11bcfe09336aed44fdfabf5627209fa4"}
+typeof decoded body object
+Var dump of decoded body: object(stdClass)#2 (3) {
+  ["ok"]=>
+  bool(true)
+  ["id"]=>
+  string(21) "07-12-2020EST07:23:25"
+  ["rev"]=>
+  string(34) "1-11bcfe09336aed44fdfabf5627209fa4"
+}
+
+
+
+testVals {"ok":true,"id":"07-12-2020EST07:01:53","rev":"1-11bcfe09336aed44fdfabf5627209fa4"}typeof testVals stringobject(stdClass)#4 (3) {
+  ["ok"]=>
+  bool(true)
+  ["id"]=>
+  string(21) "07-12-2020EST07:01:53"
+  ["rev"]=>
+  string(34) "1-11bcfe09336aed44fdfabf5627209fa4"
+}
+object(stdClass)#2 (3) {
+  ["ok"]=>
+  bool(true)
+  ["id"]=>
+  string(21) "07-12-2020EST07:24:01"
+  ["rev"]=>
+  string(34) "1-11bcfe09336aed44fdfabf5627209fa4"
+}
+
+
+1-11bcfe09336aed44fdfabf5627209fa4
+

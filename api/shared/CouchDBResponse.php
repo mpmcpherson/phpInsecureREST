@@ -9,6 +9,7 @@ class CouchDBResponse {
         //echo $response;
         $this->raw_response = $response;
         list($this->headers, $this->body) = explode("\r\n\r\n", $response);
+        $this->body = preg_replace('/\s+/', '', $this->body);
     }
 
     function getRawResponse() {

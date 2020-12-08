@@ -39,7 +39,7 @@ class CouchDBRequest {
         } else {
             $req .= "\r\n";
         }
-        
+        //echo $req;
         return $req;
     }
 

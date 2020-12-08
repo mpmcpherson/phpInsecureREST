@@ -90,3 +90,7 @@ object(stdClass)#2 (3) {
 
 1-11bcfe09336aed44fdfabf5627209fa4
 
+error => bad_request
+reason => invalidUTF-8JSON
+error => bad_request
+reason => invalidUTF-8JSON

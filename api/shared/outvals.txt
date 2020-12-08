@@ -103,7 +103,9 @@ X-Couch-Request-ID: b5c3d68e02
 X-CouchDB-Body-Time: 0
 
 {"ok":true,"id":"07-12-2020EST07:04:54","rev":"1-11bcfe09336aed44fdfabf5627209fa4"}
-{"ok":true,"id":"07-12-2020EST07:01:53","rev":"1-11bcfe09336aed44fdfabf5627209fa4"}object(stdClass)#2 (3) {
+{"ok":true,"id":"07-12-2020EST07:01:53","rev":"1-11bcfe09336aed44fdfabf5627209fa4"}
+
+object(stdClass)#2 (3) {
   ["ok"]=>
   bool(true)
   ["id"]=>
@@ -118,4 +120,7 @@ X-CouchDB-Body-Time: 0
 
 
 
-'Cache-Control: must-revalidate'Cache-Control: must-revalidateCache-Control: must-revalidateCache-Control: must-revalidate
+'Cache-Control: must-revalidate
+'Cache-Control: must-revalidate
+Cache-Control: must-revalidate
+Cache-Control: must-revalidate

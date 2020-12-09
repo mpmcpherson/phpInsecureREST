@@ -27,6 +27,3 @@
 	//and we echo this back up so that the target knows the new value to override
 	echo $decoded->rev;
 ?>
-
-
-

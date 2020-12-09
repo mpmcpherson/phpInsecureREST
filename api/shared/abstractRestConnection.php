@@ -12,7 +12,11 @@
 			$newConn = new CouchDB('test_db','localhost',5984,$uname,$pw);
 			$this->revision = "";
 		}
-		function CheckRevision(){}
+		function CheckRevision()
+		{
+			//okay, this is almost certainly just me being too clever, but it's fun while it lasts
+			return ($this->revision === json_decode($newConn->send('id')->getBody())->rev) ? true : false;
+		}
 		function JsonPrep(){}
 		function Sync()
 		{

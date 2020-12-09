@@ -85,27 +85,32 @@
 			}
 		},
 		{
-			"contents": "curl -X GET 'http://couchAdmin:Adein1Dva2!@localhost:5984/_users/'\n\n<?php\n\n$ch = curl_init(\"http://couchAdmin:Adein1Dva2!@localhost:5984/_users/\");\n$fp = fopen(\"example_homepage.txt\", \"w\");\n\ncurl_setopt($ch, CURLOPT_FILE, $fp);\ncurl_setopt($ch, CURLOPT_HEADER, 0);\n\ncurl_exec($ch);\nif(curl_error($ch)) {\n    fwrite($fp, curl_error($ch));\n}\ncurl_close($ch);\nfclose($fp);\n?>\n",
-			"file": "api/testing.php",
-			"file_size": 374,
-			"file_write_time": 132507371947429329,
+			"file": "api/shared/abstractRestConnection.php",
 			"settings":
 			{
-				"buffer_size": 373,
+				"buffer_size": 1599,
+				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"contents": "curl -X PUT 'http://couchAdmin:Adein1Dva2!@localhost:5984/test_db/\"001\"' -d '{ \" title \" : \" a modesta proposal \" , \" body \" : \" everyone sleeps under their desks, it is crunch time \" }'\t\n\n\n\n\n",
-			"file": "api/couchdebug",
-			"file_size": 187,
-			"file_write_time": 132513622632180785,
+			"contents": "1Self,\nAnaconda,\nEmmet,\nNodejs,\nPackage Control,\nPretty JSON,\nSass,\nSideBarEnhancements,\nSublimeCodeIntel,\nSublimeLinter,\nSublimeLinter-jshint,\nSublimeLinter-php,\nSublimeLinter-pylint,\nTerminal",
 			"settings":
 			{
-				"buffer_size": 192,
-				"encoding": "UTF-8",
+				"buffer_size": 193,
 				"line_ending": "Unix",
-				"name": "curl -X PUT 'http://couchAdmin:Adein1Dva2!@localho"
+				"name": "1Self,"
+			}
+		},
+		{
+			"contents": "Package Control Messages\n========================\n\n1Self\n-----\n\n  sublime-text-plugin:\n  -------------------\n\n    Thanks for installing the 1self Sublime Activity Tracker!\t\n    \n    Your data is waiting for you on your 1self data dashboard.\n    \n    To see your data, simply hit Ctrl + 1,S or click \n                                 ----   --- \n    Tools > 1self > View Sublime Activity Data.\n    -----   -----   ---- ------- -------- ----\n    \n    \n  Minutes  |        █        █ \n  of       |     █  █        █     █ \n  activity |     █  █        █   █ ██ \n           |     █ ██   █    █   █ ██  █\n           |     ████   █ █  █   █ ██  █\n           |     ████   █ █ ██   ████  █\n           |    █████  ██ ████  █████  █\n           |  █ █████  ██ ████  ██████ █\n           |  ███████  ███████  ██████ █\n           | ████████  ███████ █████████\n           |██████████ █████████████████\n           |████████████████████████████\n           +----------------------------\n                        Date\n    \n    \n    This plug-in tracks your active time whilst in Sublime: active keyboard and mouse.\n    It can be used to determine how much time you spend actively coding.\n    \n    The plug-in doesn't send up any file names or information contained in your files.\n    The source is available here if you want to check it out: https://github.com/1self/sublime-text-plugin\n    \n    1self - Live Smarter\n    \n    \n    8888888888888888888888888888888888888888\n    8888888888888888888888888888888888888888\n    88888888888888888DDDDD888888888888888888\n    8888888888888D+  .~=~,  ~OD8888888888888\n    8888888888DI IDD88888888DZ ~O88888888888\n    88888888D::Z888888888888888DI D888888888\n    8888888D O8888888888888888888D Z88888888\n    888888D 88888888888DD888888888D.O8888888\n    88888D:$88888888DD   OD88888888D D888888\n    888888.D888888D      OD888888888+ID88888\n    888Z. .O888888D+Z8D  OD888888888.  $8888\n    88Z,??I.8888888888D  OD88888888.$7$:Z888\n    88$:???.8888888888D  OD88888888,$$$~$888\n    88D= . ?8888888888D  OD88888888I , =D888\n    8888D8 D88888888$$Z  7Z$88888888+ID88888\n    88888D:$8888888O        Z888888D D888888\n    888888D 8888888888888888888888D.O8888888\n    8888888D O8888888888888888888D O88888888\n    88888888D~:Z888888888888888D?.D888888888\n    8888888888D7 ?DD88888888D$ =O88888888888\n    8888888888888D?  .:~~,  ~OD8888888888888\n    888888888888888888DDDD888888888888888888\n    8888888888888888888888888888888888888888\n    8888888888888888888888888888888888888888\n    8888888888888888888888888888888888888888\n\nAnaconda\n--------\n\n\n\n                                                            |\n                _` |  __ \\    _` |   __|   _ \\   __ \\    _` |   _` |\n               (   |  |   |  (   |  (     (   |  |   |  (   |  (   |\n              \\__,_| _|  _| \\__,_| \\___| \\___/  _|  _| \\__,_| \\__,_|\n\n                                       The Sublime Text 3 Python IDE\n\n\n  Welcome to anaconda, the Sublime Text 3 Python IDE. We hope you enjoy it :)\n\n  Anaconda works fine out of the box but you can configure it to totally adapt\n  it to your needs or style.\n\n  For a complete guide of use and configuration take a look at:\n\n  \thttp://damnwidget.github.io/anaconda/\n\n  Please, consider donating via PayPal to maintain this project alive:\n\n  \thttps://tinyurl.com/y7ktgzx6\n\nEmmet\n-----\n\n  Emmet plugin installed\n\n  Emmet is a web-developer’s toolkit for boosting HTML & CSS code writing.\n\n  With Emmet, you can type expressions (abbreviations) similar to CSS selectors and convert them into code fragment with a single keystroke. For example, this abbreviation:\n\n  ul#nav>li.item$*4>a{Item $}\n\n  ...can be expanded into:\n\n  <ul id=\"nav\">\n      <li class=\"item1\"><a href=\"\">Item 1</a></li>\n      <li class=\"item2\"><a href=\"\">Item 2</a></li>\n      <li class=\"item3\"><a href=\"\">Item 3</a></li>\n      <li class=\"item4\"><a href=\"\">Item 4</a></li>\n  </ul>\n\n  Read more about Emmet for Sublime Text:\n  https://github.com/emmetio/sublime-text-plugin#readme\n\nSass\n----\n\n  Sass 2.0\n  ======================\n\n  Thank you for installing Sass for Sublime Text.\n\n  2.0 supports things like flex-box syntax, custom properties, function snippets\n  and more for both Sass and SCSS.\n  It is now also in line with the scope naming guidelines for Sublime Text 3.0,\n  highlighting should be very similar to CSS and LESS.\n\n  If something doesn't work for you let us know at:\n  https://github.com/braver/SublimeSass\n\n  1.x is still available as a different package: \"Syntax Highlighting for Sass\":\n  https://github.com/P233/Syntax-highlighting-for-Sass\n\nSublimeCodeIntel\n----------------\n\n  SublimeCodeIntel\n  ================\n\n   ____        _     _ _                 ____          _      ___       _       _\n  / ___| _   _| |__ | (_)_ __ ___   ___ / ___|___   __| | ___|_ _|_ __ | |_ ___| |\n  \\___ \\| | | | '_ \\| | | '_ ` _ \\ / _ \\ |   / _ \\ / _` |/ _ \\| || '_ \\| __/ _ \\ |\n   ___) | |_| | |_) | | | | | | | |  __/ |__| (_) | (_| |  __/| || | | | ||  __/ |\n  |____/ \\__,_|_.__/|_|_|_| |_| |_|\\___|\\____\\___/ \\__,_|\\___|___|_| |_|\\__\\___|_|\n  A full-featured code intelligence and smart autocomplete engine for Sublime Text.\n     (Code intelligence plugin ported from Open Komodo Editor to Sublime Text)\n\n\n  +-------------------------------- HELP WANTED ---------------------------------+\n  |     Maintaining this project is hard, I do it in my spare time, but I'm      |\n  |     basically all alone. If anyone is interested in contributing, please     |\n  |     contact me. I really need much more help maintaining SublimeCodeIntel    |\n  |                                                                              |\n  |                       Follow me on twitter @germbravo                        |\n  |           You can find us at #sublimecodeintel on irc.freenode.net           |\n  |                                                                              |\n  |             If you like SublimeCodeIntel, please make a donation:            |\n  |        http://sublimecodeintel.github.io/SublimeCodeIntel/donate.html        |\n  +------------------------------------------------------------------------------+\n\n\n  Features\n  --------\n\n  Supports all the languages Komodo Editor supports for Code Intelligence (CIX, CodeIntel2):\n\n  JavaScript, Mason, XBL, XUL, RHTML, SCSS, Python, HTML, Ruby, Python3, XML, Sass, XSLT, Django, HTML5, Perl, CSS, Twig, Less, Smarty, Node.js, Tcl, TemplateToolkit, PHP.\n\n\n  Provides the following features:\n\n  * Jump to Symbol Definition - Jump to the file and line of the definition of a symbol.\n  * Imports autocomplete - Shows autocomplete with the available modules/symbols in real time.\n  * Function Call tooltips - Displays information in the status bar about the working function.\n\n\n  + Shortcuts for jump to definition have changed:\n\n    For Mac OS X:\n      * Jump to definition = ``Control+Click``\n      * Jump to definition = ``Control+Command+Alt+Up``\n      * Go back = ``Control+Command+Alt+Left``\n      * Manual CodeIntel = ``Control+Shift+space``\n\n    For Linux:\n      * Jump to definition = ``Super+Click``\n      * Jump to definition = ``Control+Super+Alt+Up``\n      * Go back = ``Control+Super+Alt+Left``\n      * Manual CodeIntel = ``Control+Shift+space``\n\n    For Windows:\n      * Jump to definition = ``Alt+Click``\n      * Jump to definition = ``Control+Windows+Alt+Up``\n      * Go back = ``Control+Windows+Alt+Left``\n      * Manual CodeIntel = ``Control+Shift+space``\n\n\n\n  Notes\n  -----\n\n  ** Restart Sublime Text after reading this **\n\n\n  More information\n  ----------------\n  Please take the time to read the documentation:\n\n  In case of trouble, please read the Troubleshooting section in the README.\n\n  * Online - http://sublimecodeintel.github.io/SublimeCodeIntel/\n  * Git - https://github.com/SublimeCodeIntel/SublimeCodeIntel\n\n\n  IMPORTANT\n  ---------\n\n  Do NOT edit the default SublimeCodeIntel settings. Your changes will be lost\n  when SublimeCodeIntel is updated. ALWAYS edit the user SublimeCodeIntel settings\n  by selecting \"Preferences->Package Settings->SublimeCodeIntel->Settings - User\".\n  Note that individual settings you include in your user settings will **completely**\n  replace the corresponding default setting, so you must provide that setting in its entirety.\n\nSublimeLinter\n-------------\n\n\n    ____        _     _ _                _     _       _\n   / ___| _   _| |__ | (_)_ __ ___   ___| |   (_)_ __ | |_ ___ _ __\n   \\___ \\| | | | '_ \\| | | '_ ` _ \\ / _ \\ |   | | '_ \\| __/ _ \\ '__|\n    ___) | |_| | |_) | | | | | | | |  __/ |___| | | | | ||  __/ |\n   |____/ \\__,_|_.__/|_|_|_| |_| |_|\\___|_____|_|_| |_|\\__\\___|_|\n\n\n  Welcome to SublimeLinter, a linter framework for Sublime Text 3.\n  Linters are not included, they must be installed separately.\n\n\n  For complete documentation on how to use and configure SublimeLinter,\n  please see: http://www.sublimelinter.com\n\n  To report issues: https://github.com/SublimeLinter/SublimeLinter\n\nSublimeLinter-jshint\n--------------------\n\n  SublimeLinter-jshint\n  -------------------------------\n  This linter plugin for SublimeLinter provides an interface to jshint.\n\n  Please read the installation instructions at:\n\n  https://github.com/SublimeLinter/SublimeLinter-jshint\n\nSublimeLinter-php\n-----------------\n\n  SublimeLinter-php\n  -------------------------------\n  This linter plugin for SublimeLinter provides an interface to php -l.\n\n  Please read the installation instructions at:\n\n  https://github.com/SublimeLinter/SublimeLinter-php\n\nSublimeLinter-pylint\n--------------------\n\n  SublimeLinter-pylint\n  -------------------------------\n  This linter plugin for SublimeLinter provides an interface to pylint.\n\n  Please read the installation instructions at:\n\n  https://github.com/SublimeLinter/SublimeLinter-pylint",
+			"settings":
+			{
+				"buffer_size": 9742,
+				"line_ending": "Unix",
+				"name": "Package Control Messages",
+				"read_only": true,
+				"scratch": true
 			}
 		}
 	],
@@ -120,6 +125,10 @@
 		"last_filter": "",
 		"selected_items":
 		[
+			[
+				"package control: advanced",
+				"Package Control: Advanced Install Package"
+			],
 			[
 				"package control: list",
 				"Package Control: List Packages"
@@ -173,11 +182,14 @@
 	},
 	"expanded_folders":
 	[
-		"/home/michaelmcpherson/src/phpInsecureREST",
-		"/home/michaelmcpherson/src/phpInsecureREST/api"
+		"/home/michael/src/phpInsecureREST",
+		"/home/michael/src/phpInsecureREST/api",
+		"/home/michael/src/phpInsecureREST/api/shared"
 	],
 	"file_history":
 	[
+		"/home/michael/src/phpInsecureREST/api/testing.php",
+		"/home/michael/src/phpInsecureREST/api/couchdebug",
 		"/home/michaelmcpherson/src/clientSideBlogger/bloggingClientBase/resources/postHandler.php",
 		"/home/michaelmcpherson/src/clientSideBlogger/bloggingClientBase/phprc",
 		"/home/michaelmcpherson/src/clientSideBlogger/bloggingClientBase/index.php",
@@ -303,9 +315,7 @@
 		"/home/michaelmcpherson/src/writtenRecords/DnD/Plot Episode 3",
 		"/home/michaelmcpherson/src/writtenRecords/DnD/dnd session notes 2",
 		"/home/michaelmcpherson/src/writtenRecords/DnD/Plot Episode 2",
-		"/home/michaelmcpherson/src/writtenRecords/DnD/Ludolf",
-		"/home/michaelmcpherson/src/DnDModuleGenerator/site/settlementGenerator/lists/05currentCalamityList",
-		"/home/michaelmcpherson/src/DnDModuleGenerator/site/settlementGenerator/lists/04knownForItsList"
+		"/home/michaelmcpherson/src/writtenRecords/DnD/Ludolf"
 	],
 	"find":
 	{
@@ -323,6 +333,7 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"\"",
 			"'",
 			"\n$",
 			"console",
@@ -347,6 +358,7 @@
 		"regex": true,
 		"replace_history":
 		[
+			"",
 			"\"",
 			"publish",
 			"input",
@@ -362,7 +374,7 @@
 	"groups":
 	[
 		{
-			"selected": 2,
+			"selected": 3,
 			"sheets":
 			[
 				{
@@ -392,29 +404,58 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 2,
+					"stack_index": 3,
 					"type": "text"
 				},
 				{
 					"buffer": 1,
-					"file": "api/testing.php",
+					"file": "api/shared/abstractRestConnection.php",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 373,
+						"buffer_size": 1599,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								66,
-								66
+								1182,
+								1182
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/PHP/PHP.sublime-syntax"
+							"syntax": "Packages/PHP/PHP.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 193,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								89,
+								89
+							]
+						],
+						"settings":
+						{
+							"auto_name": "1Self,",
+							"syntax": "Packages/Text/Plain text.tmLanguage"
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
@@ -424,29 +465,30 @@
 					"type": "text"
 				},
 				{
-					"buffer": 2,
-					"file": "api/couchdebug",
+					"buffer": 3,
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 192,
+						"buffer_size": 9742,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								192,
-								192
+								8062,
+								8062
 							]
 						],
 						"settings":
 						{
-							"auto_name": "curl -X PUT 'http://couchAdmin:Adein1Dva2!@localho",
-							"syntax": "Packages/Text/Plain text.tmLanguage"
+							"auto_indent": false,
+							"syntax": "Packages/Text/Plain text.tmLanguage",
+							"tab_width": 2,
+							"word_wrap": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 3645.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,
@@ -506,7 +548,7 @@
 	"project": "rest.sublime-project",
 	"replace":
 	{
-		"height": 73.0
+		"height": 68.0
 	},
 	"save_all_on_build": true,
 	"select_file":
@@ -534,7 +576,7 @@
 		"selected_items":
 		[
 		],
-		"width": 788.0
+		"width": 592.0
 	},
 	"selected_group": 0,
 	"settings":

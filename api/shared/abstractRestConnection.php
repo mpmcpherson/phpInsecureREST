@@ -14,14 +14,11 @@
 		}
 		function CheckRevision()
 		{
-			return RevisionsMatch()===true ? true : null ;
-		}
-		function RevisionsMatch()
-		{
 			//okay, this is almost certainly just me being too clever, but it's fun while it lasts
 			$dbRevVal = json_decode($newConn->send('id')->getBody())->rev;
 			return ($this->revision === $dbRevVal) ? true : $dbRevVal;
 		}
+		
 		function Sync()
 		{
 			

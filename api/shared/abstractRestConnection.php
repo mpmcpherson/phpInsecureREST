@@ -15,11 +15,12 @@
 		function CheckRevision()
 		{
 			//okay, this is almost certainly just me being too clever, but it's fun while it lasts
-			$dbRevVal = json_decode($newConn->send('id')->getBody())->rev;
+			//right, so what I need to do here is alert the user to get a new version. The rest (the part where I functionally branch the changes) needs to be handled by certain UI elements and custom code to keep the user in control.
+			$dbRevVal = json_decode($newConn->send($this->revision)->getBody())->rev;
 			return ($this->revision === $dbRevVal) ? true : $dbRevVal;
 		}
 		
-		function Sync()
+		function SyncToDb()
 		{
 			
 			$data = "{";

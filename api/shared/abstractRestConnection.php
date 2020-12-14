@@ -11,8 +11,12 @@
 		{
 			$newConn = new CouchDB('test_db','localhost',5984,$uname,$pw);
 			$this->revision = "";
+			$this->clean = false;
 		}
-		function CheckRevision()
+		//now GET
+		
+		//now POST
+		private function CheckRevision()
 		{
 			//okay, this is almost certainly just me being too clever, but it's fun while it lasts
 			//right, so what I need to do here is alert the user to get a new version. The rest (the part where I functionally branch the changes) needs to be handled by certain UI elements and custom code to keep the user in control.
@@ -20,25 +24,44 @@
 			return ($this->revision === $dbRevVal) ? true : $dbRevVal;
 		}
 		
-		function SyncToDb()
+		private function SyncToDb()
 		{
 			
-			$data = "{";
+			if($this->clean){
+				$data = "{";
 
-			foreach($this as $key => $value) {
-		    	$data = $data .'"'.prepString($key).'":"'. prepString($value).'",';
+				foreach($this as $key => $value) {
+			    	$data = $data .'"'.prepString($key).'":"'. prepString($value).'",';
+				}
+				//I don't feel like writing a bunch of lookaheads to know if I'm at the last element of an object, sooooo I'll just run until the end and then cut the last character (which will be an erroneous ,) out entirely.
+				$data = substr($data,0,-1)."}";
+				
+				$retVal = $newConn->send('/'.date("d-m-YTh:i:s"), 'PUT', $data);
+
+				$responseBody = $retVal->getBody();
+
+				$decoded = json_decode($responseBody);
+
+				//and we write this back up so that the target knows the new value to override
+				$this->revision = $decoded->rev;
 			}
-			//I don't feel like writing a bunch of lookaheads to know if I'm at the last element of an object, sooooo I'll just run until the end and then cut the last character (which will be an erroneous ,) out entirely.
-			$data = substr($data,0,-1)."}";
-			
-			$retVal = $newConn->send('/'.date("d-m-YTh:i:s"), 'PUT', $data);
 
-			$responseBody = $retVal->getBody();
+		}
 
-			$decoded = json_decode($responseBody);
-
-			//and we write this back up so that the target knows the new value to override
-			$this->revision = $decoded->rev;
+		function Save()
+		{
+			try{
+				$revisionStatus = CheckRevision();
+				if(gettype($revisionStatus)==="boolean"){
+					$this->clean = true;
+					SyncToDb();
+				}else{
+					echo "The version of the object you are editing is out of date; please back up you changes and refresh your data";
+				}
+			}
+			catch(Exception $e){
+				echo $e->errorMessage();
+			}
 		}
 
 		function prepString($string)
@@ -50,9 +73,19 @@
 			return preg_replace('/\<br(\s*)?\/?\>/i', PHP_EOL, html_entity_decode($out, ENT_QUOTES));
 		}
 
-		
+
+	//now DELETE		
 		
 		
 
 	}
+
+	class genericException extends Exception {
+	  	public function errorMessage() {
+	    //error message
+	    $errorMsg = 'Error on line '.$this->getLine().' in '.$this->getFile()
+	    .': '.$this->getMessage();
+	    return $errorMsg;
+  	}
+}
 ?>

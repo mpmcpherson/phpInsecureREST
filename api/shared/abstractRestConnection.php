@@ -8,19 +8,35 @@
 		private $newConn = "";
 
 		function __construct()
-		{
+		{	//if we get passed an ID, then we need to populate everything with a GET
 			$newConn = new CouchDB('test_db','localhost',5984,$uname,$pw);
+			$this->id = "";
 			$this->revision = "";
 			$this->clean = false;
 		}
-		//now GET
-		
 		//now POST
+
+		//now GET
+		//to get something, you just need to know its ID.
+		//I don't actually know if this'll bring back good results
+		private function getObject(){
+				
+				$dbRevVal = json_decode($newConn->send($this->id)->getBody());
+
+				foreach($dbRevVal as $key => $value) {
+					$key = recoverString($key);
+					$value = recoverString($value);
+					$this->$key = $value;
+				}
+		}
+
+
+		//now PUT
 		private function CheckRevision()
 		{
 			//okay, this is almost certainly just me being too clever, but it's fun while it lasts
 			//right, so what I need to do here is alert the user to get a new version. The rest (the part where I functionally branch the changes) needs to be handled by certain UI elements and custom code to keep the user in control.
-			$dbRevVal = json_decode($newConn->send($this->revision)->getBody())->rev;
+			$dbRevVal = json_decode($newConn->send($this->id, "HEAD")->getHeaders())->ETag;//way lighter than sending the whole damn doc over the wire. Might not work as written (probably won't work as written).
 			return ($this->revision === $dbRevVal) ? true : $dbRevVal;
 		}
 		
@@ -50,13 +66,16 @@
 
 		function Save()
 		{
-			try{
+			try{ //these text responses probably aren't going to work out, but they'll do for now.
 				$revisionStatus = CheckRevision();
 				if(gettype($revisionStatus)==="boolean"){
+					//this is *begging* for some horrible race condition to pop up.
 					$this->clean = true;
 					SyncToDb();
+					echo "Success! Current version number is ".$this->revision;
+					$this->clean = false;
 				}else{
-					echo "The version of the object you are editing is out of date; please back up you changes and refresh your data";
+					throw new genericException("The version of the object you are editing is out of date; please back up you changes and refresh your data");
 				}
 			}
 			catch(Exception $e){

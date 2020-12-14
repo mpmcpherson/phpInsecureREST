@@ -116,6 +116,13 @@
 			return $data;
 		}
 
+		function abstractPrint()
+		{
+			foreach($this as $key => $value) {
+					echo "key: ".$key." value: ".$value."\n";
+			}	
+		}
+
 		function prepString($string)
 		{
 			return htmlspecialchars(str_replace(["\r\n", "\r", "\n"], '<br/>', $string), ENT_QUOTES, "UTF-8");

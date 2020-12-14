@@ -16,8 +16,8 @@
 		}
 		//now POST
 		private function SubmitToDb(){
-							
-				$retVal = $newConn->send('/'.date("d-m-YTh:i:s"), 'POAT', encodeForDelivery());
+				//use the date for this one
+				$retVal = $newConn->send('/'.date("d-m-YTh:i:s"), 'POST', encodeForDelivery());
 
 				$responseBody = $retVal->getBody();
 
@@ -45,6 +45,25 @@
 
 
 		//now PUT
+		function Save()
+		{
+			try{ //these text responses probably aren't going to work out, but they'll do for now.
+				$revisionStatus = CheckRevision();
+				if(gettype($revisionStatus)==="boolean"){
+					//this is *begging* for some horrible race condition to pop up.
+					$this->clean = true;
+					SyncToDb();
+					echo "Success! Current version number is ".$this->revision;
+					$this->clean = false;
+				}else{
+					throw new genericException("The version of the object you are editing is out of date; please back up you changes and refresh your data");
+				}
+			}
+			catch(Exception $e){
+				echo $e->errorMessage();
+			}
+		}
+
 		private function CheckRevision()
 		{
 			//okay, this is almost certainly just me being too clever, but it's fun while it lasts
@@ -70,23 +89,17 @@
 
 		}
 
-		function Save()
+		//now DELETE		
+		private function deleteObject()
 		{
-			try{ //these text responses probably aren't going to work out, but they'll do for now.
-				$revisionStatus = CheckRevision();
-				if(gettype($revisionStatus)==="boolean"){
-					//this is *begging* for some horrible race condition to pop up.
-					$this->clean = true;
-					SyncToDb();
-					echo "Success! Current version number is ".$this->revision;
-					$this->clean = false;
-				}else{
-					throw new genericException("The version of the object you are editing is out of date; please back up you changes and refresh your data");
-				}
-			}
-			catch(Exception $e){
-				echo $e->errorMessage();
-			}
+			$retVal = $newConn->send('/'.$this->id, 'DELETE');
+
+			$responseBody = $retVal->getBody();
+
+			$decoded = json_decode($responseBody);
+
+			//and we write this back up so that the target knows the new value to override
+			$this->revision = $decoded->rev;
 		}
 
 		//really should have pulled this out right away
@@ -111,12 +124,6 @@
 		{
 			return preg_replace('/\<br(\s*)?\/?\>/i', PHP_EOL, html_entity_decode($out, ENT_QUOTES));
 		}
-
-
-		//now DELETE		
-		
-		
-
 	}
 
 	class genericException extends Exception {

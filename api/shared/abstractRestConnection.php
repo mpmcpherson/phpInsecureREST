@@ -15,10 +15,23 @@
 			$this->clean = false;
 		}
 		//now POST
+		private function SubmitToDb(){
+							
+				$retVal = $newConn->send('/'.date("d-m-YTh:i:s"), 'PUT', encodeForDelivery());
+
+				$responseBody = $retVal->getBody();
+
+				$decoded = json_decode($responseBody);
+
+				//and we write this back up so that the target knows the new value to override
+				$this->revision = $decoded->rev;
+		}
 
 		//now GET
 		//to get something, you just need to know its ID.
 		//I don't actually know if this'll bring back good results
+		//the $this->$key thing might not actually let me access
+		//the $this->key value
 		private function getObject(){
 				
 				$dbRevVal = json_decode($newConn->send($this->id)->getBody());
@@ -44,15 +57,8 @@
 		{
 			
 			if($this->clean){
-				$data = "{";
-
-				foreach($this as $key => $value) {
-			    	$data = $data .'"'.prepString($key).'":"'. prepString($value).'",';
-				}
-				//I don't feel like writing a bunch of lookaheads to know if I'm at the last element of an object, sooooo I'll just run until the end and then cut the last character (which will be an erroneous ,) out entirely.
-				$data = substr($data,0,-1)."}";
-				
-				$retVal = $newConn->send('/'.date("d-m-YTh:i:s"), 'PUT', $data);
+								
+				$retVal = $newConn->send('/'.date("d-m-YTh:i:s"), 'PUT', encodeForDelivery());
 
 				$responseBody = $retVal->getBody();
 
@@ -81,6 +87,21 @@
 			catch(Exception $e){
 				echo $e->errorMessage();
 			}
+		}
+
+		//really should have pulled this out right away
+		private function encodeForDelivery(){
+			$data = "{";
+
+				foreach($this as $key => $value) {
+					if($key!=="_rev"){
+			    		$data = $data .'"'.prepString($key).'":"'. prepString($value).'",';
+					}
+				}
+			//I don't feel like writing a bunch of lookaheads to know if I'm at the last element of an object, sooooo I'll just run until the end and then cut the last character (which will be an erroneous ,) out entirely.
+			$data = substr($data,0,-1)."}";
+			return $data;		
+
 		}
 
 		function prepString($string)

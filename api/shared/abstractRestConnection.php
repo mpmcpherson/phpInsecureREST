@@ -17,13 +17,13 @@
 		//now POST
 		private function SubmitToDb(){
 							
-				$retVal = $newConn->send('/'.date("d-m-YTh:i:s"), 'PUT', encodeForDelivery());
+				$retVal = $newConn->send('/'.date("d-m-YTh:i:s"), 'POAT', encodeForDelivery());
 
 				$responseBody = $retVal->getBody();
 
 				$decoded = json_decode($responseBody);
 
-				//and we write this back up so that the target knows the new value to override
+				//we write this back up so that the target knows the value to override
 				$this->revision = $decoded->rev;
 		}
 
@@ -58,7 +58,7 @@
 			
 			if($this->clean){
 								
-				$retVal = $newConn->send('/'.date("d-m-YTh:i:s"), 'PUT', encodeForDelivery());
+				$retVal = $newConn->send('/'.$this->id, 'PUT', encodeForDelivery());
 
 				$responseBody = $retVal->getBody();
 
@@ -100,8 +100,7 @@
 				}
 			//I don't feel like writing a bunch of lookaheads to know if I'm at the last element of an object, sooooo I'll just run until the end and then cut the last character (which will be an erroneous ,) out entirely.
 			$data = substr($data,0,-1)."}";
-			return $data;		
-
+			return $data;
 		}
 
 		function prepString($string)
@@ -114,7 +113,7 @@
 		}
 
 
-	//now DELETE		
+		//now DELETE		
 		
 		
 

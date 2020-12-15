@@ -7,9 +7,8 @@
 	$post->author="Michael";
 	$post->subject="Bedtime";
 	$post->body="New";
-	$post->restBaseClass::__construct();
-	
-	$post->print();
-	$post->abstractPrint();
 
+
+	//var_dump($post);	
+	$post->print();
 ?>

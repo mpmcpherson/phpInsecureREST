@@ -6,6 +6,9 @@
 
 	class restBaseClass{
 		private $newConn = "";
+		public $id = '';
+		public $revision = '';
+		public $clean = '';
 
 		function __construct()
 		{	//if we get passed an ID, then we need to populate everything with a GET
@@ -17,7 +20,8 @@
 		//now POST
 		private function SubmitToDb(){
 				//use the date for this one
-				$retVal = $newConn->send('/'.date("d-m-YTh:i:s"), 'POST', encodeForDelivery());
+				$this->id = date("d-m-YTh:i:s");
+				$retVal = $newConn->send('/'. $this->id, 'POST', encodeForDelivery());
 
 				$responseBody = $retVal->getBody();
 

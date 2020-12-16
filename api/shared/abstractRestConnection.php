@@ -18,6 +18,11 @@
 			$this->clean = false;
 		}
 		//now POST
+		function POST(){
+			SubmitToDb();
+		}
+
+
 		private function SubmitToDb(){
 				//use the date for this one
 				$this->id = date("d-m-YTh:i:s");
@@ -36,6 +41,9 @@
 		//I don't actually know if this'll bring back good results
 		//the $this->$key thing might not actually let me access
 		//the $this->key value
+		function GET(){
+			getObject();
+		}
 		private function getObject(){
 				
 				$dbRevVal = json_decode($newConn->send($this->id)->getBody());
@@ -49,7 +57,10 @@
 
 
 		//now PUT
-		function Save()
+		function PUT(){
+			Save();
+		}
+		private function Save()
 		{
 			try{ //these text responses probably aren't going to work out, but they'll do for now.
 				$revisionStatus = CheckRevision();
@@ -93,7 +104,10 @@
 
 		}
 
-		//now DELETE		
+		//now DELETE
+		function DELETE(){
+			deleteObject();
+		}	
 		private function deleteObject()
 		{
 			$retVal = $newConn->send('/'.$this->id, 'DELETE');
@@ -127,11 +141,11 @@
 			}	
 		}
 
-		function prepString($string)
+		private function prepString($string)
 		{
 			return htmlspecialchars(str_replace(["\r\n", "\r", "\n"], '<br/>', $string), ENT_QUOTES, "UTF-8");
 		}
-		function recoverString($string)
+		private function recoverString($string)
 		{
 			return preg_replace('/\<br(\s*)?\/?\>/i', PHP_EOL, html_entity_decode($out, ENT_QUOTES));
 		}

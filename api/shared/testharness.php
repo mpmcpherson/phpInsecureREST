@@ -10,5 +10,7 @@
 
 
 	//var_dump($post);	
-	$post->print();
+	//$post->print();
+	$post->abstractPrint();
+	var_dump(get_class_methods($post));
 ?>

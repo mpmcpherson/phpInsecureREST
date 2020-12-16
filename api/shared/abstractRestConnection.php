@@ -37,7 +37,7 @@
 				$responseBody = $retVal->getBody();
 
 				$decoded = json_decode($responseBody);
-				var_dump($decoded);
+				
 				//we write this back up so that the target knows the value to override
 				$this->revision = $decoded->rev;
 		}
@@ -134,7 +134,10 @@
 
 		function abstractPrint(){
 			foreach($this as $key => $value) {
+				if($key!=="newConn"){
 					echo "key: ".$key." value: ".$value."\n";
+				}
+
 			}	
 		}
 

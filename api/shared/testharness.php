@@ -25,4 +25,5 @@
 	*/
 	$vals = $post->POST();
 	echo $vals;
+	$post->abstractPrint();
 ?>

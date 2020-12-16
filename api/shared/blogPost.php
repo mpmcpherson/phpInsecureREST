@@ -8,11 +8,6 @@
 			$this->body = "";
 		}
 
-		function print()
-		{
-			foreach($this as $key => $value) {
-					echo "key: ".$key." value: ".$value."\n";
-				}
-		}
+		
 	}
 ?>

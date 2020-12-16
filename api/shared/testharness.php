@@ -23,6 +23,6 @@
 	$plot = new dndPlot();
 	$plot -> abstractPrint();
 	*/
-	//$vals = $post->POST();
+	$vals = $post->POST();
 	echo $vals;
 ?>

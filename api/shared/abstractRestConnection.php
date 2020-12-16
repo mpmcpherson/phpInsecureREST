@@ -5,7 +5,7 @@
 	//require_once(__DIR__.'/../config/secretConfig.php');
 
 	class restBaseClass{
-		private $config;
+		
 		private $newConn;
 		public $id;
 		public $revision;
@@ -15,8 +15,8 @@
 			//if we get passed an ID, then we need to populate everything with a GET
 			$config = include __DIR__.'/../config/secretConfig.php';
 			echo "constructed\n";
-			$newConn = new CouchDB('test_db','localhost',5984,$config['uname'],$config['pw']);
-			echo "type of newConn: " . gettype($newConn).'\n';
+			$this->newConn = new CouchDB('test_db','127.0.0.1',5984,$config['uname'],$config['pw']);
+			echo "type of newConn: " . get_class($this->newConn)."\n";
 			$this->id = "";
 			$this->revision = "";
 			$this->clean = false;
@@ -30,12 +30,14 @@
 		private function SubmitToDb(){
 				//use the date for this one
 				$this->id = date("d-m-YTh:i:s");
-				$retVal = $newConn->send('/'. $this->id, 'POST', $this->encodeForDelivery());
+				echo $this->id."\n";
+				
+				$retVal = $this->newConn->send('/'. $this->id, 'PUT', $this->encodeForDelivery());
 
 				$responseBody = $retVal->getBody();
 
 				$decoded = json_decode($responseBody);
-
+				var_dump($decoded);
 				//we write this back up so that the target knows the value to override
 				$this->revision = $decoded->rev;
 		}
@@ -49,14 +51,13 @@
 			getObject();
 		}
 		private function getObject(){
-				
-				$dbRevVal = json_decode($newConn->send($this->id)->getBody());
+			$dbRevVal = json_decode($newConn->send($this->id)->getBody());
 
-				foreach($dbRevVal as $key => $value) {
-					$key = recoverString($key);
-					$value = recoverString($value);
-					$this->$key = $value;
-				}
+			foreach($dbRevVal as $key => $value) {
+				$key = recoverString($key);
+				$value = recoverString($value);
+				$this->$key = $value;
+			}
 		}
 
 
@@ -64,8 +65,7 @@
 		function PUT(){
 			Save();
 		}
-		private function Save()
-		{
+		private function Save(){
 			try{ //these text responses probably aren't going to work out, but they'll do for now.
 				$revisionStatus = CheckRevision();
 				if(gettype($revisionStatus)==="boolean"){
@@ -82,18 +82,14 @@
 				echo $e->errorMessage();
 			}
 		}
-
-		private function CheckRevision()
-		{
+		private function CheckRevision(){
 			//okay, this is almost certainly just me being too clever, but it's fun while it lasts
 			//right, so what I need to do here is alert the user to get a new version. The rest (the part where I functionally branch the changes) needs to be handled by certain UI elements and custom code to keep the user in control.
 			$dbRevVal = json_decode($newConn->send($this->id, "HEAD")->getHeaders())->ETag;//way lighter than sending the whole damn doc over the wire. Might not work as written (probably won't work as written).
 			return ($this->revision === $dbRevVal) ? true : $dbRevVal;
 		}
 		
-		private function SyncToDb()
-		{
-			
+		private function SyncToDb(){		
 			if($this->clean){
 								
 				$retVal = $newConn->send('/'.$this->id, 'PUT', encodeForDelivery());
@@ -105,15 +101,13 @@
 				//and we write this back up so that the target knows the new value to override
 				$this->revision = $decoded->rev;
 			}
-
 		}
 
 		//now DELETE
 		function DELETE(){
 			deleteObject();
 		}	
-		private function deleteObject()
-		{
+		private function deleteObject(){
 			$retVal = $newConn->send('/'.$this->id, 'DELETE');
 
 			$responseBody = $retVal->getBody();
@@ -129,7 +123,7 @@
 			$data = "{";
 
 				foreach($this as $key => $value) {
-					if($key!=="_rev"){
+					if($key!=="_rev"&&$key!=="newConn"&&$key!=="clean"){
 			    		$data = $data .'"'.$this->prepString($key).'":"'. $this->prepString($value).'",';
 					}
 				}
@@ -138,26 +132,23 @@
 			return $data;
 		}
 
-		function abstractPrint()
-		{
+		function abstractPrint(){
 			foreach($this as $key => $value) {
 					echo "key: ".$key." value: ".$value."\n";
 			}	
 		}
 
-		private function prepString($string)
-		{
+		private function prepString($string){
 			return htmlspecialchars(str_replace(["\r\n", "\r", "\n"], '<br/>', $string), ENT_QUOTES, "UTF-8");
 		}
-		private function recoverString($string)
-		{
+		private function recoverString($string){
 			return preg_replace('/\<br(\s*)?\/?\>/i', PHP_EOL, html_entity_decode($out, ENT_QUOTES));
 		}
 	}
 
-	class genericException extends Exception {
-	  	public function errorMessage() {
-	    //error message
+class genericException extends Exception {
+  	public function errorMessage() {
+		//error message
 	    $errorMsg = 'Error on line '.$this->getLine().' in '.$this->getFile()
 	    .': '.$this->getMessage();
 	    return $errorMsg;

@@ -1,8 +1,8 @@
 <?php
-	require_once('CouchDBConnection.php');
-	require_once('CouchDBRequest.php');
-	require_once('CouchDBResponse.php');
-	require_once('../config/secretConfig.php');
+	require_once 'CouchDBConnection.php';
+	require_once 'CouchDBRequest.php';
+	require_once 'CouchDBResponse.php';
+	require_once(__DIR__.'/../config/secretConfig.php');
 
 	class restBaseClass{
 		private $newConn = "";
@@ -10,8 +10,9 @@
 		public $revision = '';
 		public $clean = '';
 
-		function __construct()
+		function construct()
 		{	//if we get passed an ID, then we need to populate everything with a GET
+			echo "constructed\n";
 			$newConn = new CouchDB('test_db','localhost',5984,$uname,$pw);
 			$this->id = "";
 			$this->revision = "";
@@ -19,14 +20,14 @@
 		}
 		//now POST
 		function POST(){
-			SubmitToDb();
+			$this->SubmitToDb();
 		}
 
 
 		private function SubmitToDb(){
 				//use the date for this one
 				$this->id = date("d-m-YTh:i:s");
-				$retVal = $newConn->send('/'. $this->id, 'POST', encodeForDelivery());
+				$retVal = $newConn->send('/'. $this->id, 'POST', $this->encodeForDelivery());
 
 				$responseBody = $retVal->getBody();
 
@@ -67,7 +68,7 @@
 				if(gettype($revisionStatus)==="boolean"){
 					//this is *begging* for some horrible race condition to pop up.
 					$this->clean = true;
-					SyncToDb();
+					$this->SyncToDb();
 					echo "Success! Current version number is ".$this->revision;
 					$this->clean = false;
 				}else{
@@ -126,7 +127,7 @@
 
 				foreach($this as $key => $value) {
 					if($key!=="_rev"){
-			    		$data = $data .'"'.prepString($key).'":"'. prepString($value).'",';
+			    		$data = $data .'"'.$this->prepString($key).'":"'. $this->prepString($value).'",';
 					}
 				}
 			//I don't feel like writing a bunch of lookaheads to know if I'm at the last element of an object, sooooo I'll just run until the end and then cut the last character (which will be an erroneous ,) out entirely.

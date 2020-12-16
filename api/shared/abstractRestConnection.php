@@ -2,18 +2,21 @@
 	require_once 'CouchDBConnection.php';
 	require_once 'CouchDBRequest.php';
 	require_once 'CouchDBResponse.php';
-	require_once(__DIR__.'/../config/secretConfig.php');
+	//require_once(__DIR__.'/../config/secretConfig.php');
 
 	class restBaseClass{
-		private $newConn = "";
-		public $id = '';
-		public $revision = '';
-		public $clean = '';
+		private $config;
+		private $newConn;
+		public $id;
+		public $revision;
+		public $clean;
 
-		function construct()
-		{	//if we get passed an ID, then we need to populate everything with a GET
+		function construct(){
+			//if we get passed an ID, then we need to populate everything with a GET
+			$config = include __DIR__.'/../config/secretConfig.php';
 			echo "constructed\n";
-			$newConn = new CouchDB('test_db','localhost',5984,$uname,$pw);
+			$newConn = new CouchDB('test_db','localhost',5984,$config['uname'],$config['pw']);
+			echo "type of newConn: " . gettype($newConn).'\n';
 			$this->id = "";
 			$this->revision = "";
 			$this->clean = false;

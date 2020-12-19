@@ -1,0 +1,10 @@
+{
+    "name": "bastionllc/phpinsecurerest",
+    "authors": [
+        {
+            "name": "Michael McPherson",
+            "email": "michael@mpmcpherson.com"
+        }
+    ],
+    "require": {}
+}

@@ -39,7 +39,9 @@ class CouchDBRequest {
         } else {
             $req .= "\r\n";
         }
-        echo $req;
+        if($this->method == "DELETE"){
+            echo $req;
+        }
         return $req;
     }
 

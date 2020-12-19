@@ -36,7 +36,7 @@
 				$decoded = json_decode($responseBody);
 				
 				//we write this back up so that the target knows the value to override
-				$this->_rev = $decoded->_rev;
+				$this->_rev = $decoded->rev;
 
 		}
 

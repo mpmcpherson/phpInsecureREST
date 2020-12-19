@@ -5,26 +5,61 @@
 	require_once __DIR__.'/objects/user.php';
 	require_once __DIR__.'/objects/dndPlot.php';
 
-	$post = new blogPost();
-	$post->construct();
-	$post->author="Michael";
-	$post->subject="Bedtime? > < & @ # : ;";
-	$post->body="New";
 
+	$_idForward = "";
 
-	//var_dump($post);	
-	//$post->print();
-	//$post->abstractPrint();
-	//I should write something to print the methods, in the abstract class
-	//var_dump(get_class_methods($post));
-	/*
-	$user = new user();
-	$user ->abstractPrint();
+	$post = array('post' => "",'get'=>"",'put'=>"",'delete'=>"" );
 
-	$plot = new dndPlot();
-	$plot -> abstractPrint();
-	*/
-	$vals = $post->POST();
-	echo $vals;
-	$post->abstractPrint();
+	/*testing POST*/
+	$testPost=true;
+	if($testPost){
+		echo "post \n";
+		$post['post'] = new blogPost();
+		$post['post']->construct();
+
+		$post['post']->author="Michael";
+		$post['post']->subject="we're going to try to get this to go through to the 'put'";
+		$post['post']->body="HERE'S A BODY";
+		$vals = $post['post']->POST();
+		$post['post']->abstractPrint();
+		
+		$_idForward = $post['post']->_id;
+		
+		echo "\n";
+	}
+
+	/*testing GET*/
+	$testGET=true;
+	if($testGET)
+	{
+		echo "get \n";
+		$post['get'] = new blogPost();
+		$post['get']->construct();
+		$post['get']->GET($_idForward);
+		$post['get']->abstractPrint();
+		echo "\n";
+	}
+
+	/*testing PUT*/
+	$testPUT=true;
+	if($testPUT)
+	{
+		echo "put \n";
+
+		$post['put'] = new blogPost();
+		$post['put']->construct();
+
+		$post['put']->GET($_idForward);
+		$post['put']->body="and now we're something else";
+		$post['put']->PUT();
+
+		$post['put']->abstractPrint();
+
+		echo "\n";
+	}
+
+	/*testing DELETE*/
+	$testDELETE=false;
+	if($testDELETE){}
+
 ?>

@@ -2,7 +2,7 @@
 
 class CouchDBRequest {
 
-    static $VALID_HTTP_METHODS = array('DELETE', 'GET', 'POST', 'PUT');
+    static $VALID_HTTP_METHODS = array('DELETE', 'GET', 'POST', 'PUT', 'HEAD');
 
     private $method = 'GET';
     private $url = '';
@@ -22,7 +22,7 @@ class CouchDBRequest {
         $this->password = $password;
 
         if(!in_array($this->method, self::$VALID_HTTP_METHODS)) {
-            throw new CouchDBException('Invalid HTTP method: '.$this->method);
+            throw new genericException('Invalid HTTP method: '.$this->method);
         }
     }
 
@@ -46,7 +46,7 @@ class CouchDBRequest {
     private function connect() {
         $this->sock = @fsockopen($this->host, $this->port, $err_num, $err_string);
         if(!$this->sock) {
-            throw new CouchDBException('Could not open connection to '.$this->host.':'.$this->port.' ('.$err_string.')');
+            throw new genericException('Could not open connection to '.$this->host.':'.$this->port.' ('.$err_string.')');
         }
     }
 

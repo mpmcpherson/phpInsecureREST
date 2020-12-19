@@ -1,0 +1,50 @@
+post 
+key: _id value: 19-12-2020EST12:56:21
+key: _rev value: 1-ecc044eb217f0cfaa43bb52c5ba064c4
+key: clean value: 
+key: author value: Michael
+key: subject value: we're going to try to get this to go through to the 'put'
+key: body value: HERE'S A BODY
+
+get 
+key: _id value: 19-12-2020EST12:56:21
+key: _rev value: 1-ecc044eb217f0cfaa43bb52c5ba064c4
+key: clean value: 
+key: author value: Michael
+key: subject value: we'regoingtotrytogetthistogothroughtothe'put'
+key: body value: HERE'SABODY
+
+put 
+array(10) {
+  ["HTTP/1.0200OK"]=>
+  string(0) ""
+  ["Cache-Control"]=>
+  string(16) "must-revalidate"
+  ["Connection"]=>
+  string(6) "close"
+  ["Content-Length"]=>
+  string(4) "208"
+  ["Content-Type"]=>
+  string(17) "application/json"
+  ["Date"]=>
+  string(15) "Sat,19Dec202005"
+  ["ETag"]=>
+  string(35) "1-ecc044eb217f0cfaa43bb52c5ba064c4"
+  ["Server"]=>
+  string(28) "CouchDB/3.1.1(ErlangOTP/20)"
+  ["X-Couch-Request-ID"]=>
+  string(11) "e4778e7b8d"
+  ["X-CouchDB-Body-Time"]=>
+  string(1) "0"
+}
+lc revision: 1-ecc044eb217f0cfaa43bb52c5ba064c4
+db revision: 1-ecc044eb217f0cfaa43bb52c5ba064c4
+
+Error on line 83 in /home/michaelmcpherson/src/phpInsecureREST/api/shared/abstractRestConnection.php: The version of the object you are editing is out of date; please back up you changes and refresh your data
+key: _id value: 19-12-2020EST12:56:21
+key: _rev value: 1-ecc044eb217f0cfaa43bb52c5ba064c4
+key: clean value: 
+key: author value: Michael
+key: subject value: we'regoingtotrytogetthistogothroughtothe'put'
+key: body value: and now we're something else
+

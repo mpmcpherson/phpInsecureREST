@@ -1,2 +1,4 @@
 # Specify filepatterns you want git to ignore.
 secretConfig.php
+
+/vendor/

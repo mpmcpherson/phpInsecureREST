@@ -59,7 +59,20 @@
 	}
 
 	/*testing DELETE*/
-	$testDELETE=false;
-	if($testDELETE){}
+	$testDELETE=true;
+	if($testDELETE){
+		echo "delete \n";
+
+		$post['delete'] = new blogPost();
+		$post['delete']->construct();
+
+		$post['delete']->GET($_idForward);
+		$post['delete']->abstractPrint();
+		$post['delete']->DELETE();
+
+		$post['delete']->abstractPrint();
+
+		echo "\n";	
+	}
 
 ?>

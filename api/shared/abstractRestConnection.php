@@ -145,15 +145,15 @@
 
 		//now DELETE
 		function DELETE(){
-			deleteObject();
+			$this->deleteObject();
 		}	
 		private function deleteObject(){
-			$retVal = $newConn->send('/'.$this->_id, 'DELETE');
+			$retVal = $this->newConn->send('/'.$this->_id, 'DELETE');
 
 			$responseBody = $retVal->getBody();
 
 			$decoded = json_decode($responseBody);
-
+			var_dump($retVal);
 			//and we write this back up so that the target knows the new value to override
 			$this->_rev = $decoded->rev;
 		}

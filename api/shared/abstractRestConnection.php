@@ -80,10 +80,11 @@
 					//this is *begging* for some horrible race condition to pop up.
 					$this->clean = true;
 					$this->SyncToDb();
-					echo "Success! Current version number is ".$this->_rev;
+					echo "Success! Current version number is ".$this->_rev."
+				\n";
 					$this->clean = false;
 				}else{
-					throw new genericException("The version of the object you are editing is out of date; please back up you changes and refresh your data");
+					throw new genericException("The version of the object you are editing is out of date; please back up you changes and refresh your data\n");
 				}
 			}
 			catch(genericException $e){
@@ -99,34 +100,15 @@
 
 			$retVal = $this->newConn->send($this->_id, "HEAD");
 			$responseBody = $retVal->getHeaders();
-			;
-			try{
+
+		
 				
-				$midVal = explode(PHP_EOL, $responseBody);
-				$lokeys = array();
-				$hivalue = array();
-
-				foreach($midVal as $key => $value){
-					$inter = explode(':', $value);
-					array_push($lokeys, str_replace(["\""," "],"",$inter[0]));
-					array_push($hivalue, str_replace(["\""," "],"",$inter[1]));
-					
-				}
-				$workingHeaders = array_combine($lokeys, $hivalue);
-				$dbRevVal = $workingHeaders['ETag'];
-			}catch(genericException $e)
-			{
-				echo $e->errorMessage();
-			}
 			
-			try{
+			$parsedHeaders = $this->parseHeaders($responseBody);			
 
-				return strcmp($this->_rev , $dbRevVal)!==0 ? true : $dbRevVal; 
+			$dbRevVal = $parsedHeaders['ETag'];		
 
-			}catch(genericException $e){
-				echo $e->errorMessage();
-			}
-			
+			return strcmp($this->_rev , $dbRevVal)!==0 ? true : $dbRevVal; 
 		}
 		
 		private function SyncToDb(){		
@@ -141,6 +123,28 @@
 				//and we write this back up so that the target knows the new value to override
 				$this->_rev = $decoded->rev; //and it's rev, nto _rev, because consistency is for suckers
 			}
+		}
+
+		private function parseHeaders($headerString){
+
+			$midVal = explode(PHP_EOL, $headerString);
+			$lokeys = array();
+			$hivalue = array();
+
+			$httpResponse = $midVal[0];
+			
+			array_shift($midVal);
+
+
+			foreach($midVal as $key => $value){
+				$inter = explode(':', $value);
+				array_push($lokeys, str_replace(["\""," "],"",$inter[0]));
+				array_push($hivalue, str_replace(["\""," "],"",$inter[1]));
+				
+			}
+			$workingHeaders = array_combine($lokeys, $hivalue);
+			return $workingHeaders;
+
 		}
 
 		//now DELETE

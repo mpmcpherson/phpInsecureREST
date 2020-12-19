@@ -1,8 +1,8 @@
 <?php
-	require_once 'abstractRestConnection.php';
-	require_once 'blogPost.php';
-	require_once 'user.php';
-	require_once 'dndPlot.php';
+	require_once 'shared/abstractRestConnection.php';
+	require_once 'objects/blogPost.php';
+	require_once 'objects/user.php';
+	require_once 'objects/dndPlot.php';
 
 	$post = new blogPost();
 	$post->construct();

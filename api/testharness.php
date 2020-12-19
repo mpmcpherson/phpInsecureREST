@@ -1,8 +1,9 @@
 <?php
-	require_once 'shared/abstractRestConnection.php';
-	require_once 'objects/blogPost.php';
-	require_once 'objects/user.php';
-	require_once 'objects/dndPlot.php';
+	//echo dirname(__DIR__).'/shared/abstractRestConnection.php';
+	require_once __DIR__.'/shared/abstractRestConnection.php';
+	require_once __DIR__.'/objects/blogPost.php';
+	require_once __DIR__.'/objects/user.php';
+	require_once __DIR__.'/objects/dndPlot.php';
 
 	$post = new blogPost();
 	$post->construct();

@@ -42,9 +42,6 @@
 
 		//now GET
 		//to get something, you just need to know its ID.
-		//I don't actually know if this'll bring back good results
-		//the $this->$key thing might not actually let me access
-		//the $this->key value
 		function GET($id){
 			try{
 				$this->getObject($id);
@@ -121,7 +118,7 @@
 				$decoded = json_decode($responseBody);
 				
 				//and we write this back up so that the target knows the new value to override
-				$this->_rev = $decoded->rev; //and it's rev, nto _rev, because consistency is for suckers
+				$this->_rev = $decoded->rev; //and it's rev, not _rev, because consistency is for suckers
 			}
 		}
 

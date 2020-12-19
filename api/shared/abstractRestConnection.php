@@ -29,7 +29,7 @@
 				//use the date for this one
 				$this->_id = date("d-m-YTh:i:s");
 				
-				$retVal = $this->newConn->send('/'. $this->_id, 'PUT', $this->encodeForDeliveryPost());
+				$retVal = $this->newConn->send('/'. $this->_id, 'PUT', $this->encodeForDelivery("POST"));
 
 				$responseBody = $retVal->getBody();
 
@@ -114,7 +114,7 @@
 		private function SyncToDb(){		
 			if($this->clean){
 								
-				$retVal = $this->newConn->send('/'.$this->_id, 'PUT', $this->encodeForDeliveryPut());
+				$retVal = $this->newConn->send('/'.$this->_id, 'PUT', $this->encodeForDelivery("PUT"));
 
 				$responseBody = $retVal->getBody();
 				
@@ -124,6 +124,46 @@
 				$this->_rev = $decoded->rev; //and it's rev, nto _rev, because consistency is for suckers
 			}
 		}
+
+		
+		//now DELETE
+		function DELETE(){
+			$this->deleteObject();
+		}	
+		private function deleteObject(){
+			$retVal = $this->newConn->send('/'.$this->_id, 'DELETE');
+
+			$responseBody = $retVal->getBody();
+
+			$decoded = json_decode($responseBody);
+			var_dump($retVal);
+			//and we write this back up so that the target knows the new value to override
+			$this->_rev = $decoded->rev;
+		}
+
+		//really should have pulled this out right away
+		//there: now it properly encodes *and* it's one function
+		private function encodeForDelivery($encodingMethod){
+
+			if($encodingMethod==="POST"){
+				$encAry = array("newConn","clean","_rev");
+			}elseif($encodingMethod==="PUT"){
+				$encAry = array("newConn","clean");
+			}
+
+			$data = "{";
+
+				foreach($this as $key => $value) {
+					if(in_array($key, $encAry,true)===false){
+			    		$data = $data .'"'.$this->prepString($key).'":"'. $this->prepString($value).'",';
+					}
+				}
+			//I don't feel like writing a bunch of lookaheads to know if I'm at the last element of an object, sooooo I'll just run until the end and then cut the last character (which will be an erroneous ,) out entirely.
+			$data = substr($data,0,-1)."}";
+			//echo $data;
+			return $data;
+		}
+
 
 		private function parseHeaders($headerString){
 
@@ -145,51 +185,6 @@
 			$workingHeaders = array_combine($lokeys, $hivalue);
 			return $workingHeaders;
 
-		}
-
-		//now DELETE
-		function DELETE(){
-			$this->deleteObject();
-		}	
-		private function deleteObject(){
-			$retVal = $this->newConn->send('/'.$this->_id, 'DELETE');
-
-			$responseBody = $retVal->getBody();
-
-			$decoded = json_decode($responseBody);
-			var_dump($retVal);
-			//and we write this back up so that the target knows the new value to override
-			$this->_rev = $decoded->rev;
-		}
-
-		//really should have pulled this out right away
-		private function encodeForDeliveryPost(){
-			$data = "{";
-
-				foreach($this as $key => $value) {
-					if($key!=="_rev"&&$key!=="newConn"&&$key!=="clean"){
-			    		$data = $data .'"'.$this->prepString($key).'":"'. $this->prepString($value).'",';
-					}
-				}
-			//I don't feel like writing a bunch of lookaheads to know if I'm at the last element of an object, sooooo I'll just run until the end and then cut the last character (which will be an erroneous ,) out entirely.
-			$data = substr($data,0,-1)."}";
-			//echo $data;
-			return $data;
-		}
-
-		//really should have pulled this out right away
-		private function encodeForDeliveryPut(){
-			$data = "{";
-
-				foreach($this as $key => $value) {
-					if($key!=="newConn"&&$key!=="clean"){
-			    		$data = $data .'"'.$this->prepString($key).'":"'. $this->prepString($value).'",';
-					}
-				}
-			//I don't feel like writing a bunch of lookaheads to know if I'm at the last element of an object, sooooo I'll just run until the end and then cut the last character (which will be an erroneous ,) out entirely.
-			$data = substr($data,0,-1)."}";
-			//echo $data;
-			return $data;
 		}
 
 		function abstractPrint(){

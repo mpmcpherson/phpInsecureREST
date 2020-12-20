@@ -24,6 +24,7 @@ class CouchDB {
     function send($url, $method = 'get', $data = NULL) {
         $url = '/'.$this->db.(substr($url, 0, 1) == '/' ? $url : '/'.$url);
         $request = new CouchDBRequest($this->host, $this->port, $url, $method, $data, $this->username, $this->password);
+        
         return $request->send();
     }
 

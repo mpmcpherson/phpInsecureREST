@@ -75,13 +75,16 @@
 				$revisionStatus = $this->CheckRevision();
 				if(gettype($revisionStatus)==="boolean"){
 					//this is *begging* for some horrible race condition to pop up.
-					$this->clean = true;
-					$this->SyncToDb();
-					echo "Success! Current version number is ".$this->_rev."
-				\n";
-					$this->clean = false;
+					$this->clean = $revisionStatus;
+					if($this->clean){
+						$this->SyncToDb();
+						echo "Success! Current version number is ".$this->_rev."\n";
+						$this->clean = false;
+					}
 				}else{
-					throw new genericException("The version of the object you are editing is out of date; please back up you changes and refresh your data\n");
+					throw new genericException("The version of the object you are editing is out of date. Current local version is: " . 
+						$this->_rev . " and current server version is : " . 
+						$revisionStatus . ". Please back up your changes and refresh your data\n");
 				}
 			}
 			catch(genericException $e){
@@ -97,10 +100,9 @@
 
 			$retVal = $this->newConn->send($this->_id, "HEAD");
 			$responseBody = $retVal->getHeaders();
-
-		
-				
 			
+			var_dump($responseBody);
+
 			$parsedHeaders = $this->parseHeaders($responseBody);			
 
 			$dbRevVal = $parsedHeaders['ETag'];		
@@ -128,14 +130,18 @@
 			$this->deleteObject();
 		}	
 		private function deleteObject(){
-			$retVal = $this->newConn->send('/'.$this->_id, 'DELETE');
+			if($this->CheckRevision()){
+				$retVal = $this->newConn->send('/'.$this->_id."?rev=".$this->_rev, 'DELETE');
 
-			$responseBody = $retVal->getBody();
+				$responseBody = $retVal->getBody();
 
-			$decoded = json_decode($responseBody);
-			var_dump($retVal);
-			//and we write this back up so that the target knows the new value to override
-			$this->_rev = $decoded->rev;
+				$decoded = json_decode($responseBody);
+				
+				//and we write this back up so that the target knows the new value to override
+				$this->_rev = $decoded->rev;
+			}else{
+				$this->clean=false;
+			}
 		}
 
 		//really should have pulled this out right away

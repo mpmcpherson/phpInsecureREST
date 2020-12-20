@@ -39,9 +39,14 @@ class CouchDBRequest {
         } else {
             $req .= "\r\n";
         }
+
+        /* diagnostics....
         if($this->method == "DELETE"){
+            echo "\n\n\nBEG COUCHDBREQUEST REQUEST \n\n\n";
             echo $req;
+            echo "\n\n\nEND COUCHDBREQUEST REQUEST \n\n\n";
         }
+        */ 
         return $req;
     }
 

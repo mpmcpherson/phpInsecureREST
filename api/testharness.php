@@ -69,6 +69,13 @@
 		$post['delete']->GET($_idForward);
 		$post['delete']->abstractPrint();
 		$post['delete']->DELETE();
+		
+		echo "\n";
+		echo "Now try GETting the DELETEd object...";
+		echo "\n";
+		echo "\n";
+
+		$post['delete']->GET($_idForward);
 
 		$post['delete']->abstractPrint();
 

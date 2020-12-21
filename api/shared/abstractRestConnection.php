@@ -1,24 +1,23 @@
 <?php
-	require_once 'CouchDBConnection.php';
-	require_once 'CouchDBRequest.php';
-	require_once 'CouchDBResponse.php';
-	//require_once(__DIR__.'/../config/secretConfig.php');
+namespace REST_API;
+require_once 'CouchDBConnection.php';
+require_once 'CouchDBRequest.php';
+require_once 'CouchDBResponse.php';
+require_once 'genericException.php';
 
 	class restBaseClass{
 		
 		private $newConn;
-		public $id;
-		public $revision;
+		public $_id;
+		public $_rev;
 		public $clean;
 
 		function construct(){
 			//if we get passed an ID, then we need to populate everything with a GET
 			$config = include __DIR__.'/../config/secretConfig.php';
-			echo "constructed\n";
 			$this->newConn = new CouchDB('test_db','127.0.0.1',5984,$config['uname'],$config['pw']);
-			echo "type of newConn: " . get_class($this->newConn)."\n";
-			$this->id = "";
-			$this->revision = "";
+			$this->_id = "";
+			$this->_rev = "";
 			$this->clean = false;
 		}
 		//now POST
@@ -29,107 +28,196 @@
 
 		private function SubmitToDb(){
 				//use the date for this one
-				$this->id = date("d-m-YTh:i:s");
-				echo $this->id."\n";
+				$this->_id = date("d-m-YTh:i:s");
 				
-				$retVal = $this->newConn->send('/'. $this->id, 'PUT', $this->encodeForDelivery());
+				$retVal = $this->newConn->send('/'. $this->_id, 'PUT', $this->encodeForDelivery("POST"));
 
 				$responseBody = $retVal->getBody();
 
 				$decoded = json_decode($responseBody);
 				
+				//testing
+				$this->handleReturns($decoded);
 				//we write this back up so that the target knows the value to override
-				$this->revision = $decoded->rev;
+				//$this->_rev = $decoded->rev;
+
 		}
 
 		//now GET
 		//to get something, you just need to know its ID.
-		//I don't actually know if this'll bring back good results
-		//the $this->$key thing might not actually let me access
-		//the $this->key value
-		function GET(){
-			getObject();
-		}
-		private function getObject(){
-			$dbRevVal = json_decode($newConn->send($this->id)->getBody());
-
-			foreach($dbRevVal as $key => $value) {
-				$key = recoverString($key);
-				$value = recoverString($value);
-				$this->$key = $value;
+		function GET($id){
+			try{
+				$this->getObject($id);
+			}catch(Exception $e){
+				echo $e->errorMessage();
 			}
+
+		}
+
+		private function getObject($id){
+
+			$retVal = $this->newConn->send($id);
+			//var_dump($retVal);
+			$responseBody = $retVal->getBody();
+			//echo $responseBody;
+			$dbRevVal = json_decode($responseBody);
+
+
+			//ahhh ahahaha, this is beautiful: the means that any new classes (say, errors) will get dynamically added to the class without vomiting any errors out. 
+			//there could be issues, but as it is, this also makes this very useful.
+			//I might write this into each of the functions...
+			/*foreach($dbRevVal as $key => $value) {
+				$this->{$this->recoverString($key)} = $this->recoverString($value);
+				
+			}*/
+			//testing
+			$this->handleReturns($dbRevVal);
 		}
 
 
 		//now PUT
 		function PUT(){
-			Save();
+			$this->Save();
 		}
 		private function Save(){
 			try{ //these text responses probably aren't going to work out, but they'll do for now.
-				$revisionStatus = CheckRevision();
+				$revisionStatus = $this->CheckRevision();
 				if(gettype($revisionStatus)==="boolean"){
 					//this is *begging* for some horrible race condition to pop up.
-					$this->clean = true;
-					$this->SyncToDb();
-					echo "Success! Current version number is ".$this->revision;
-					$this->clean = false;
+					$this->clean = $revisionStatus;
+					if($this->clean){
+						$this->SyncToDb();
+						echo "Success! Current version number is ".$this->_rev."\n";
+						$this->clean = false;
+					}
 				}else{
-					throw new genericException("The version of the object you are editing is out of date; please back up you changes and refresh your data");
+					throw new genericException("The version of the object you are editing is out of date. Current local version is: " . 
+						$this->_rev . " and current server version is : " . 
+						$revisionStatus . ". Please back up your changes and refresh your data\n");
 				}
 			}
-			catch(Exception $e){
+			catch(genericException $e){
 				echo $e->errorMessage();
 			}
 		}
 		private function CheckRevision(){
 			//okay, this is almost certainly just me being too clever, but it's fun while it lasts
 			//right, so what I need to do here is alert the user to get a new version. The rest (the part where I functionally branch the changes) needs to be handled by certain UI elements and custom code to keep the user in control.
-			$dbRevVal = json_decode($newConn->send($this->id, "HEAD")->getHeaders())->ETag;//way lighter than sending the whole damn doc over the wire. Might not work as written (probably won't work as written).
-			return ($this->revision === $dbRevVal) ? true : $dbRevVal;
+
+			//way lighter than sending the whole damn doc over the wire. Might not work as written (probably won't work as written).
+			//$dbRevVal = json_decode($this->newConn->send($this->_id, "HEAD")->getHeaders())->ETag;
+
+			$retVal = $this->newConn->send($this->_id, "HEAD");
+			$responseBody = $retVal->getHeaders();
+			
+			//var_dump($responseBody);
+
+			$parsedHeaders = $this->parseHeaders($responseBody);			
+
+			$dbRevVal = $parsedHeaders['ETag'];		
+
+			return strcmp($this->_rev , $dbRevVal)!==0 ? true : $dbRevVal; 
 		}
 		
 		private function SyncToDb(){		
 			if($this->clean){
 								
-				$retVal = $newConn->send('/'.$this->id, 'PUT', encodeForDelivery());
+				$retVal = $this->newConn->send('/'.$this->_id, 'PUT', $this->encodeForDelivery("PUT"));
+
+				$responseBody = $retVal->getBody();
+				
+				$decoded = json_decode($responseBody);
+				
+				//and we write this back up so that the target knows the new value to override
+
+				//let's try this little thing:
+				$this->handleReturns($decoded);
+				
+
+				//$this->_rev = $decoded->rev; //and it's rev, not _rev, because consistency is for suckers
+			}
+		}
+
+		
+		//now DELETE
+		function DELETE(){
+			$this->deleteObject();
+		}	
+		private function deleteObject(){
+			if($this->CheckRevision()){
+				$retVal = $this->newConn->send('/'.$this->_id."?rev=".$this->_rev, 'DELETE');
 
 				$responseBody = $retVal->getBody();
 
 				$decoded = json_decode($responseBody);
 
+				//Wipe the object itself from local memory
+				foreach($this as $key => $value) {
+					if($key !== "newConn"){
+						$this->{$key} = "null";
+					}
+				}
+
+				//testing
+				$this->handleReturns($decoded);
+
+
 				//and we write this back up so that the target knows the new value to override
-				$this->revision = $decoded->rev;
+				//$this->_rev = $decoded->rev;
+
+
+
+
+				
+			}else{
+				$this->clean=false;
 			}
 		}
 
-		//now DELETE
-		function DELETE(){
-			deleteObject();
-		}	
-		private function deleteObject(){
-			$retVal = $newConn->send('/'.$this->id, 'DELETE');
-
-			$responseBody = $retVal->getBody();
-
-			$decoded = json_decode($responseBody);
-
-			//and we write this back up so that the target knows the new value to override
-			$this->revision = $decoded->rev;
-		}
-
 		//really should have pulled this out right away
-		private function encodeForDelivery(){
+		//there: now it properly encodes *and* it's one function
+		private function encodeForDelivery($encodingMethod){
+
+			if($encodingMethod==="POST"){
+				$encAry = array("newConn","clean","_rev");
+			}elseif($encodingMethod==="PUT"){
+				$encAry = array("newConn","clean");
+			}
+
 			$data = "{";
 
 				foreach($this as $key => $value) {
-					if($key!=="_rev"&&$key!=="newConn"&&$key!=="clean"){
+					if(in_array($key, $encAry,true)===false){
 			    		$data = $data .'"'.$this->prepString($key).'":"'. $this->prepString($value).'",';
 					}
 				}
 			//I don't feel like writing a bunch of lookaheads to know if I'm at the last element of an object, sooooo I'll just run until the end and then cut the last character (which will be an erroneous ,) out entirely.
 			$data = substr($data,0,-1)."}";
+			//echo $data;
 			return $data;
+		}
+
+
+		private function parseHeaders($headerString){
+
+			$midVal = explode(PHP_EOL, $headerString);
+			$lokeys = array();
+			$hivalue = array();
+
+			$httpResponse = $midVal[0];
+			
+			array_shift($midVal);
+
+
+			foreach($midVal as $key => $value){
+				$inter = explode(':', $value);
+				array_push($lokeys, str_replace(["\""," "],"",$inter[0]));
+				array_push($hivalue, str_replace(["\""," "],"",$inter[1]));
+				
+			}
+			$workingHeaders = array_combine($lokeys, $hivalue);
+			return $workingHeaders;
+
 		}
 
 		function abstractPrint(){
@@ -140,21 +228,30 @@
 
 			}	
 		}
+		private function handleReturns($obj){
+			foreach($obj as $key => $value) {
+				if($this->recoverString($key)=="id"){$this->_id=$this->recoverString($value);}else
+				if($this->recoverString($key)=="rev"){$this->_rev=$this->recoverString($value);}else{
+				$this->{$this->recoverString($key)} = $this->recoverString($value);}
+				
+			}
+		}
 
 		private function prepString($string){
+			//echo "\nPreparing string \n";
+			//echo $string."\n";
+			//echo htmlspecialchars(str_replace(["\r\n", "\r", "\n"], '<br/>', $string), ENT_QUOTES, "UTF-8")."\n";
 			return htmlspecialchars(str_replace(["\r\n", "\r", "\n"], '<br/>', $string), ENT_QUOTES, "UTF-8");
+			
 		}
 		private function recoverString($string){
-			return preg_replace('/\<br(\s*)?\/?\>/i', PHP_EOL, html_entity_decode($out, ENT_QUOTES));
+			//echo "\nRecovering string \n";
+			//echo $string."\n";
+			//echo htmlspecialchars_decode($string, ENT_QUOTES)."\n";//str_replace('<br/>', PHP_EOL, htmlspecialchars_decode($string, ENT_QUOTES));
+			return htmlspecialchars_decode($string, ENT_QUOTES);//str_replace('<br/>', PHP_EOL, htmlspecialchars_decode($string, ENT_QUOTES));
 		}
 	}
 
-class genericException extends Exception {
-  	public function errorMessage() {
-		//error message
-	    $errorMsg = 'Error on line '.$this->getLine().' in '.$this->getFile()
-	    .': '.$this->getMessage();
-	    return $errorMsg;
-  	}
-}
+
 ?>
+

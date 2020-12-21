@@ -1,8 +1,8 @@
 <?php
-
+namespace REST_API;
 class CouchDBRequest {
 
-    static $VALID_HTTP_METHODS = array('DELETE', 'GET', 'POST', 'PUT');
+    static $VALID_HTTP_METHODS = array('DELETE', 'GET', 'POST', 'PUT', 'HEAD');
 
     private $method = 'GET';
     private $url = '';
@@ -22,7 +22,7 @@ class CouchDBRequest {
         $this->password = $password;
 
         if(!in_array($this->method, self::$VALID_HTTP_METHODS)) {
-            throw new CouchDBException('Invalid HTTP method: '.$this->method);
+            throw new genericException('Invalid HTTP method: '.$this->method);
         }
     }
 
@@ -39,14 +39,22 @@ class CouchDBRequest {
         } else {
             $req .= "\r\n";
         }
-        //echo $req;
+
+        //diagnostics....
+        /*
+        if($this->method == "GET"){
+            echo "\n\n\nBEG COUCHDBREQUEST REQUEST \n\n\n";
+            echo $req;
+            echo "\n\n\nEND COUCHDBREQUEST REQUEST \n\n\n";
+        }
+         */
         return $req;
     }
 
     private function connect() {
         $this->sock = @fsockopen($this->host, $this->port, $err_num, $err_string);
         if(!$this->sock) {
-            throw new CouchDBException('Could not open connection to '.$this->host.':'.$this->port.' ('.$err_string.')');
+            throw new genericException('Could not open connection to '.$this->host.':'.$this->port.' ('.$err_string.')');
         }
     }
 
@@ -61,6 +69,7 @@ class CouchDBRequest {
         while(!feof($this->sock)) {
             $response .= fgets($this->sock);
         }
+        
         $this->response = new CouchDBResponse($response);
         return $this->response;
     }

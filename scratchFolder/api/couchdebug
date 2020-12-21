@@ -1,1 +1,0 @@
-curl -X PUT 'http://couchAdmin:Adein1Dva2!@localhost:5984/test_db/"001"' -d '{ " title " : " a modesta proposal " , " body " : " everyone sleeps under their desks, it is crunch time " }'	

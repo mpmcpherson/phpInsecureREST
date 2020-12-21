@@ -1,10 +1,7 @@
 {
-    "name": "bastionllc/phpinsecurerest",
-    "authors": [
-        {
-            "name": "Michael McPherson",
-            "email": "michael@mpmcpherson.com"
-        }
-    ],
+    "name": "michaelmcpherson/php-insecure-rest",
+    "description": "an insecure implementation of a rest API, created for educational purposes",
+    "type": "library",
+    "license": "MIT",
     "require": {}
 }

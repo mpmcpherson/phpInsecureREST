@@ -6,10 +6,12 @@ class CouchDBResponse {
     private $body = '';
 
     function __construct($response = '') {
-        //echo $response;
+        
         $this->raw_response = $response;
         list($this->headers, $this->body) = explode("\r\n\r\n", $response);
-        $this->body = preg_replace('/\s+/', '', $this->body);
+        //$this->body = preg_replace('/\s+/', '', $this->body); //OH FOR FUCKS SAKE
+        //THIS WAS THE CULPRIT THE WHOLE TIME
+        //WHY WAS IT TRYING TO DO STRING HANDLING?
     }
 
     function getRawResponse() {

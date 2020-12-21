@@ -40,13 +40,14 @@ class CouchDBRequest {
             $req .= "\r\n";
         }
 
-        /* diagnostics....
-        if($this->method == "DELETE"){
+        //diagnostics....
+        /*
+        if($this->method == "GET"){
             echo "\n\n\nBEG COUCHDBREQUEST REQUEST \n\n\n";
             echo $req;
             echo "\n\n\nEND COUCHDBREQUEST REQUEST \n\n\n";
         }
-        */ 
+         */
         return $req;
     }
 
@@ -68,6 +69,7 @@ class CouchDBRequest {
         while(!feof($this->sock)) {
             $response .= fgets($this->sock);
         }
+        
         $this->response = new CouchDBResponse($response);
         return $this->response;
     }

@@ -7,13 +7,18 @@
 
 
 	$_idForward = "";
+	//$_idForward = "20-12-2020EST07:43:05";
 
 	$post = array('post' => "",'get'=>"",'put'=>"",'delete'=>"" );
-
-	/*testing POST*/
+	
 	$testPost=true;
+	$testGET=true;
+	$testPUT=true;
+	$testDELETE=false;
+	
+	/*testing POST*/
 	if($testPost){
-		echo "post \n";
+		echo "\npost \n";
 		$post['post'] = new blogPost();
 		$post['post']->construct();
 
@@ -28,8 +33,7 @@
 		echo "\n";
 	}
 
-	/*testing GET*/
-	$testGET=true;
+	/*testing GET*/	
 	if($testGET)
 	{
 		echo "get \n";
@@ -40,8 +44,7 @@
 		echo "\n";
 	}
 
-	/*testing PUT*/
-	$testPUT=true;
+	/*testing PUT*/	
 	if($testPUT)
 	{
 		echo "put \n";
@@ -58,8 +61,7 @@
 		echo "\n";
 	}
 
-	/*testing DELETE*/
-	$testDELETE=true;
+	/*testing DELETE*/	
 	if($testDELETE){
 		echo "delete \n";
 

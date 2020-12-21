@@ -35,8 +35,10 @@
 
 				$decoded = json_decode($responseBody);
 				
+				//testing
+				$this->handleReturns($decoded);
 				//we write this back up so that the target knows the value to override
-				$this->_rev = $decoded->rev;
+				//$this->_rev = $decoded->rev;
 
 		}
 
@@ -54,15 +56,21 @@
 		private function getObject($id){
 
 			$retVal = $this->newConn->send($id);
+			//var_dump($retVal);
 			$responseBody = $retVal->getBody();
+			//echo $responseBody;
 			$dbRevVal = json_decode($responseBody);
 
 
-
-			foreach($dbRevVal as $key => $value) {
+			//ahhh ahahaha, this is beautiful: the means that any new classes (say, errors) will get dynamically added to the class without vomiting any errors out. 
+			//there could be issues, but as it is, this also makes this very useful.
+			//I might write this into each of the functions...
+			/*foreach($dbRevVal as $key => $value) {
 				$this->{$this->recoverString($key)} = $this->recoverString($value);
 				
-			}
+			}*/
+			//testing
+			$this->handleReturns($dbRevVal);
 		}
 
 
@@ -101,7 +109,7 @@
 			$retVal = $this->newConn->send($this->_id, "HEAD");
 			$responseBody = $retVal->getHeaders();
 			
-			var_dump($responseBody);
+			//var_dump($responseBody);
 
 			$parsedHeaders = $this->parseHeaders($responseBody);			
 
@@ -120,7 +128,12 @@
 				$decoded = json_decode($responseBody);
 				
 				//and we write this back up so that the target knows the new value to override
-				$this->_rev = $decoded->rev; //and it's rev, not _rev, because consistency is for suckers
+
+				//let's try this little thing:
+				$this->handleReturns($decoded);
+				
+
+				//$this->_rev = $decoded->rev; //and it's rev, not _rev, because consistency is for suckers
 			}
 		}
 
@@ -136,9 +149,25 @@
 				$responseBody = $retVal->getBody();
 
 				$decoded = json_decode($responseBody);
-				
+
+				//Wipe the object itself from local memory
+				foreach($this as $key => $value) {
+					if($key !== "newConn"){
+						$this->{$key} = "null";
+					}
+				}
+
+				//testing
+				$this->handleReturns($decoded);
+
+
 				//and we write this back up so that the target knows the new value to override
-				$this->_rev = $decoded->rev;
+				//$this->_rev = $decoded->rev;
+
+
+
+
+				
 			}else{
 				$this->clean=false;
 			}
@@ -198,12 +227,27 @@
 
 			}	
 		}
+		private function handleReturns($obj){
+			foreach($obj as $key => $value) {
+				if($this->recoverString($key)=="id"){$this->_id=$this->recoverString($value);}else
+				if($this->recoverString($key)=="rev"){$this->_rev=$this->recoverString($value);}else{
+				$this->{$this->recoverString($key)} = $this->recoverString($value);}
+				
+			}
+		}
 
 		private function prepString($string){
+			//echo "\nPreparing string \n";
+			//echo $string."\n";
+			//echo htmlspecialchars(str_replace(["\r\n", "\r", "\n"], '<br/>', $string), ENT_QUOTES, "UTF-8")."\n";
 			return htmlspecialchars(str_replace(["\r\n", "\r", "\n"], '<br/>', $string), ENT_QUOTES, "UTF-8");
+			
 		}
 		private function recoverString($string){
-			return preg_replace('/\<br(\s*)?\/?\>/i', PHP_EOL, html_entity_decode($string, ENT_QUOTES));
+			//echo "\nRecovering string \n";
+			//echo $string."\n";
+			//echo htmlspecialchars_decode($string, ENT_QUOTES)."\n";//str_replace('<br/>', PHP_EOL, htmlspecialchars_decode($string, ENT_QUOTES));
+			return htmlspecialchars_decode($string, ENT_QUOTES);//str_replace('<br/>', PHP_EOL, htmlspecialchars_decode($string, ENT_QUOTES));
 		}
 	}
 
@@ -216,3 +260,4 @@ class genericException extends Exception {
   	}
 }
 ?>
+

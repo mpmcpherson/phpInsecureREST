@@ -2,7 +2,6 @@
 	require_once 'CouchDBConnection.php';
 	require_once 'CouchDBRequest.php';
 	require_once 'CouchDBResponse.php';
-	//require_once(__DIR__.'/../config/secretConfig.php');
 
 	class restBaseClass{
 		

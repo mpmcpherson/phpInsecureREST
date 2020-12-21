@@ -2,5 +2,6 @@
 Hacking together a basic modular REST API to drop into other projects
 
 
-Two days of arguing with dreamcompute to try to get couchdb up and running on their platform, and I ended up just hosting it locally. I'm deeply disappointed.
+So, I know there are plenty of other PHP REST APIs, but it's better to learn how these things work by hand before using the tool. 
 
+And hey, while I'm here I get to learn how to make composer play nice, despite the absolutely impenetrable documentation. 

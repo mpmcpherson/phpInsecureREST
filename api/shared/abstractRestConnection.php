@@ -1,7 +1,9 @@
 <?php
-	require_once 'CouchDBConnection.php';
-	require_once 'CouchDBRequest.php';
-	require_once 'CouchDBResponse.php';
+namespace REST_API;
+require_once 'CouchDBConnection.php';
+require_once 'CouchDBRequest.php';
+require_once 'CouchDBResponse.php';
+require_once 'genericException.php';
 
 	class restBaseClass{
 		
@@ -250,13 +252,6 @@
 		}
 	}
 
-class genericException extends Exception {
-  	public function errorMessage() {
-		//error message
-	    $errorMsg = 'Error on line '.$this->getLine().' in '.$this->getFile()
-	    .': '.$this->getMessage();
-	    return "\n".$errorMsg."\n";
-  	}
-}
+
 ?>
 

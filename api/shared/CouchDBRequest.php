@@ -1,5 +1,5 @@
 <?php
-
+namespace REST_API;
 class CouchDBRequest {
 
     static $VALID_HTTP_METHODS = array('DELETE', 'GET', 'POST', 'PUT', 'HEAD');

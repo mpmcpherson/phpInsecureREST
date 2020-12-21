@@ -1,4 +1,5 @@
 <?php
+namespace REST_API;
 class CouchDBResponse {
 
     private $raw_response = '';

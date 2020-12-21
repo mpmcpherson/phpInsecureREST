@@ -1,4 +1,5 @@
 <?php
+	namespace REST_API;
 	//echo dirname(__DIR__).'/shared/abstractRestConnection.php';
 	require_once __DIR__.'/shared/abstractRestConnection.php';
 	require_once __DIR__.'/objects/blogPost.php';

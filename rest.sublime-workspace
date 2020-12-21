@@ -4,6 +4,38 @@
 		"selected_items":
 		[
 			[
+				"html",
+				"htmlspecialchars"
+			],
+			[
+				"http_parse",
+				"http_parse_headers"
+			],
+			[
+				"response",
+				"responseBody"
+			],
+			[
+				"respon",
+				"responseBody"
+			],
+			[
+				"new",
+				"newConn"
+			],
+			[
+				"abstr",
+				"abstractPrint"
+			],
+			[
+				"get_class",
+				"get_class_methods"
+			],
+			[
+				"get_def",
+				"get_defined_functions"
+			],
+			[
 				"dbR",
 				"dbRevVal"
 			],
@@ -88,30 +120,66 @@
 	"buffers":
 	[
 		{
-			"file": "api/shared/blogPost.php",
+			"file": "api/shared/abstractRestConnection.php",
 			"settings":
 			{
-				"buffer_size": 272,
+				"buffer_size": 7642,
 				"encoding": "UTF-8",
-				"line_ending": "Unix",
-				"name": "<?php"
+				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "api/shared/testharness.php",
+			"contents": "",
+			"file": "api/testRes.txt",
+			"file_size": 0,
+			"file_write_time": 132529904312539142,
 			"settings":
 			{
-				"buffer_size": 265,
+				"buffer_size": 0,
 				"encoding": "UTF-8",
-				"line_ending": "Unix",
-				"name": "<?php"
+				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "/home/michaelmcpherson/src/clientSideBlogger/bloggingClientBase/frontEnd/index.php",
+			"file": "api/shared/CouchDBRequest.php",
 			"settings":
 			{
-				"buffer_size": 1809,
+				"buffer_size": 2491,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "api/shared/CouchDBConnection.php",
+			"settings":
+			{
+				"buffer_size": 959,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "api/shared/CouchDBResponse.php",
+			"settings":
+			{
+				"buffer_size": 747,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "api/objects/blogPost.php",
+			"settings":
+			{
+				"buffer_size": 157,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "api/testharness.php",
+			"settings":
+			{
+				"buffer_size": 1764,
 				"line_ending": "Unix"
 			}
 		}
@@ -128,6 +196,14 @@
 		"selected_items":
 		[
 			[
+				"package",
+				"Package Control: Install Package"
+			],
+			[
+				"rename",
+				"Rename File"
+			],
+			[
 				"package control: advanced",
 				"Package Control: Advanced Install Package"
 			],
@@ -137,10 +213,6 @@
 			],
 			[
 				"packa",
-				"Package Control: Install Package"
-			],
-			[
-				"package",
 				"Package Control: Install Package"
 			],
 			[
@@ -186,13 +258,29 @@
 	[
 		"/home/michaelmcpherson/src/phpInsecureREST",
 		"/home/michaelmcpherson/src/phpInsecureREST/api",
-		"/home/michaelmcpherson/src/phpInsecureREST/api/shared",
-		"/home/michaelmcpherson/src/phpInsecureREST/scratchFolder",
-		"/home/michaelmcpherson/src/phpInsecureREST/scratchFolder/api"
+		"/home/michaelmcpherson/src/phpInsecureREST/api/config",
+		"/home/michaelmcpherson/src/phpInsecureREST/api/objects",
+		"/home/michaelmcpherson/src/phpInsecureREST/api/shared"
 	],
 	"file_history":
 	[
+		"/home/michaelmcpherson/src/phpInsecureREST/api/testharness.php",
+		"/home/michaelmcpherson/src/phpInsecureREST/api/shared/CouchDBResponse.php",
 		"/home/michaelmcpherson/src/phpInsecureREST/api/shared/CouchDBRequest.php",
+		"/home/michaelmcpherson/src/phpInsecureREST/api/testoutput.txt",
+		"/home/michaelmcpherson/src/phpInsecureREST/api/shared/CouchDBConnection.php",
+		"/home/michaelmcpherson/src/phpInsecureREST/api/shared/blogPost.php",
+		"/home/michaelmcpherson/src/phpInsecureREST/api/shared/dndPlot.php",
+		"/home/michaelmcpherson/src/phpInsecureREST/api/shared/user.php",
+		"/home/michaelmcpherson/src/phpInsecureREST/api/shared/testharness.php",
+		"/home/michaelmcpherson/src/phpInsecureREST/api/objects/genericObject.php",
+		"/home/michaelmcpherson/src/phpInsecureREST/api/example_homepage.txt",
+		"/home/michaelmcpherson/src/phpInsecureREST/api/shared/testHandler.php",
+		"/home/michaelmcpherson/bastionSoftwareGlider",
+		"/home/michaelmcpherson/src/writtenRecords/DnD/Necromancer Nine/Adventure Plotting",
+		"/home/michaelmcpherson/src/phpInsecureREST/api/config/secretConfig.php",
+		"/home/michaelmcpherson/src/phpInsecureREST/api/shared/abstractRestConnection.php",
+		"/home/michaelmcpherson/src/clientSideBlogger/bloggingClientBase/frontEnd/index.php",
 		"/home/michaelmcpherson/src/clientSideBlogger/bloggingClientBase/index.php",
 		"/home/michaelmcpherson/src/phpInsecureREST/api/couchTesting.php",
 		"/home/michael/src/phpInsecureREST/api/testing.php",
@@ -207,7 +295,6 @@
 		"/home/michaelmcpherson/src/clientSideBlogger/bloggingClientBase/frontEnd/resources/loadPost.php",
 		"/home/michaelmcpherson/src/clientSideBlogger/bloggingClientBase/frontEnd/resources/postHandler.php",
 		"/home/michaelmcpherson/src/clientSideBlogger/snippets.php",
-		"/home/michaelmcpherson/src/clientSideBlogger/bloggingClientBase/frontEnd/index.php",
 		"/home/michaelmcpherson/src/clientSideBlogger/bloggingClientBase/css/style.css",
 		"/var/www/html/blogBase/resources/postHandler.php",
 		"/home/michaelmcpherson/src/clientSideBlogger/bloggingClientBase/resources/config.php",
@@ -281,7 +368,6 @@
 		"/home/michaelmcpherson/src/gitRecurse/dmg adventure generator text",
 		"/home/michaelmcpherson/src/writtenRecords/DnD/Necromancer Nine/siteVersion/strangegods/index.php",
 		"/home/michaelmcpherson/src/writtenRecords/DnD/Necromancer Nine/the strange gods of the land",
-		"/home/michaelmcpherson/src/writtenRecords/DnD/Necromancer Nine/Adventure Plotting",
 		"/home/michaelmcpherson/src/writtenRecords/DnD/Necromancer Nine/siteVersion/sessionNotes/Plot Episode 1",
 		"/home/michaelmcpherson/src/writtenRecords/DnD/Necromancer Nine/siteVersion/sessionNotes/Plot Episode 5",
 		"/home/michaelmcpherson/src/writtenRecords/DnD/Necromancer Nine/siteVersion/sessionNotes/Plot Episode 6",
@@ -305,21 +391,7 @@
 		"/home/michaelmcpherson/src/quickscrape/.gitignore",
 		"/home/michaelmcpherson/src/writtenRecords/DnD/Necromancer Nine/`encounters to reskin",
 		"/home/michaelmcpherson/src/comnavnotes/ComNavNotes",
-		"/home/michaelmcpherson/src/akounting/akountingInstallstep",
-		"/home/michaelmcpherson/src/akounting/index.php",
-		"/home/michaelmcpherson/src/mathSite/index.php",
-		"/home/michaelmcpherson/src/mathSite/harder/index.php",
-		"/home/michaelmcpherson/src/mathSite/style.css",
-		"/home/michaelmcpherson/src/mathSite/base of screenshotting tool in wayland",
-		"/var/www/html/index.html",
-		"/home/michaelmcpherson/src/DnDModuleGenerator/site/settlementGenerator/index.php",
-		"/home/michaelmcpherson/src/DnDModuleGenerator/site/villainGenerator/index.php",
-		"/home/michaelmcpherson/src/DnDModuleGenerator/site/npcGenerator/index.php",
-		"/home/michaelmcpherson/src/writtenRecords/DnD/Duchy of the Eight Granite Vines",
-		"/home/michaelmcpherson/src/writtenRecords/DnD/Plot Episode 4",
-		"/home/michaelmcpherson/src/writtenRecords/DnD/plot episode 1",
-		"/home/michaelmcpherson/src/writtenRecords/DnD/Plot Episode 3",
-		"/home/michaelmcpherson/src/writtenRecords/DnD/dnd session notes 2"
+		"/home/michaelmcpherson/src/akounting/akountingInstallstep"
 	],
 	"find":
 	{
@@ -337,6 +409,22 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"var_dump",
+			"Y291Y2hBZG1pbjpBZGVpbjFEdmEyIQ==",
+			"get",
+			"\"\";\n",
+			"\"));\n",
+			"CheckRevision",
+			"put",
+			"echo",
+			"exception",
+			"$post",
+			"echo",
+			">revision",
+			">id",
+			"$id",
+			"GET",
+			"get",
 			"\"",
 			"'",
 			"\n$",
@@ -362,6 +450,10 @@
 		"regex": true,
 		"replace_history":
 		[
+			"delete",
+			"$post['post']",
+			">_id",
+			"$_id",
 			"",
 			"\"",
 			"publish",
@@ -378,59 +470,30 @@
 	"groups":
 	[
 		{
-			"selected": 1,
+			"selected": 0,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "api/shared/blogPost.php",
+					"file": "api/shared/abstractRestConnection.php",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 272,
+						"buffer_size": 7642,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								266,
-								266
+								464,
+								464
 							]
 						],
 						"settings":
 						{
-							"auto_name": "<?php",
-							"syntax": "Packages/PHP/PHP.sublime-syntax"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 1,
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"file": "api/shared/testharness.php",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 265,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								265,
-								265
-							]
-						],
-						"settings":
-						{
-							"auto_name": "<?php",
-							"syntax": "Packages/PHP/PHP.sublime-syntax"
+							"syntax": "Packages/PHP/PHP.sublime-syntax",
+							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
@@ -440,31 +503,179 @@
 					"type": "text"
 				},
 				{
-					"buffer": 2,
-					"file": "/home/michaelmcpherson/src/clientSideBlogger/bloggingClientBase/frontEnd/index.php",
+					"buffer": 1,
+					"file": "api/testRes.txt",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1809,
+						"buffer_size": 0,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								968,
-								968
+								0,
+								0
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/PHP/PHP.sublime-syntax"
+							"syntax": "Packages/Text/Plain text.tmLanguage"
 						},
 						"translation.x": 0.0,
-						"translation.y": 399.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "api/shared/CouchDBRequest.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2491,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2410,
+								2410
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 756.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "api/shared/CouchDBConnection.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 959,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								5,
+								5
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "api/shared/CouchDBResponse.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 747,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								747,
+								747
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "api/objects/blogPost.php",
+					"semi_transient": true,
+					"settings":
+					{
+						"buffer_size": 157,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "api/testharness.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1764,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 162.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 6,
 					"type": "text"
 				}
 			]
@@ -472,7 +683,7 @@
 	],
 	"incremental_find":
 	{
-		"height": 28.0
+		"height": 27.0
 	},
 	"input":
 	{
@@ -521,7 +732,7 @@
 	"project": "rest.sublime-project",
 	"replace":
 	{
-		"height": 68.0
+		"height": 71.0
 	},
 	"save_all_on_build": true,
 	"select_file":
@@ -559,7 +770,7 @@
 	"show_open_files": true,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 271.0,
+	"side_bar_width": 302.0,
 	"status_bar_visible": true,
 	"template_settings":
 	{

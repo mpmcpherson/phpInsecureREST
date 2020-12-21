@@ -1,5 +1,5 @@
 <?php
-
+namespace REST_API;
 class CouchDB {
 
     private $username;

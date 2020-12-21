@@ -3,5 +3,11 @@
     "description": "an insecure implementation of a rest API, created for educational purposes",
     "type": "library",
     "license": "MIT",
-    "require": {}
+    "require": {},
+
+    "autoload": {
+        "psr-4": {
+            "rest\\api\\": "api"
+        }
+    }
 }

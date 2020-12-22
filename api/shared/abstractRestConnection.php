@@ -12,10 +12,9 @@ require_once 'genericException.php';
 		public $_rev;
 		public $clean;
 
-		function construct(){
-			//if we get passed an ID, then we need to populate everything with a GET
-			$config = include __DIR__.'/../config/secretConfig.php';
-			$this->newConn = new CouchDB('test_db','127.0.0.1',5984,$config['uname'],$config['pw']);
+		function construct($uname,$passwd,$db,$host){
+			
+			$this->newConn = new CouchDB($db,$host,5984,$uname,$passwd);
 			$this->_id = "";
 			$this->_rev = "";
 			$this->clean = false;

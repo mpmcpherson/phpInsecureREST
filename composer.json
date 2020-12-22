@@ -7,9 +7,12 @@
 
         "autoload": {
         "classmap": [
-          "api/config/",
-          "api/objects/",
-          "api/shared"
+          "api/objects/blogPost.php",
+          "api/shared/abstractRestConnection.php",
+          "api/shared/genericException.php",
+          "api/shared/CouchDBConnection.php",
+          "api/shared/CouchDBResponse.php",
+          "api/shared/CouchDBRequest.php"
         ]
     }
 }

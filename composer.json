@@ -5,9 +5,11 @@
     "license": "MIT",
     "require": {},
 
-    "autoload": {
-        "psr-4": {
-            "restapi\\": ["api/config/","api/objects/","api/shared"]
-        }
+        "autoload": {
+        "classmap": [
+          "api/config/",
+          "api/objects/",
+          "api/shared"
+        ]
     }
 }

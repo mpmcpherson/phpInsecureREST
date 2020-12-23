@@ -12,7 +12,7 @@ require_once 'genericException.php';
 		public $_rev;
 		public $clean;
 
-		function construct($db,$host,$uname,$passwd) : void{
+		function construct(string $db, string $host,string $uname,string $passwd) : void{
 			
 			$this->newConn = buildDbConnection($db,$host,5984,$uname,$passwd);
 			$this->_id = "";
@@ -42,14 +42,14 @@ require_once 'genericException.php';
 
 		}
 
-		private function buildDbConnection($db,$host,$port,$uname,$passwd) : CouchDB {
+		private function buildDbConnection(string $db,string $host,int $port, string $uname,string $passwd) : CouchDB {
 
 			return new CouchDB($db,$host,$port,$uname,$passwd);
 		}
 
 		//now GET
 		//to get something, you just need to know its ID.
-		function GET($id) : void{
+		function GET(string $id) : void{
 			try{
 				$this->getObject($id);
 			}catch(Exception $e){
@@ -58,7 +58,7 @@ require_once 'genericException.php';
 
 		}
 
-		private function getObject($id) : void{
+		private function getObject(string $id) : void{
 
 			$retVal = $this->newConn->send($id);
 			//var_dump($retVal);
@@ -180,7 +180,7 @@ require_once 'genericException.php';
 
 		//really should have pulled this out right away
 		//there: now it properly encodes *and* it's one function
-		private function encodeForDelivery($encodingMethod) : string{
+		private function encodeForDelivery(string $encodingMethod) : string{
 
 			if($encodingMethod==="POST"){
 				$encAry = array("newConn","clean","_rev");
@@ -202,7 +202,7 @@ require_once 'genericException.php';
 		}
 
 
-		private function parseHeaders($headerString) : array{
+		private function parseHeaders(string $headerString) : array{
 
 			$midVal = explode(PHP_EOL, $headerString);
 			$lokeys = array();
@@ -241,14 +241,14 @@ require_once 'genericException.php';
 			}
 		}
 
-		private function prepString($string) : string{
+		private function prepString(string $string) : string{
 			//echo "\nPreparing string \n";
 			//echo $string."\n";
 			//echo htmlspecialchars(str_replace(["\r\n", "\r", "\n"], '<br/>', $string), ENT_QUOTES, "UTF-8")."\n";
 			return htmlspecialchars(str_replace(["\r\n", "\r", "\n"], '<br/>', $string), ENT_QUOTES, "UTF-8");
 			
 		}
-		private function recoverString($string) : string{
+		private function recoverString(string $string) : string{
 			//echo "\nRecovering string \n";
 			//echo $string."\n";
 			//echo htmlspecialchars_decode($string, ENT_QUOTES)."\n";//str_replace('<br/>', PHP_EOL, htmlspecialchars_decode($string, ENT_QUOTES));

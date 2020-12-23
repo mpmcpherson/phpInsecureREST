@@ -12,20 +12,20 @@ require_once 'genericException.php';
 		public $_rev;
 		public $clean;
 
-		function construct($uname,$passwd,$db,$host){
+		function construct($db,$host,$uname,$passwd) : void{
 			
-			$this->newConn = new CouchDB($db,$host,5984,$uname,$passwd);
+			$this->newConn = buildDbConnection($db,$host,5984,$uname,$passwd);
 			$this->_id = "";
 			$this->_rev = "";
 			$this->clean = false;
 		}
 		//now POST
-		function POST(){
+		function POST() : void{
 			$this->SubmitToDb();
 		}
 
 
-		private function SubmitToDb(){
+		private function SubmitToDb() : void{
 				//use the date for this one
 				$this->_id = date("d-m-YTh:i:s");
 				
@@ -42,9 +42,14 @@ require_once 'genericException.php';
 
 		}
 
+		private function buildDbConnection($db,$host,$port,$uname,$passwd) : CouchDB {
+
+			return new CouchDB($db,$host,$port,$uname,$passwd);
+		}
+
 		//now GET
 		//to get something, you just need to know its ID.
-		function GET($id){
+		function GET($id) : void{
 			try{
 				$this->getObject($id);
 			}catch(Exception $e){
@@ -53,7 +58,7 @@ require_once 'genericException.php';
 
 		}
 
-		private function getObject($id){
+		private function getObject($id) : void{
 
 			$retVal = $this->newConn->send($id);
 			//var_dump($retVal);
@@ -75,10 +80,10 @@ require_once 'genericException.php';
 
 
 		//now PUT
-		function PUT(){
+		function PUT() : void{
 			$this->Save();
 		}
-		private function Save(){
+		private function Save() : void{
 			try{ //these text responses probably aren't going to work out, but they'll do for now.
 				$revisionStatus = $this->CheckRevision();
 				if(gettype($revisionStatus)==="boolean"){
@@ -99,7 +104,7 @@ require_once 'genericException.php';
 				echo $e->errorMessage();
 			}
 		}
-		private function CheckRevision(){
+		private function CheckRevision() {
 			//okay, this is almost certainly just me being too clever, but it's fun while it lasts
 			//right, so what I need to do here is alert the user to get a new version. The rest (the part where I functionally branch the changes) needs to be handled by certain UI elements and custom code to keep the user in control.
 
@@ -118,7 +123,7 @@ require_once 'genericException.php';
 			return strcmp($this->_rev , $dbRevVal)!==0 ? true : $dbRevVal; 
 		}
 		
-		private function SyncToDb(){		
+		private function SyncToDb() : void{		
 			if($this->clean){
 								
 				$retVal = $this->newConn->send('/'.$this->_id, 'PUT', $this->encodeForDelivery("PUT"));
@@ -139,10 +144,10 @@ require_once 'genericException.php';
 
 		
 		//now DELETE
-		function DELETE(){
+		function DELETE() : void{
 			$this->deleteObject();
 		}	
-		private function deleteObject(){
+		private function deleteObject() : void{
 			if($this->CheckRevision()){
 				$retVal = $this->newConn->send('/'.$this->_id."?rev=".$this->_rev, 'DELETE');
 
@@ -175,7 +180,7 @@ require_once 'genericException.php';
 
 		//really should have pulled this out right away
 		//there: now it properly encodes *and* it's one function
-		private function encodeForDelivery($encodingMethod){
+		private function encodeForDelivery($encodingMethod) : string{
 
 			if($encodingMethod==="POST"){
 				$encAry = array("newConn","clean","_rev");
@@ -197,7 +202,7 @@ require_once 'genericException.php';
 		}
 
 
-		private function parseHeaders($headerString){
+		private function parseHeaders($headerString) : array{
 
 			$midVal = explode(PHP_EOL, $headerString);
 			$lokeys = array();
@@ -219,7 +224,7 @@ require_once 'genericException.php';
 
 		}
 
-		function abstractPrint(){
+		function abstractPrint() : void{
 			foreach($this as $key => $value) {
 				if($key!=="newConn"){
 					echo "key: ".$key." value: ".$value."\n";
@@ -227,7 +232,7 @@ require_once 'genericException.php';
 
 			}	
 		}
-		private function handleReturns($obj){
+		private function handleReturns($obj) : void{
 			foreach($obj as $key => $value) {
 				if($this->recoverString($key)=="id"){$this->_id=$this->recoverString($value);}else
 				if($this->recoverString($key)=="rev"){$this->_rev=$this->recoverString($value);}else{
@@ -236,14 +241,14 @@ require_once 'genericException.php';
 			}
 		}
 
-		private function prepString($string){
+		private function prepString($string) : string{
 			//echo "\nPreparing string \n";
 			//echo $string."\n";
 			//echo htmlspecialchars(str_replace(["\r\n", "\r", "\n"], '<br/>', $string), ENT_QUOTES, "UTF-8")."\n";
 			return htmlspecialchars(str_replace(["\r\n", "\r", "\n"], '<br/>', $string), ENT_QUOTES, "UTF-8");
 			
 		}
-		private function recoverString($string){
+		private function recoverString($string) : string{
 			//echo "\nRecovering string \n";
 			//echo $string."\n";
 			//echo htmlspecialchars_decode($string, ENT_QUOTES)."\n";//str_replace('<br/>', PHP_EOL, htmlspecialchars_decode($string, ENT_QUOTES));

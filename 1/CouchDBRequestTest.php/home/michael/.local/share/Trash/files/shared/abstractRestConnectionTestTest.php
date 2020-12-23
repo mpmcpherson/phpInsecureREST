@@ -1,21 +1,21 @@
 <?php
 
-namespace Tests\Unit\REST_API;
+namespace Tests\Unit\Tests\Unit\REST_API;
 
-use REST_API\restBaseClass;
 use Tests\TestCase;
+use Tests\Unit\REST_API\restBaseClassTest;
 
 /**
- * Class restBaseClassTest.
+ * Class restBaseClassTestTest.
  *
- * @covers \REST_API\restBaseClass
+ * @covers \Tests\Unit\REST_API\restBaseClassTest
  */
-class restBaseClassTest extends TestCase
+class restBaseClassTestTest extends TestCase
 {
     /**
-     * @var restBaseClass
+     * @var restBaseClassTest
      */
-    protected $restBaseClass;
+    protected $restBaseClassTest;
 
     /**
      * {@inheritdoc}
@@ -25,7 +25,7 @@ class restBaseClassTest extends TestCase
         parent::setUp();
 
         /** @todo Correctly instantiate tested object to use it. */
-        $this->restBaseClass = new restBaseClass();
+        $this->restBaseClassTest = new restBaseClassTest();
     }
 
     /**
@@ -35,41 +35,40 @@ class restBaseClassTest extends TestCase
     {
         parent::tearDown();
 
-        unset($this->restBaseClass);
+        unset($this->restBaseClassTest);
     }
 
-    public function testConstruct(): void
-    {
-
-        /** @todo This test is incomplete. */
-        $this->markTestIncomplete();
-    }
-
-    public function testPOST(): void
+    public function testTestConstruct(): void
     {
         /** @todo This test is incomplete. */
         $this->markTestIncomplete();
     }
 
-    public function testGET(): void
+    public function testTestPOST(): void
     {
         /** @todo This test is incomplete. */
         $this->markTestIncomplete();
     }
 
-    public function testPUT(): void
+    public function testTestGET(): void
     {
         /** @todo This test is incomplete. */
         $this->markTestIncomplete();
     }
 
-    public function testDELETE(): void
+    public function testTestPUT(): void
     {
         /** @todo This test is incomplete. */
         $this->markTestIncomplete();
     }
 
-    public function testAbstractPrint(): void
+    public function testTestDELETE(): void
+    {
+        /** @todo This test is incomplete. */
+        $this->markTestIncomplete();
+    }
+
+    public function testTestAbstractPrint(): void
     {
         /** @todo This test is incomplete. */
         $this->markTestIncomplete();

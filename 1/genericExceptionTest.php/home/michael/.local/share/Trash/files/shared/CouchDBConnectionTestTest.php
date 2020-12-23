@@ -1,21 +1,21 @@
 <?php
 
-namespace Tests\Unit\REST_API;
+namespace Tests\Unit\Tests\Unit\REST_API;
 
-use REST_API\restBaseClass;
 use Tests\TestCase;
+use Tests\Unit\REST_API\CouchDBTest;
 
 /**
- * Class restBaseClassTest.
+ * Class CouchDBTestTest.
  *
- * @covers \REST_API\restBaseClass
+ * @covers \Tests\Unit\REST_API\CouchDBTest
  */
-class restBaseClassTest extends TestCase
+class CouchDBTestTest extends TestCase
 {
     /**
-     * @var restBaseClass
+     * @var CouchDBTest
      */
-    protected $restBaseClass;
+    protected $couchDBTest;
 
     /**
      * {@inheritdoc}
@@ -25,7 +25,7 @@ class restBaseClassTest extends TestCase
         parent::setUp();
 
         /** @todo Correctly instantiate tested object to use it. */
-        $this->restBaseClass = new restBaseClass();
+        $this->couchDBTest = new CouchDBTest();
     }
 
     /**
@@ -35,41 +35,34 @@ class restBaseClassTest extends TestCase
     {
         parent::tearDown();
 
-        unset($this->restBaseClass);
+        unset($this->couchDBTest);
     }
 
-    public function testConstruct(): void
-    {
-
-        /** @todo This test is incomplete. */
-        $this->markTestIncomplete();
-    }
-
-    public function testPOST(): void
+    public function testTestDecode_json(): void
     {
         /** @todo This test is incomplete. */
         $this->markTestIncomplete();
     }
 
-    public function testGET(): void
+    public function testTestEncode_json(): void
     {
         /** @todo This test is incomplete. */
         $this->markTestIncomplete();
     }
 
-    public function testPUT(): void
+    public function testTestSend(): void
     {
         /** @todo This test is incomplete. */
         $this->markTestIncomplete();
     }
 
-    public function testDELETE(): void
+    public function testTestGet_all_docs(): void
     {
         /** @todo This test is incomplete. */
         $this->markTestIncomplete();
     }
 
-    public function testAbstractPrint(): void
+    public function testTestGet_item(): void
     {
         /** @todo This test is incomplete. */
         $this->markTestIncomplete();

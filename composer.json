@@ -3,9 +3,7 @@
     "description": "an insecure implementation of a rest API, created for educational purposes",
     "type": "library",
     "license": "MIT",
-    "require": {},
-
-        "autoload": {
+    "autoload": {
         "classmap": [
           "api/objects/blogPost.php",
           "api/shared/abstractRestConnection.php",
@@ -14,5 +12,9 @@
           "api/shared/CouchDBResponse.php",
           "api/shared/CouchDBRequest.php"
         ]
+    },
+        "require-dev": {
+        "phpunit/phpunit": "^9",
+        "phpunitgen/console": "^1.3"
     }
 }

@@ -14,6 +14,7 @@ require_once 'genericException.php';
 		}
 
 		//Okay. Now to write all the mass-handling functions...
+		//Have to think about how this accesses the database. *and* how the database is shaped. Ugh.
 		/*
 		function construct(string $db, string $host,string $uname,string $passwd) : void{
 			

@@ -5,20 +5,22 @@ require_once 'CouchDBRequest.php';
 require_once 'CouchDBResponse.php';
 require_once 'genericException.php';
 
-	class restBaseClass{
+	class restBaseCollection{
 		
-		private $newConn;
-		public $_id;
-		public $_rev;
-		public $clean;
+		private $baseClassArray;
 
 		function __construct(){
+			$baseClassArray = array();
+		}
+
+		//Okay. Now to write all the mass-handling functions...
+		/*
+		function construct(string $db, string $host,string $uname,string $passwd) : void{
+			
+			$this->newConn = buildDbConnection($db,$host,5984,$uname,$passwd);
 			$this->_id = "";
 			$this->_rev = "";
 			$this->clean = false;
-		}
-		function construct(string $db, string $host,string $uname,string $passwd) : void{
-			$this->newConn = buildDbConnection($db,$host,5984,$uname,$passwd);
 		}
 		//now POST
 		function POST() : void{
@@ -71,10 +73,10 @@ require_once 'genericException.php';
 			//ahhh ahahaha, this is beautiful: the means that any new classes (say, errors) will get dynamically added to the class without vomiting any errors out. 
 			//there could be issues, but as it is, this also makes this very useful.
 			//I might write this into each of the functions...
-			/*foreach($dbRevVal as $key => $value) {
-				$this->{$this->recoverString($key)} = $this->recoverString($value);
+			//foreach($dbRevVal as $key => $value) {
+			//	$this->{$this->recoverString($key)} = $this->recoverString($value);
 				
-			}*/
+			//}
 			//testing
 			$this->handleReturns($dbRevVal);
 		}
@@ -268,6 +270,7 @@ require_once 'genericException.php';
 		private function recoverString(string $string) : string{
 			return htmlspecialchars_decode($string, ENT_QUOTES);
 		}
+		*/
 	}
 
 

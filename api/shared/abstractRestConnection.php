@@ -161,25 +161,13 @@ require_once 'genericException.php';
 						$this->{$key} = "null";
 					}
 				}
-
-				//testing
 				$this->handleReturns($decoded);
-
-
-				//and we write this back up so that the target knows the new value to override
-				//$this->_rev = $decoded->rev;
-
-
-
-
-				
 			}else{
 				$this->clean=false;
 			}
 		}
 
-		//really should have pulled this out right away
-		//there: now it properly encodes *and* it's one function
+
 		private function encodeForDelivery(string $encodingMethod) : string{
 
 			if($encodingMethod==="POST"){
@@ -197,7 +185,6 @@ require_once 'genericException.php';
 				}
 			//I don't feel like writing a bunch of lookaheads to know if I'm at the last element of an object, sooooo I'll just run until the end and then cut the last character (which will be an erroneous ,) out entirely.
 			$data = substr($data,0,-1)."}";
-			//echo $data;
 			return $data;
 		}
 
@@ -232,6 +219,38 @@ require_once 'genericException.php';
 
 			}	
 		}
+		function betterAbstractPrint($obj,$print){
+			foreach($obj as $key => $value) {
+				if($key!=="newConn"){
+					$print .= "key: ".$key;
+
+					if(gettype($value) == 'array'){
+						$print .= abstractPrint($value, $print);
+					}
+					else{
+						$print .= " value: ".$value;
+					}
+				}	
+			}
+			return $print;
+		}			
+		function betterHTMLAbstractPrint($obj,$print){
+			foreach($obj as $key => $value) {
+				if($key!=="newConn"){
+					$print .= "<div class='logme'> key: ".$key;
+					
+					if(gettype($value) == 'array'){
+						$print .= abstractPrint($value, $print);
+					}
+					else{
+						$print .= " value: ".$value;
+					}
+					$print .= "</div>";
+				}	
+			}
+			return $print;
+		}			
+
 		private function handleReturns($obj) : void{
 			foreach($obj as $key => $value) {
 				if($this->recoverString($key)=="id"){$this->_id=$this->recoverString($value);}else
@@ -242,17 +261,11 @@ require_once 'genericException.php';
 		}
 
 		private function prepString(string $string) : string{
-			//echo "\nPreparing string \n";
-			//echo $string."\n";
-			//echo htmlspecialchars(str_replace(["\r\n", "\r", "\n"], '<br/>', $string), ENT_QUOTES, "UTF-8")."\n";
 			return htmlspecialchars(str_replace(["\r\n", "\r", "\n"], '<br/>', $string), ENT_QUOTES, "UTF-8");
 			
 		}
 		private function recoverString(string $string) : string{
-			//echo "\nRecovering string \n";
-			//echo $string."\n";
-			//echo htmlspecialchars_decode($string, ENT_QUOTES)."\n";//str_replace('<br/>', PHP_EOL, htmlspecialchars_decode($string, ENT_QUOTES));
-			return htmlspecialchars_decode($string, ENT_QUOTES);//str_replace('<br/>', PHP_EOL, htmlspecialchars_decode($string, ENT_QUOTES));
+			return htmlspecialchars_decode($string, ENT_QUOTES);
 		}
 	}
 

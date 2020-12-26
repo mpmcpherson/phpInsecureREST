@@ -4,6 +4,7 @@ require_once 'CouchDBConnection.php';
 require_once 'CouchDBRequest.php';
 require_once 'CouchDBResponse.php';
 require_once 'genericException.php';
+require_once 'abstractRestConnection.php';
 
 	class restBaseCollection{
 		
@@ -11,6 +12,11 @@ require_once 'genericException.php';
 
 		function __construct(){
 			$baseClassArray = array();
+		}
+
+		function getAllDocs()
+		{
+			$lol = restBaseClass::GET("_all_docs"); //yeah, except this doesn't actually *parse* all the friggin documents, because of course it doesn't.
 		}
 
 		//Okay. Now to write all the mass-handling functions...

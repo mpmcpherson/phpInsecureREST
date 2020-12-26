@@ -9,11 +9,13 @@ require_once 'genericException.php';
 		
 		private $newConn;
 		public $_id;
+		publid $timestamp;
 		public $_rev;
 		public $clean;
 
 		function __construct(){
 			$this->_id = "";
+			$this->$timestamp="";
 			$this->_rev = "";
 			$this->clean = false;
 		}
@@ -27,9 +29,12 @@ require_once 'genericException.php';
 
 
 		private function SubmitToDb() : void{
-				//use the date for this one
-				$this->_id = date("d-m-YTh:i:s");
 				
+				//use the date for this one
+				$this->_id = uniqid("",true);
+				
+				$this->timestamp = date("d-m-YTh:i:s");
+
 				$retVal = $this->newConn->send('/'. $this->_id, 'PUT', $this->encodeForDelivery("POST"));
 
 				$responseBody = $retVal->getBody();

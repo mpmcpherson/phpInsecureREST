@@ -9,7 +9,7 @@ require_once 'genericException.php';
 		
 		private $newConn;
 		public $_id;
-		publid $timestamp;
+		public $timestamp;
 		public $_rev;
 		public $clean;
 

@@ -15,7 +15,7 @@ require_once 'abstractRestConnection.php';
 		} 
 
 		function getAllDocs()
-		{
+		{	//this will go after a true *all* docs in the default database
 			$this->baseClassArray = restBaseClass::GET("_all_docs");
 		}
 

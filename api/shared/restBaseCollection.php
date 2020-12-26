@@ -6,7 +6,7 @@ require_once 'CouchDBResponse.php';
 require_once 'genericException.php';
 require_once 'abstractRestConnection.php';
 
-	class restBaseCollection{
+	class restBaseCollection extends restBaseClass{
 		
 		private $baseClassArray;
 

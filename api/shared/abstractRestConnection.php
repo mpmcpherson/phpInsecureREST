@@ -21,7 +21,7 @@ require_once 'genericException.php';
 		}
 		//now POST
 		function POST() : void{
-			$this->SubmitToDb();
+			$this->SubmitToDb(); 
 		}
 
 

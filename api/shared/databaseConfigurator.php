@@ -15,5 +15,6 @@ require_once 'abstractRestConnection.php';
 			$conf = file_get_contents('../config/databaseClassification.json');//manual is bullshit, but it's a start
 		}
 	}
-
+		
+	 
 ?>

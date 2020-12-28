@@ -25,7 +25,7 @@ require_once 'abstractRestConnection.php';
 		}
 		private function SubmitToDb() : void{
 			$retVal = $this->newConn->send('/'. $this->dbName, 'PUT');
-			$responseBody = $retVal->getBody();
+			$responseBody = $retVal->getBody(); 
 			$decoded = json_decode($responseBody);
 			$this->handleReturns($decoded);
 		}

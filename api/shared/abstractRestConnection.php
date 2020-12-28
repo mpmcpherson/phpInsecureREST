@@ -32,7 +32,7 @@ require_once 'genericException.php';
 				
 				//use the date for this one
 				$this->_id = uniqid("",true);
-				
+				 
 				$this->timestamp = date("d-m-YTh:i:s");
 
 				$retVal = $this->newConn->send('/'. $this->_id, 'PUT', $this->encodeForDelivery("POST"));
@@ -40,7 +40,7 @@ require_once 'genericException.php';
 				$responseBody = $retVal->getBody();
 
 				$decoded = json_decode($responseBody);
-				
+				 
 				//testing
 				$this->handleReturns($decoded);
 				//we write this back up so that the target knows the value to override

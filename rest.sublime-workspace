@@ -4,6 +4,58 @@
 		"selected_items":
 		[
 			[
+				"req",
+				"require_once"
+			],
+			[
+				"restb",
+				"restBaseClass"
+			],
+			[
+				"html",
+				"htmlspecialchars"
+			],
+			[
+				"http_parse",
+				"http_parse_headers"
+			],
+			[
+				"response",
+				"responseBody"
+			],
+			[
+				"respon",
+				"responseBody"
+			],
+			[
+				"new",
+				"newConn"
+			],
+			[
+				"abstr",
+				"abstractPrint"
+			],
+			[
+				"get_class",
+				"get_class_methods"
+			],
+			[
+				"get_def",
+				"get_defined_functions"
+			],
+			[
+				"dbR",
+				"dbRevVal"
+			],
+			[
+				"errorM",
+				"errorMessage"
+			],
+			[
+				"revi",
+				"revisionStatus"
+			],
+			[
 				"file",
 				"file_get_contents"
 			],
@@ -76,53 +128,56 @@
 	"buffers":
 	[
 		{
-			"file": "tests/Unit/shared/abstractRestConnectionTest.php",
-			"settings":
-			{
-				"buffer_size": 1481,
-				"encoding": "UTF-8",
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"contents": " $this->assertInstanceOf(\n            restBaseClass::class,\n            restBaseClass::buildDbConnection\n        );\n\n        $this->restBaseClass->construct($uname,$passwd,$db,$host);//ahahahcry",
-			"settings":
-			{
-				"buffer_size": 194,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "generateTestsOverwrite.sh",
-			"settings":
-			{
-				"buffer_size": 441,
-				"encoding": "UTF-8",
-				"line_ending": "Unix"
-			}
-		},
-		{
 			"file": "api/shared/abstractRestConnection.php",
 			"settings":
 			{
-				"buffer_size": 7689,
+				"buffer_size": 7788,
 				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "/home/michael/repo token",
+			"contents": "<?php\nnamespace REST_API;\nrequire_once 'CouchDBConnection.php';\nrequire_once 'CouchDBRequest.php';\nrequire_once 'CouchDBResponse.php';\nrequire_once 'genericException.php';\nrequire_once 'abstractRestConnection.php';\n\n\tclass databaseManager extends restBaseClass{\n\t\t\n\t\tprivate $dbName;\n\n\t\tfunction __construct(){\n\t\t\t$this->dbName=\"\";\n\t\t}\n\n\t\tfunction createDatabase(string $name)\n\t\t{\n\t\t\t$this->dbName = $name;\n\t\t\tSubmitToDb();\n\t\t}\n\t\tfunction deleteDatabse(string $name){\n\t\t\t$this->dbName = $name;\n\t\t\tdeleteObject();\n\t\t}\n\t\tprivate function SubmitToDb() : void{\n\t\t\t$retVal = $this->newConn->send('/'. $this->dbName, 'PUT');\n\t\t\t$responseBody = $retVal->getBody();\n\t\t\t$decoded = json_decode($responseBody);\n\t\t\t$this->handleReturns($decoded);\n\t\t}\n\n\t\tfunction getAllDbs(){\n\t\t\treturn GET('_all_dbs');\n\t\t}\n\t\tprivate function deleteObject() : void{\n\t\t\tif($this->CheckRevision()){\n\t\t\t\t$retVal = $this->newConn->send('/'.$this->dbName, 'DELETE');\n\t\t\t\t$responseBody = $retVal->getBody();\n\t\t\t\t$decoded = json_decode($responseBody);\n\n\t\t\t\t//Wipe the object itself from local memory\n\t\t\t\tforeach($this as $key => $value) {\n\t\t\t\t\tif($key !== \"newConn\"){\n\t\t\t\t\t\t$this->{$key} = \"null\";\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t\t$this->handleReturns($decoded);\n\t\t\t}else{\n\t\t\t\t$this->clean=false;\n\t\t\t}\n\t\t}\n\t\tprivate function handleReturns($obj) : void{\n\t\t\tforeach($obj as $key => $value) {\n\t\t\t\tif(gettype($value) == 'array'){\n\t\t\t\t\t$this->{$this->recoverString($key)} = \"Array\";\n\t\t\t\t\t$this->handleReturns($obj);\n\t\t\t\t}else{\n\t\t\t\t\tif($this->recoverString($key)==\"id\"){$this->_id=$this->recoverString($value);}else\n\t\t\t\t\tif($this->recoverString($key)==\"rev\"){$this->_rev=$this->recoverString($value);}else{\n\t\t\t\t\t$this->{$this->recoverString($key)} = $this->recoverString($value);}\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n?>\n\n",
+			"file": "api/shared/databaseManager.php",
+			"file_size": 1745,
+			"file_write_time": 132534393159508361,
 			"settings":
 			{
-				"buffer_size": 40,
+				"buffer_size": 1745,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "api/shared/CouchDBConnection.php",
+			"contents": "<?php\nnamespace REST_API;\nrequire_once 'CouchDBConnection.php';\nrequire_once 'CouchDBRequest.php';\nrequire_once 'CouchDBResponse.php';\nrequire_once 'genericException.php';\nrequire_once 'abstractRestConnection.php';\n\n\tclass databaseConfigurator{\n\n\t\tfunction __construct(){}\n\t\tfunction getUserId(){}//not actually sure I need this, but let's note down the thought process\n\t\tfunction createUserDbDimension(){}//we're going to be pulling this in when the user is searching on the META objects\n\t\tfunction determine(){\n\t\t\t$conf = file_get_contents('../config/databaseClassification.json');//manual is bullshit, but it's a start\n\t\t}\n\t}\n\n?>",
+			"file": "api/shared/databaseConfigurator.php",
+			"file_size": 632,
+			"file_write_time": 132534416752371858,
 			"settings":
 			{
-				"buffer_size": 978,
+				"buffer_size": 632,
+				"encoding": "UTF-8",
+				"line_ending": "Unix",
+				"name": "<?php"
+			}
+		},
+		{
+			"file": "/home/michaelmcpherson/Downloads/rss",
+			"settings":
+			{
+				"buffer_size": 12338,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"contents": "{\n\t\"blogPosts\":{\n\t\t\"_id\":false,\n\t\t\"_rev\":false\n\t},\n\t\"nsLookupResults\":{\n\t\t\"_id\":false,\n\t\t\"_rev\":false\n\t},\n\t\"ipgeolocation.io\":{\n\t\t\"_id\":false,\n\t\t\"_rev\":false\n\t},\n\t\"whois\":{\n\t\t\"_id\":false,\n\t\t\"_rev\":false\n\t},\n\t\"nslookup\":{\n\t\t\"_id\":false,\n\t\t\"_rev\":false\n\t},\n\t\"ping\":{\n\t\t\"_id\":false,\n\t\t\"_rev\":false\n\t},\n\t\"traceroute\":{\n\t\t\"_id\":false,\n\t\t\"_rev\":false\n\t},\n\t\"tcpdump\":{\n\t\t\"_id\":false,\n\t\t\"_rev\":false\n\t},\n\t\"netstat\":{\n\t\t\"_id\":false,\n\t\t\"_rev\":false\n\t},\n\t\"ss\":{\n\t\t\"_id\":false,\n\t\t\"_rev\":false\n\t}\n}",
+			"file": "api/config/databaseClassification.json",
+			"file_size": 485,
+			"file_write_time": 132534467232182796,
+			"settings":
+			{
+				"buffer_size": 485,
+				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
 		}
@@ -139,20 +194,32 @@
 		"selected_items":
 		[
 			[
-				"packa",
+				"package control insta",
 				"Package Control: Install Package"
 			],
 			[
-				"json",
-				"Pretty JSON: Validate"
+				"package control list",
+				"Package Control: List Packages"
 			],
 			[
 				"package",
-				"Package Control: Install Package"
+				"Package Control: Remove Package"
 			],
 			[
-				"sidebar",
-				"Side Bar: Refresh"
+				"package control: remove\t",
+				"Package Control: Remove Package"
+			],
+			[
+				"packa",
+				"Package Control: List Packages"
+			],
+			[
+				" package control: ",
+				"Package Control: Disable Package"
+			],
+			[
+				"rename",
+				"Rename File"
 			],
 			[
 				"package control: advanced",
@@ -203,36 +270,64 @@
 	},
 	"expanded_folders":
 	[
-		"/home/michael/src/phpInsecureREST",
-		"/home/michael/src/phpInsecureREST/api",
-		"/home/michael/src/phpInsecureREST/api/config",
-		"/home/michael/src/phpInsecureREST/api/objects",
-		"/home/michael/src/phpInsecureREST/api/shared",
-		"/home/michael/src/phpInsecureREST/tests"
+		"/home/michaelmcpherson/src/phpInsecureREST",
+		"/home/michaelmcpherson/src/phpInsecureREST/api",
+		"/home/michaelmcpherson/src/phpInsecureREST/api/config",
+		"/home/michaelmcpherson/src/phpInsecureREST/api/documentation",
+		"/home/michaelmcpherson/src/phpInsecureREST/api/objects",
+		"/home/michaelmcpherson/src/phpInsecureREST/api/shared"
 	],
 	"file_history":
 	[
-		"/home/michael/src/phpInsecureREST/generateTestsForAllPHP.sh",
-		"/home/michael/src/phpInsecureREST/composer.json",
-		"/home/michael/src/phpInsecureREST/composer.lock",
-		"/home/michael/src/phpInsecureREST/README.md",
-		"/home/michael/src/phpInsecureREST/api/couchTesting.php",
-		"/home/michael/src/gitrecurse/gitScan.sh",
-		"/home/michael/.config/sublime-text-3/Packages/User/GutterColor.sublime-settings",
-		"/home/michael/.config/sublime-text-3/Packages/Gutter Color/GutterColor.sublime-settings",
-		"/home/michael/snap/caprine/43/.config/Caprine/custom.css",
-		"/home/michael/src/connectionMonitor/conn.sh",
-		"/home/michael/amixerOut.txt",
-		"/home/michael/pacmdOut.txt",
-		"/home/michael/.config/sublime-text-3/Packages/SideBarEnhancements/Side Bar.sublime-settings",
-		"/home/michael/.config/sublime-text-3/Packages/SideBarEnhancements/Default (Linux).sublime-keymap",
-		"/home/michael/.config/sublime-text-3/Packages/Pretty JSON/Pretty JSON.sublime-settings",
-		"/home/michael/.config/sublime-text-3/Packages/User/Side Bar.sublime-settings",
+		"/home/michaelmcpherson/.cache/.fr-yqfHjM/dependency-metadata.json",
+		"/home/michaelmcpherson/.cache/.fr-t8NhHX/README.md",
+		"/home/michaelmcpherson/.cache/.fr-IrtFkN/linter.py",
+		"/home/michaelmcpherson/.cache/.fr-VsTbUq/messages/install.txt",
+		"/home/michaelmcpherson/.cache/.fr-r1NVrU/messages.json",
+		"/home/michaelmcpherson/Documents/55-jsonschema.py",
+		"/home/michaelmcpherson/Documents/20-newterm.py",
+		"/home/michaelmcpherson/Documents/10-shellenv.py",
+		"/home/michaelmcpherson/Documents/10-psutil.py",
+		"/home/michaelmcpherson/src/phpInsecureREST/api/config/databaseClassification.json",
+		"/home/michaelmcpherson/Documents/00-package_control.py",
+		"/home/michaelmcpherson/Documents/30 day notice.odt",
+		"/home/michaelmcpherson/.config/sublime-text-3/Installed Packages/0_package_control_loader.sublime-package",
+		"/home/michaelmcpherson/.config/sublime-text-3/Packages/JSLint/JSLint.sublime-settings",
+		"/home/michaelmcpherson/src/phpInsecureREST/api/shared/restBaseCollection.php",
+		"/home/michaelmcpherson/src/phpInsecureREST/api/shared/databaseManager.php",
+		"/home/michaelmcpherson/src/phpInsecureREST/api/objects/blogPost.php",
+		"/home/michaelmcpherson/iftop_top.json",
+		"/home/michaelmcpherson/src/betterabstractprint.php",
+		"/home/michaelmcpherson/src/phpInsecureREST/api/objects/user.php",
+		"/home/michaelmcpherson/src/phpInsecureREST/api/objects/dndPlot.php",
+		"/home/michaelmcpherson/src/phpInsecureREST/api/config/secretConfig.php",
+		"/home/michaelmcpherson/src/phpInsecureREST/composer.json",
+		"/home/michaelmcpherson/src/phpInsecureREST/api/shared/CouchDBResponse.php",
+		"/home/michaelmcpherson/src/phpInsecureREST/api/shared/CouchDBConnection.php",
+		"/home/michaelmcpherson/src/phpInsecureREST/api/shared/CouchDBRequest.php",
+		"/home/michaelmcpherson/src/phpInsecureREST/api/testharness.php",
+		"/home/michaelmcpherson/src/phpInsecureREST/api/shared/genericException.php",
+		"/home/michaelmcpherson/src/phpInsecureREST/tests/Unit/shared/abstractRestConnectionTest.php.bak",
+		"/home/michaelmcpherson/src/phpInsecureREST/tests/Unit/shared/mpmcpherson.sublime-project",
+		"/home/michaelmcpherson/src/phpInsecureREST/api/testRes.txt",
+		"/home/michaelmcpherson/src/phpInsecureREST/api/testoutput.txt",
+		"/home/michaelmcpherson/src/phpInsecureREST/api/shared/blogPost.php",
+		"/home/michaelmcpherson/src/phpInsecureREST/api/shared/dndPlot.php",
+		"/home/michaelmcpherson/src/phpInsecureREST/api/shared/user.php",
+		"/home/michaelmcpherson/src/phpInsecureREST/api/shared/testharness.php",
+		"/home/michaelmcpherson/src/phpInsecureREST/api/objects/genericObject.php",
+		"/home/michaelmcpherson/src/phpInsecureREST/api/example_homepage.txt",
+		"/home/michaelmcpherson/src/phpInsecureREST/api/shared/testHandler.php",
+		"/home/michaelmcpherson/bastionSoftwareGlider",
+		"/home/michaelmcpherson/src/writtenRecords/DnD/Necromancer Nine/Adventure Plotting",
+		"/home/michaelmcpherson/src/phpInsecureREST/api/shared/abstractRestConnection.php",
+		"/home/michaelmcpherson/src/clientSideBlogger/bloggingClientBase/frontEnd/index.php",
+		"/home/michaelmcpherson/src/clientSideBlogger/bloggingClientBase/index.php",
+		"/home/michaelmcpherson/src/phpInsecureREST/api/couchTesting.php",
 		"/home/michael/src/phpInsecureREST/api/testing.php",
 		"/home/michael/src/phpInsecureREST/api/couchdebug",
 		"/home/michaelmcpherson/src/clientSideBlogger/bloggingClientBase/resources/postHandler.php",
 		"/home/michaelmcpherson/src/clientSideBlogger/bloggingClientBase/phprc",
-		"/home/michaelmcpherson/src/clientSideBlogger/bloggingClientBase/index.php",
 		"/home/michaelmcpherson/src/clientSideBlogger/bloggingClientBase/js/helper.js",
 		"/home/michaelmcpherson/src/clientSideBlogger/README.md",
 		"/home/michaelmcpherson/src/clientSideBlogger/bloggingClientBase/resources/SFTPConnector.php",
@@ -241,7 +336,6 @@
 		"/home/michaelmcpherson/src/clientSideBlogger/bloggingClientBase/frontEnd/resources/loadPost.php",
 		"/home/michaelmcpherson/src/clientSideBlogger/bloggingClientBase/frontEnd/resources/postHandler.php",
 		"/home/michaelmcpherson/src/clientSideBlogger/snippets.php",
-		"/home/michaelmcpherson/src/clientSideBlogger/bloggingClientBase/frontEnd/index.php",
 		"/home/michaelmcpherson/src/clientSideBlogger/bloggingClientBase/css/style.css",
 		"/var/www/html/blogBase/resources/postHandler.php",
 		"/home/michaelmcpherson/src/clientSideBlogger/bloggingClientBase/resources/config.php",
@@ -312,45 +406,17 @@
 		"/home/michaelmcpherson/src/DnDModuleGenerator/site/adventureGenerator/index.php",
 		"/home/michaelmcpherson/src/gitRecurse/bintest.sh",
 		"/home/michaelmcpherson/src/gitRecurse/gitScan.config",
-		"/home/michaelmcpherson/src/gitRecurse/dmg adventure generator text",
-		"/home/michaelmcpherson/src/writtenRecords/DnD/Necromancer Nine/siteVersion/strangegods/index.php",
-		"/home/michaelmcpherson/src/writtenRecords/DnD/Necromancer Nine/the strange gods of the land",
-		"/home/michaelmcpherson/src/writtenRecords/DnD/Necromancer Nine/Adventure Plotting",
-		"/home/michaelmcpherson/src/writtenRecords/DnD/Necromancer Nine/siteVersion/sessionNotes/Plot Episode 1",
-		"/home/michaelmcpherson/src/writtenRecords/DnD/Necromancer Nine/siteVersion/sessionNotes/Plot Episode 5",
-		"/home/michaelmcpherson/src/writtenRecords/DnD/Necromancer Nine/siteVersion/sessionNotes/Plot Episode 6",
-		"/home/michaelmcpherson/src/writtenRecords/DnD/Necromancer Nine/siteVersion/index.php",
-		"/home/michaelmcpherson/src/writtenRecords/DnD/Necromancer Nine/Episode 6",
-		"/home/michaelmcpherson/src/markov/markov_revision.php",
-		"/home/michaelmcpherson/src/markov/markov.php",
-		"/home/michaelmcpherson/src/DnDModuleGenerator/site/localeGenerator/index.php",
-		"/home/michaelmcpherson/src/Eliza/main.php",
-		"/home/michaelmcpherson/src/Eliza/src/Eliza.php",
-		"/home/michaelmcpherson/src/markov/text/horribleCorpus.txt",
-		"/home/michaelmcpherson/src/markov/text/calvin.txt",
-		"/home/michaelmcpherson/src/quickscrape/style.css",
-		"/home/michaelmcpherson/src/quickscrape/getPrevious.php",
-		"/home/michaelmcpherson/src/quickscrape/getNext.php",
-		"/home/michaelmcpherson/src/quickscrape/getCurrent.php",
-		"/home/michaelmcpherson/src/quickscrape/getFirst.php",
-		"/home/michaelmcpherson/src/quickscrape/index.php",
-		"/home/michaelmcpherson/src/DnDModuleGenerator/site/adventureGenerator/basicGenerator.php",
-		"/home/michaelmcpherson/src/quickscrape/dailyVacuum.php",
-		"/home/michaelmcpherson/src/quickscrape/.gitignore",
-		"/home/michaelmcpherson/src/writtenRecords/DnD/Necromancer Nine/`encounters to reskin",
-		"/home/michaelmcpherson/src/comnavnotes/ComNavNotes",
-		"/home/michaelmcpherson/src/akounting/akountingInstallstep"
+		"/home/michaelmcpherson/src/gitRecurse/dmg adventure generator text"
 	],
 	"find":
 	{
-		"height": 99.0
+		"height": 40.0
 	},
 	"find_in_files":
 	{
-		"height": 99.0,
+		"height": 0.0,
 		"where_history":
 		[
-			""
 		]
 	},
 	"find_state":
@@ -358,12 +424,27 @@
 		"case_sensitive": false,
 		"find_history":
 		[
-			"createcredentials",
-			"phpInsecureREST",
-			"createcredentials",
-			"stereo",
-			"mic",
-			"internal",
+			"eslint",
+			"space",
+			"use spaces",
+			"spaces",
+			"tab",
+			"var_dump",
+			"Y291Y2hBZG1pbjpBZGVpbjFEdmEyIQ==",
+			"get",
+			"\"\";\n",
+			"\"));\n",
+			"CheckRevision",
+			"put",
+			"echo",
+			"exception",
+			"$post",
+			"echo",
+			">revision",
+			">id",
+			"$id",
+			"GET",
+			"get",
 			"\"",
 			"'",
 			"\n$",
@@ -389,6 +470,10 @@
 		"regex": true,
 		"replace_history":
 		[
+			"delete",
+			"$post['post']",
+			">_id",
+			"$_id",
 			"",
 			"\"",
 			"publish",
@@ -410,30 +495,28 @@
 			[
 				{
 					"buffer": 0,
-					"file": "tests/Unit/shared/abstractRestConnectionTest.php",
+					"file": "api/shared/abstractRestConnection.php",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1481,
+						"buffer_size": 7788,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								715,
-								715
+								746,
+								746
 							]
 						],
 						"settings":
 						{
-							"function_name_status_row": 42,
 							"syntax": "Packages/PHP/PHP.sublime-syntax",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
+							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 405.0,
+						"translation.y": 652.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 4,
@@ -441,28 +524,28 @@
 				},
 				{
 					"buffer": 1,
+					"file": "api/shared/databaseManager.php",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 194,
+						"buffer_size": 1745,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								194,
-								194
+								310,
+								310
 							]
 						],
 						"settings":
 						{
-							"default_dir": "/home/michael/src/phpInsecureREST/tests/Unit/shared",
-							"function_name_status_row": 5,
-							"syntax": "Packages/PHP/PHP.sublime-syntax"
+							"syntax": "Packages/PHP/PHP.sublime-syntax",
+							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 54.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 3,
@@ -470,84 +553,25 @@
 				},
 				{
 					"buffer": 2,
-					"file": "generateTestsOverwrite.sh",
+					"file": "api/shared/databaseConfigurator.php",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 441,
+						"buffer_size": 632,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								441,
-								441
+								629,
+								629
 							]
 						],
 						"settings":
 						{
-							"function_name_status_row": 20,
-							"syntax": "Packages/ShellScript/Bash.sublime-syntax"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 5,
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"file": "api/shared/abstractRestConnection.php",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 7689,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								194,
-								194
-							]
-						],
-						"settings":
-						{
-							"function_name_status_row": 7,
-							"syntax": "Packages/PHP/PHP.sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 0,
-					"type": "text"
-				},
-				{
-					"buffer": 4,
-					"file": "/home/michael/repo token",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 40,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								40,
-								40
-							]
-						],
-						"settings":
-						{
-							"function_name_status_row": 0,
-							"syntax": "Packages/Text/Plain text.tmLanguage"
+							"auto_name": "<?php",
+							"syntax": "Packages/PHP/PHP.sublime-syntax"
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
@@ -557,14 +581,27 @@
 					"type": "text"
 				},
 				{
-					"buffer": 5,
-					"file": "api/shared/CouchDBConnection.php",
-					"semi_transient": true,
+					"buffer": 3,
+					"file": "/home/michaelmcpherson/Downloads/rss",
+					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 978,
+						"buffer_size": 12338,
 						"regions":
 						{
+							"gutter_color_0":
+							{
+								"flags": 144,
+								"icon": "Cache/GutterColor/red.png",
+								"regions":
+								[
+									[
+										0,
+										12338
+									]
+								],
+								"scope": "gutter_color"
+							}
 						},
 						"selection":
 						[
@@ -575,10 +612,36 @@
 						],
 						"settings":
 						{
-							"function_name_status_row": 0,
-							"syntax": "Packages/PHP/PHP.sublime-syntax",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
+							"syntax": "Packages/XML/XML.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "api/config/databaseClassification.json",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 485,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								264,
+								264
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JSON.sublime-syntax",
+							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
@@ -592,7 +655,7 @@
 	],
 	"incremental_find":
 	{
-		"height": 28.0
+		"height": 27.0
 	},
 	"input":
 	{
@@ -623,11 +686,11 @@
 	"menu_visible": true,
 	"output.SublimeLinter":
 	{
-		"height": 0.0
+		"height": 127.0
 	},
 	"output.exec":
 	{
-		"height": 121.0
+		"height": 385.0
 	},
 	"output.find_results":
 	{
@@ -641,7 +704,7 @@
 	"project": "rest.sublime-project",
 	"replace":
 	{
-		"height": 68.0
+		"height": 71.0
 	},
 	"save_all_on_build": true,
 	"select_file":
@@ -679,7 +742,7 @@
 	"show_open_files": true,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 362.0,
+	"side_bar_width": 302.0,
 	"status_bar_visible": true,
 	"template_settings":
 	{

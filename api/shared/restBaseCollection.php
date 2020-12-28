@@ -4,37 +4,41 @@ require_once 'CouchDBConnection.php';
 require_once 'CouchDBRequest.php';
 require_once 'CouchDBResponse.php';
 require_once 'genericException.php';
+require_once 'abstractRestConnection.php';
 
-	class restBaseClass{
+	class restBaseCollection{
 		
-		private $newConn;
-		public $_id;
-		public $timestamp;
-		public $_rev;
-		public $clean;
+		private $baseClassArray;
 
 		function __construct(){
+			$baseClassArray = array();
+		}
+
+		function getAllDocs()
+		{
+			$lol = restBaseClass::GET("_all_docs"); //yeah, except this doesn't actually *parse* all the friggin documents, because of course it doesn't.
+		}
+
+		//Okay. Now to write all the mass-handling functions...
+		//Have to think about how this accesses the database. *and* how the database is shaped. Ugh.
+		/*
+		function construct(string $db, string $host,string $uname,string $passwd) : void{
+			
+			$this->newConn = buildDbConnection($db,$host,5984,$uname,$passwd);
 			$this->_id = "";
-			$this->$timestamp="";
 			$this->_rev = "";
 			$this->clean = false;
 		}
-		function construct(string $db, string $host,string $uname,string $passwd) : void{
-			$this->newConn = buildDbConnection($db,$host,5984,$uname,$passwd);
-		}
 		//now POST
 		function POST() : void{
-			$this->SubmitToDb(); 
+			$this->SubmitToDb();
 		}
 
 
 		private function SubmitToDb() : void{
-				
 				//use the date for this one
-				$this->_id = uniqid("",true);
+				$this->_id = date("d-m-YTh:i:s");
 				
-				$this->timestamp = date("d-m-YTh:i:s");
-
 				$retVal = $this->newConn->send('/'. $this->_id, 'PUT', $this->encodeForDelivery("POST"));
 
 				$responseBody = $retVal->getBody();
@@ -76,10 +80,10 @@ require_once 'genericException.php';
 			//ahhh ahahaha, this is beautiful: the means that any new classes (say, errors) will get dynamically added to the class without vomiting any errors out. 
 			//there could be issues, but as it is, this also makes this very useful.
 			//I might write this into each of the functions...
-			/*foreach($dbRevVal as $key => $value) {
-				$this->{$this->recoverString($key)} = $this->recoverString($value);
+			//foreach($dbRevVal as $key => $value) {
+			//	$this->{$this->recoverString($key)} = $this->recoverString($value);
 				
-			}*/
+			//}
 			//testing
 			$this->handleReturns($dbRevVal);
 		}
@@ -273,6 +277,7 @@ require_once 'genericException.php';
 		private function recoverString(string $string) : string{
 			return htmlspecialchars_decode($string, ENT_QUOTES);
 		}
+		*/
 	}
 
 

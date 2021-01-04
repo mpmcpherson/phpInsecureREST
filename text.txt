@@ -1,0 +1,59 @@
+[2K... 8% ...[2K... 17% ...[2K... 25% ...[2K... 33% ...[2K... 42% ...[2K... 50% ...[2K... 58% ...[2K... 67% ...[2K... 75% ...[2K... 83% ...[2K... 92% ...[2K... 100% ...[2K
+
+[2KExecuting system analyzes...
+
+[2KExecuting composer analyzes, requesting https://packagist.org...
+
+[2KLOC
+    Lines of code                               683
+    Logical lines of code                       380
+    Comment lines of code                       303
+    Average volume                              404.62
+    Average comment weight                      16.48
+    Average intelligent content                 16.48
+    Logical lines of code by class              42
+    Logical lines of code by method             9
+
+Object oriented programming
+    Classes                                     9
+    Interface                                   0
+    Methods                                     41
+    Methods by class                            4.56
+    Lack of cohesion of methods                 1.78
+    
+Coupling
+    Average afferent coupling                   1.11
+    Average efferent coupling                   1.22
+    Average instability                         0.68
+    Depth of Inheritance Tree                   1.33
+    
+Package
+    Packages                                    1
+    Average classes per package                 9
+    Average distance                            0
+    Average incoming class dependencies         0
+    Average outgoing class dependencies         1
+    Average incoming package dependencies       0
+    Average outgoing package dependencies       1
+
+Complexity
+    Average Cyclomatic complexity by class      4.67
+    Average Weighted method count by class      8.56
+    Average Relative system complexity          28.89
+    Average Difficulty                          4.65
+    
+Bugs
+    Average bugs by class                       0.13
+    Average defects by class (Kan)              0.49
+
+Violations
+    Critical                                    0
+    Error                                       0
+    Warning                                     1
+    Information                                 1
+
+
+
+HTML report generated in "testingReport" directory
+
+Done

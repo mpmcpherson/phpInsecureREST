@@ -15,15 +15,15 @@ require_once 'genericException.php';
 		public $type;
 		public $tags;
 
-		function __construct(){
+		function _construct(){
 			$this->_id = "";
 			$this->$timestamp="";
 			$this->_rev = "";
 			$this->clean = false;
 			$this->type = "post";
-			$this->tags = ["testing","blogPost","mcpherson","dyer"];
+			$this->tags = array ("testing","blogPost","mcpherson","dyer");
 		}
-		function construct(string $db, string $host,string $uname,string $passwd) : void{
+		function connect(string $db, string $host,string $uname,string $passwd) : void{
 			$this->newConn = $this->buildDbConnection($db,$host,5984,$uname,$passwd);
 		}
 		//now POST
@@ -39,8 +39,8 @@ require_once 'genericException.php';
 				 
 				$this->timestamp = date("d-m-YTh:i:s");
 
-				$retVal = $this->newConn->send('/'. $this->_id, 'PUT', $this->encodeForDelivery("POST"));
-
+				$retVal = $this->newConn->send('/'. $this->_id, 'PUT', $this->encodeForDelivery("POST",$this,"",rand(0,25)));
+				
 				$responseBody = $retVal->getBody();
 
 				$decoded = json_decode($responseBody);
@@ -136,7 +136,7 @@ require_once 'genericException.php';
 		private function SyncToDb() : void{		
 			if($this->clean){
 								
-				$retVal = $this->newConn->send('/'.$this->_id, 'PUT', $this->encodeForDelivery("PUT"));
+				$retVal = $this->newConn->send('/'.$this->_id, 'PUT', $this->encodeForDelivery("PUT",$this,"",rand(26,50)));
 
 				$responseBody = $retVal->getBody();
 				
@@ -178,42 +178,39 @@ require_once 'genericException.php';
 		}
 
 
-		private function encodeForDelivery(string $encodingMethod, $data) : string{
+		private function encodeForDelivery(string $encodingMethod, $obj, $print, $tag) : string{
 
 			if($encodingMethod==="POST"){
-				$encAry = array("newConn","clean","_rev");
+				$encAry = array("newConn","clean","_rev","");
 			}elseif($encodingMethod==="PUT"){
-				$encAry = array("newConn","clean");
+				$encAry = array("newConn","clean","");
 			}
-			/*
-			$data = "{";
 
-				foreach($this as $key => $value) {
-					if(in_array($key, $encAry,true)===false){
-
-			    		$data = $data .'"'.$this->prepString($key).'":"'. $this->prepString($value).'",';
-
-					}
-				}
-			//I don't feel like writing a bunch of lookaheads to know if I'm at the last element of an object, sooooo I'll just run until the end and then cut the last character (which will be an erroneous ,) out entirely.
-			$data = substr($data,0,-1)."}";
-			return $data;
-			*/
-			
-			$print .= "{";
-			foreach($this as $key => $value) {
+			$print = $print . '{';
+			foreach($obj as $key => $value) {
 				if(in_array($key, $encAry,true)===false){
-					$print .= '"'.$this->prepString($key).'":"';
 
 					if(gettype($value) == 'array'){
-						$print .= '"Array:"' . encodeForDelivery($value, $print);
+						//echo "X" . $key . "X : ";
+						$print = $print . '"'.$this->prepString($key).'":"';	
+					}else{
+						//echo "" . $key . " : ";
+						$print = $print . '"'.$this->prepString($key).'":"';
+					}
+					if(gettype($value) == 'array'){
+						//echo gettype($value) . "\n";
+						$print = $print . $this->encodeForDelivery($encodingMethod, $value, $print, $tag);
 					}
 					else{
-						$print .= $this->prepString($value) . '",';
+						//echo "" . $value . "\n";
+						$print = $print . $this->prepString($value) . '",';
 					}
+
 				}	
 			}
-			$print = substr($print,0,-1)."}";
+			$print = substr($print,0,-1).'}';
+			echo $print;
+			echo "\n\n".$tag."\n\n";
 			return $print;			
 		}
 

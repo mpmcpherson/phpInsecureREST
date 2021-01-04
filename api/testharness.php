@@ -13,8 +13,8 @@
 	$post = array('post' => "",'get'=>"",'put'=>"",'delete'=>"" );
 	
 	$testPost=true;
-	$testGET=true;
-	$testPUT=true;
+	$testGET=false;
+	$testPUT=false;
 	$testDELETE=false;
 	
 	$db = "test_db";
@@ -24,16 +24,23 @@
 
 	/*testing POST*/
 	if($testPost){
-		echo "\npost \n";
+		echo "\npost \n\n";
 		$post['post'] = new blogPost();
-		$post['post']->construct($db,$host,$uname,$passwd);
+		$post['post']->connect($db,$host,$uname,$passwd);
+		$post['post']->_construct();
 
 		$post['post']->author="Michael";
 		$post['post']->subject="we're going to try to get this to go through to the 'put'";
 		$post['post']->body="HERE'S A BODY";
-		$vals = $post['post']->POST();
-		$post['post']->abstractPrint();
-		
+		echo "\n\n";
+		var_dump($post['post']);
+		echo "\n\n";
+		//$vals = $post['post']->POST();
+		//$post['post']->abstractPrint();
+		$post['post']->POST();
+		echo "\n\n";
+		var_dump($post['post']);
+		echo "\n\n";
 		$_idForward = $post['post']->_id;
 		
 		echo "\n";
@@ -44,7 +51,9 @@
 	{
 		echo "get \n";
 		$post['get'] = new blogPost();
-		$post['get']->construct($db,$host,$uname,$passwd);
+		$post['get']->connect($db,$host,$uname,$passwd);
+		$post['get']->_construct();
+
 		$post['get']->GET($_idForward);
 		$post['get']->abstractPrint();
 		echo "\n";
@@ -57,6 +66,7 @@
 
 		$post['put'] = new blogPost();
 		$post['put']->construct($db,$host,$uname,$passwd);
+		$post['put']->_construct();
 
 		$post['put']->GET($_idForward);
 		$post['put']->body="and now we're something else";
@@ -73,6 +83,7 @@
 
 		$post['delete'] = new blogPost();
 		$post['delete']->construct($db,$host,$uname,$passwd);
+		$post['delete']->_construct();
 
 		$post['delete']->GET($_idForward);
 		$post['delete']->abstractPrint();

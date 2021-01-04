@@ -5,8 +5,11 @@ require_once 'CouchDBRequest.php';
 require_once 'CouchDBResponse.php';
 require_once 'genericException.php';
 
-	class restBaseClass{
+	class restBaseClass {
 		
+		private $position = 0;
+		private $ary = "";
+
 		private $newConn;
 		public $_id;
 		public $timestamp;
@@ -16,12 +19,15 @@ require_once 'genericException.php';
 		public $tags;
 
 		function _construct(){
+			$ary = get_object_vars($this);
+
+
 			$this->_id = "";
-			$this->$timestamp="";
+			$this->timestamp="";
 			$this->_rev = "";
 			$this->clean = false;
 			$this->type = "post";
-			$this->tags = array ("testing","blogPost","mcpherson","dyer");
+			$this->tags = array("testing","blogPost","mcpherson","dyer");
 		}
 		function connect(string $db, string $host,string $uname,string $passwd) : void{
 			$this->newConn = $this->buildDbConnection($db,$host,5984,$uname,$passwd);
@@ -186,34 +192,24 @@ require_once 'genericException.php';
 				$encAry = array("newConn","clean","");
 			}
 
-			$print = $print . '{';
-			foreach($obj as $key => $value) {
-				if(in_array($key, $encAry,true)===false){
+			$tempSelf = array();
 
-					if(gettype($value) == 'array'){
-						//echo "X" . $key . "X : ";
-						$print = $print . '"'.$this->prepString($key).'":"';	
-					}else{
-						//echo "" . $key . " : ";
-						$print = $print . '"'.$this->prepString($key).'":"';
-					}
-					if(gettype($value) == 'array'){
-						//echo gettype($value) . "\n";
-						$print = $print . $this->encodeForDelivery($encodingMethod, $value, $print, $tag);
-					}
-					else{
-						//echo "" . $value . "\n";
-						$print = $print . $this->prepString($value) . '",';
-					}
+			//var_dump($this);
 
-				}	
+
+			foreach($ary as $key => $value) {
+
+				if(in_array($key, $encAry, true)===false){
+					$ary->{$key} = $this->prepString($value);
+				}
+				
 			}
-			$print = substr($print,0,-1).'}';
-			echo $print;
-			echo "\n\n".$tag."\n\n";
-			return $print;			
-		}
 
+
+			return $print;
+
+			
+		}
 
 		private function parseHeaders(string $headerString) : array{
 
@@ -293,6 +289,59 @@ require_once 'genericException.php';
 		private function recoverString(string $string) : string{
 			return htmlspecialchars_decode($string, ENT_QUOTES);
 		}
+
+		function getChildren():RecursiveIterator{
+			if(hasChildren()){
+				
+				$topicalVar = $this->ary[$this->position];
+
+			
+				if(is_array($topicalVar)){
+					if(count($topicalVar)>0){
+						return new RecursiveIterator($topicalVar);
+					}
+				}
+				if(is_object($topicalVar)){
+					if(count(get_object_vars($topicalVar))>0){
+						return new RecursiveIterator(get_object_vars($topicalVar));
+					}
+				}		
+			}else{
+				throw new InvalidArgumentException("Cursor at position $position has no children");
+			}
+		}
+		function hasChildren () : bool{
+			if($valid){
+				$encAry = array("String","Integer","Float","Boolean","double",NULL,"Resource");
+				$topicalVar = $this->ary[$this->position];
+
+				if( in_array(gettype($topicalVar),$encAry,true) === true ){
+					return false;
+				}else{
+					if(is_array($topicalVar)){
+						if(count($topicalVar)>0){
+							return true;
+						}
+					}
+					if(is_object($topicalVar)){
+						if(count(get_object_vars($topicalVar))>0){
+							return true;
+						}
+					}		
+					return false;
+				}
+			}else{return false;}
+		}
+		/* Inherited methods */
+		function current ( ) : mixed {return $this->ary[$this->position];}
+		function key ( ) : scalar {return $this->position;}
+		function next ( ) : void {++$this->position;}
+		function rewind ( ) : void {$this->position = 0;}
+		function valid ( ) : bool {return isset($this->ary[$this->position]);}
+
+
+		
+
 	}
 
 

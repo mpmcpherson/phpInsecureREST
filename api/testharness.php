@@ -33,14 +33,14 @@
 		$post['post']->subject="we're going to try to get this to go through to the 'put'";
 		$post['post']->body="HERE'S A BODY";
 		echo "\n\n";
-		var_dump($post['post']);
-		echo "\n\n";
+		//var_dump($post['post']);
+		//echo "\n\n";
 		//$vals = $post['post']->POST();
 		//$post['post']->abstractPrint();
 		$post['post']->POST();
-		echo "\n\n";
-		var_dump($post['post']);
-		echo "\n\n";
+		//echo "\n\n";
+		//var_dump($post['post']);
+		//echo "\n\n";
 		$_idForward = $post['post']->_id;
 		
 		echo "\n";

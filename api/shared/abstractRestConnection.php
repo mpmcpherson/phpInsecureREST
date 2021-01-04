@@ -12,15 +12,19 @@ require_once 'genericException.php';
 		public $timestamp;
 		public $_rev;
 		public $clean;
+		public $type;
+		public $tags;
 
 		function __construct(){
 			$this->_id = "";
 			$this->$timestamp="";
 			$this->_rev = "";
 			$this->clean = false;
+			$this->type = "post";
+			$this->tags = ["testing","blogPost","mcpherson","dyer"];
 		}
 		function construct(string $db, string $host,string $uname,string $passwd) : void{
-			$this->newConn = buildDbConnection($db,$host,5984,$uname,$passwd);
+			$this->newConn = $this->buildDbConnection($db,$host,5984,$uname,$passwd);
 		}
 		//now POST
 		function POST() : void{
@@ -174,24 +178,43 @@ require_once 'genericException.php';
 		}
 
 
-		private function encodeForDelivery(string $encodingMethod) : string{
+		private function encodeForDelivery(string $encodingMethod, $data) : string{
 
 			if($encodingMethod==="POST"){
 				$encAry = array("newConn","clean","_rev");
 			}elseif($encodingMethod==="PUT"){
 				$encAry = array("newConn","clean");
 			}
-
+			/*
 			$data = "{";
 
 				foreach($this as $key => $value) {
 					if(in_array($key, $encAry,true)===false){
+
 			    		$data = $data .'"'.$this->prepString($key).'":"'. $this->prepString($value).'",';
+
 					}
 				}
 			//I don't feel like writing a bunch of lookaheads to know if I'm at the last element of an object, sooooo I'll just run until the end and then cut the last character (which will be an erroneous ,) out entirely.
 			$data = substr($data,0,-1)."}";
 			return $data;
+			*/
+			
+			$print .= "{";
+			foreach($this as $key => $value) {
+				if(in_array($key, $encAry,true)===false){
+					$print .= '"'.$this->prepString($key).'":"';
+
+					if(gettype($value) == 'array'){
+						$print .= '"Array:"' . encodeForDelivery($value, $print);
+					}
+					else{
+						$print .= $this->prepString($value) . '",';
+					}
+				}	
+			}
+			$print = substr($print,0,-1)."}";
+			return $print;			
 		}
 
 

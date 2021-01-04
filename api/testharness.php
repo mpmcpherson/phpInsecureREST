@@ -17,11 +17,16 @@
 	$testPUT=true;
 	$testDELETE=false;
 	
+	$db = "test_db";
+	$host = "localhost";
+	$uname = "couchAdmin";
+	$passwd = "Adein1Dva2!";
+
 	/*testing POST*/
 	if($testPost){
 		echo "\npost \n";
 		$post['post'] = new blogPost();
-		$post['post']->construct();
+		$post['post']->construct($db,$host,$uname,$passwd);
 
 		$post['post']->author="Michael";
 		$post['post']->subject="we're going to try to get this to go through to the 'put'";
@@ -39,7 +44,7 @@
 	{
 		echo "get \n";
 		$post['get'] = new blogPost();
-		$post['get']->construct();
+		$post['get']->construct($db,$host,$uname,$passwd);
 		$post['get']->GET($_idForward);
 		$post['get']->abstractPrint();
 		echo "\n";
@@ -51,7 +56,7 @@
 		echo "put \n";
 
 		$post['put'] = new blogPost();
-		$post['put']->construct();
+		$post['put']->construct($db,$host,$uname,$passwd);
 
 		$post['put']->GET($_idForward);
 		$post['put']->body="and now we're something else";
@@ -67,7 +72,7 @@
 		echo "delete \n";
 
 		$post['delete'] = new blogPost();
-		$post['delete']->construct();
+		$post['delete']->construct($db,$host,$uname,$passwd);
 
 		$post['delete']->GET($_idForward);
 		$post['delete']->abstractPrint();

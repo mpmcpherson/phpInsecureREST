@@ -62,6 +62,14 @@ require_once 'abstractRestConnection.php';
 				}
 			}
 		}
+
+		function load
+
+		function getMapAndIndexFile($path) {
+			$this->file = json_decode(file_get_contents($path.'.couchConfig'), true);
+
+			return $this->file['mapColumnList'];
+		}
 	}
 ?>
 

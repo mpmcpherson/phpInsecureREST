@@ -7,9 +7,9 @@ require_once 'genericException.php';
 
 	class restBaseClass {
 		
-		private $position = 0;
-		private $ary = "";
-
+		public $author;
+		public $subject;
+		public $body;
 		private $newConn;
 		public $_id;
 		public $timestamp;
@@ -18,15 +18,14 @@ require_once 'genericException.php';
 		public $type;
 		public $tags;
 
-		function _construct(){
-			$ary = get_object_vars($this);
-
+		function __construct(){
+			$this->ary = get_object_vars($this);
 
 			$this->_id = "";
 			$this->timestamp="";
 			$this->_rev = "";
 			$this->clean = false;
-			$this->type = "post";
+			$this->type = "abstract";
 			$this->tags = array("testing","blogPost","mcpherson","dyer");
 		}
 		function connect(string $db, string $host,string $uname,string $passwd) : void{
@@ -187,28 +186,59 @@ require_once 'genericException.php';
 		private function encodeForDelivery(string $encodingMethod, $obj, $print, $tag) : string{
 
 			if($encodingMethod==="POST"){
-				$encAry = array("newConn","clean","_rev","");
+				$encAry = array("newConn","clean","_rev","","position","ary");
 			}elseif($encodingMethod==="PUT"){
-				$encAry = array("newConn","clean","");
+				$encAry = array("newConn","clean","","position","ary");
 			}
-
-			$tempSelf = array();
-
-			//var_dump($this);
+			
+			$startAry = get_object_vars($this);
 
 
-			foreach($ary as $key => $value) {
+			$workingAry = array();
 
+			foreach($startAry as $key => $value){
+					if(in_array($key, $encAry, true)===false){
+						$workingAry[$key]=$value;
+					}
+			}
+			$spitItOut = $this->recurse($workingAry);
+
+			$itVal = new \RecursiveIteratorIterator( new \RecursiveArrayIterator($workingAry));
+
+
+			//var_dump(get_class_methods($itVal));
+			var_dump($workingAry);
+
+
+			foreach ($itVal as $key=>$val){
 				if(in_array($key, $encAry, true)===false){
-					$ary->{$key} = $this->prepString($value);
+
+					//echo $key.":".$this->prepString($workingAry[$key])."\n";
+					echo $key.":".$val."\n";
+
 				}
-				
 			}
-
-
 			return $print;
 
 			
+		}
+		private function recurse($workingAry) {
+
+			
+			foreach($workingAry as $key=>$value){
+				if(in_array($key, $encAry, true)===false){
+					if(gettype($value)!=="array"||gettype($value)!=="object"){
+						//echo $key.":".$this->prepString($workingAry[$key])."\n";
+						echo $key.":".$val."\n";
+					}else{
+						recurse(workingAry[$key]);
+					}
+				}
+			}
+
+
+		
+
 		}
 
 		private function parseHeaders(string $headerString) : array{
@@ -289,58 +319,6 @@ require_once 'genericException.php';
 		private function recoverString(string $string) : string{
 			return htmlspecialchars_decode($string, ENT_QUOTES);
 		}
-
-		function getChildren():RecursiveIterator{
-			if(hasChildren()){
-				
-				$topicalVar = $this->ary[$this->position];
-
-			
-				if(is_array($topicalVar)){
-					if(count($topicalVar)>0){
-						return new RecursiveIterator($topicalVar);
-					}
-				}
-				if(is_object($topicalVar)){
-					if(count(get_object_vars($topicalVar))>0){
-						return new RecursiveIterator(get_object_vars($topicalVar));
-					}
-				}		
-			}else{
-				throw new InvalidArgumentException("Cursor at position $position has no children");
-			}
-		}
-		function hasChildren () : bool{
-			if($valid){
-				$encAry = array("String","Integer","Float","Boolean","double",NULL,"Resource");
-				$topicalVar = $this->ary[$this->position];
-
-				if( in_array(gettype($topicalVar),$encAry,true) === true ){
-					return false;
-				}else{
-					if(is_array($topicalVar)){
-						if(count($topicalVar)>0){
-							return true;
-						}
-					}
-					if(is_object($topicalVar)){
-						if(count(get_object_vars($topicalVar))>0){
-							return true;
-						}
-					}		
-					return false;
-				}
-			}else{return false;}
-		}
-		/* Inherited methods */
-		function current ( ) : mixed {return $this->ary[$this->position];}
-		function key ( ) : scalar {return $this->position;}
-		function next ( ) : void {++$this->position;}
-		function rewind ( ) : void {$this->position = 0;}
-		function valid ( ) : bool {return isset($this->ary[$this->position]);}
-
-
-		
 
 	}
 

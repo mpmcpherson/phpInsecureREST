@@ -25,9 +25,9 @@
 	/*testing POST*/
 	if($testPost){
 		echo "\npost \n\n";
-		$post['post'] = new blogPost();
+		$post['post'] = new restBaseClass();
 		$post['post']->connect($db,$host,$uname,$passwd);
-		$post['post']->_construct();
+
 
 		$post['post']->author="Michael";
 		$post['post']->subject="we're going to try to get this to go through to the 'put'";

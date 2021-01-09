@@ -227,18 +227,20 @@ require_once 'genericException.php';
 
 		
 		function betterAbstractPrint($obj){
-			//var_dump($obj);
+			
 			$print = "";
 			foreach($obj as $key => $value) {
 				if($key!=="newConn"){
 					$print .= $key.":";
-					echo $key;
 					if(gettype($value) == 'array'){
-
 						$print .= "array()\n\t" . $this->betterAbstractPrint($value)."\n";
 					}
 					else{
-						$print .= $value."\n";
+						if($key === "clean"){
+							$print .= strval($value)."\n";
+						}else{
+							$print .= $value."\n";
+						}
 					}
 				}	
 			}

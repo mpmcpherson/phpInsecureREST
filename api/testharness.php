@@ -30,12 +30,14 @@
 		$post['post']->author="Michael";
 		$post['post']->subject="<p><br />we're going to try to get this to go through to the 'put'";
 		$post['post']->body="HERE'S A BODY";
-		
+		//var_dump($post['post']);
+		echo "\n";
 		echo $post['post']->betterAbstractPrint($post['post']);
 
 		//var_dump($post['post']);
 		$post['post']->POST();
 		
+		echo $post['post']->betterAbstractPrint($post['post']);		
 		
 		$_idForward = $post['post']->_id;
 		

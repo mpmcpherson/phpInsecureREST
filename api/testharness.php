@@ -30,6 +30,8 @@
 		$post['post']->author="Michael";
 		$post['post']->subject="<p><br />we're going to try to get this to go through to the 'put'";
 		$post['post']->body="HERE'S A BODY";
+		$post['post']->type="post";
+		$post['post']->tags = array("testing","blogPost","mcpherson","dyer");
 		//var_dump($post['post']);
 		echo "\n";
 		echo $post['post']->betterAbstractPrint($post['post']);
@@ -52,7 +54,8 @@
 		$post['get']->connect($db,$host,$uname,$passwd);
 		
 		$post['get']->GET($_idForward);
-		$post['get']->betterAbstractPrint($post['post']);
+		$post['get']->betterAbstractPrint($post['get']);
+		var_dump($post['get']);
 		echo "\n";
 	}
 
@@ -69,7 +72,8 @@
 		$post['put']->body="and now we're something else";
 		$post['put']->PUT();
 
-		$post['put']->betterAbstractPrint($post['post']);
+		$post['put']->betterAbstractPrint($post['put']);
+		var_dump($post['put']);
 
 		echo "\n";
 	}
@@ -83,7 +87,7 @@
 		
 
 		$post['delete']->GET($_idForward);
-		$post['delete']->betterAbstractPrint($post['post']);
+		$post['delete']->betterAbstractPrint($post['delete']);
 		$post['delete']->DELETE();
 		
 		echo "\n";
@@ -93,7 +97,8 @@
 
 		$post['delete']->GET($_idForward);
 
-		$post['delete']->betterAbstractPrint($post['post']);
+		$post['delete']->betterAbstractPrint($post['delete']);
+		var_dump($post['delete']);
 
 		echo "\n";	
 	}

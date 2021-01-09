@@ -19,7 +19,7 @@ require_once 'genericException.php';
 		public $tags;
 
 		function __construct(){
-			$this->ary = get_object_vars($this);
+			//$this->ary = get_object_vars($this);
 
 			$this->_id = "";
 			$this->timestamp="";
@@ -44,7 +44,7 @@ require_once 'genericException.php';
 				 
 				$this->timestamp = date("d-m-YTh:i:s");
 
-				$retVal = $this->newConn->send('/'. $this->_id, 'PUT', $this->encodeForDelivery("POST",$this,"",rand(0,25)));
+				$retVal = $this->newConn->send('/'. $this->_id, 'PUT', $this->encodeForDelivery("POST"));
 				
 				$responseBody = $retVal->getBody();
 
@@ -141,7 +141,7 @@ require_once 'genericException.php';
 		private function SyncToDb() : void{		
 			if($this->clean){
 								
-				$retVal = $this->newConn->send('/'.$this->_id, 'PUT', $this->encodeForDelivery("PUT",$this,"",rand(26,50)));
+				$retVal = $this->newConn->send('/'.$this->_id, 'PUT', $this->encodeForDelivery("PUT"));
 
 				$responseBody = $retVal->getBody();
 				
@@ -183,7 +183,7 @@ require_once 'genericException.php';
 		}
 
 
-		private function encodeForDelivery(string $encodingMethod, $obj, $print, $tag) : string{
+		private function encodeForDelivery(string $encodingMethod) : string{
 
 			if($encodingMethod==="POST"){
 				$encAry = array("newConn","clean","_rev","","position","ary");
@@ -193,7 +193,6 @@ require_once 'genericException.php';
 			
 			$startAry = get_object_vars($this);
 
-
 			$workingAry = array();
 
 			foreach($startAry as $key => $value){
@@ -201,44 +200,7 @@ require_once 'genericException.php';
 						$workingAry[$key]=$value;
 					}
 			}
-			$spitItOut = $this->recurse($workingAry);
-
-			$itVal = new \RecursiveIteratorIterator( new \RecursiveArrayIterator($workingAry));
-
-
-			//var_dump(get_class_methods($itVal));
-			var_dump($workingAry);
-
-
-			foreach ($itVal as $key=>$val){
-				if(in_array($key, $encAry, true)===false){
-
-					//echo $key.":".$this->prepString($workingAry[$key])."\n";
-					echo $key.":".$val."\n";
-
-				}
-			}
-			return $print;
-
-			
-		}
-		private function recurse($workingAry) {
-
-			
-			foreach($workingAry as $key=>$value){
-				if(in_array($key, $encAry, true)===false){
-					if(gettype($value)!=="array"||gettype($value)!=="object"){
-						//echo $key.":".$this->prepString($workingAry[$key])."\n";
-						echo $key.":".$val."\n";
-					}else{
-						recurse(workingAry[$key]);
-					}
-				}
-			}
-
-
-		
-
+			return json_encode($workingAry);			
 		}
 
 		private function parseHeaders(string $headerString) : array{
@@ -263,53 +225,41 @@ require_once 'genericException.php';
 
 		}
 
-		function abstractPrint() : void{
-			foreach($this as $key => $value) {
-				if($key!=="newConn"){
-					echo "key: ".$key." value: ".$value."\n";
-				}
-
-			}	
-		}
+		
 		function betterAbstractPrint($obj,$print){
+
 			foreach($obj as $key => $value) {
 				if($key!=="newConn"){
-					$print .= "key: ".$key;
+					$print .= $key.":";
 
 					if(gettype($value) == 'array'){
-						$print .= abstractPrint($value, $print);
+						$print .= "array()\n\t" . $this->betterAbstractPrint($value, $print)."\n";
 					}
 					else{
-						$print .= " value: ".$value;
+						$print .= $value."\n";
 					}
-				}	
-			}
-			return $print;
-		}			
-		function betterHTMLAbstractPrint($obj,$print){
-			foreach($obj as $key => $value) {
-				if($key!=="newConn"){
-					$print .= "<div class='logme'> key: ".$key;
-					
-					if(gettype($value) == 'array'){
-						$print .= abstractPrint($value, $print);
-					}
-					else{
-						$print .= " value: ".$value;
-					}
-					$print .= "</div>";
 				}	
 			}
 			return $print;
 		}			
 
 		private function handleReturns($obj) : void{
-			foreach($obj as $key => $value) {
-				if($this->recoverString($key)=="id"){$this->_id=$this->recoverString($value);}else
-				if($this->recoverString($key)=="rev"){$this->_rev=$this->recoverString($value);}else{
-				$this->{$this->recoverString($key)} = $this->recoverString($value);}
-				
+
+			$startAry = get_object_vars($obj);
+
+			$workingAry = array();
+
+			foreach($startAry as $key => $value){
+				if($key=="id")
+					{$this->_id=$value;}
+				elseif($key=="rev")
+					{$this->_rev=$value;}
+				else
+					{$this->{$key} = $value;}	
 			}
+
+
+			
 		}
 
 		private function prepString(string $string) : string{

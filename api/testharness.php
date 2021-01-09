@@ -50,8 +50,7 @@
 		echo "get \n";
 		$post['get'] = new restBaseClass();
 		$post['get']->connect($db,$host,$uname,$passwd);
-		$post['get']->_construct();
-
+		
 		$post['get']->GET($_idForward);
 		$post['get']->betterAbstractPrint($post['post']);
 		echo "\n";
@@ -63,8 +62,8 @@
 		echo "put \n";
 
 		$post['put'] = new restBaseClass();
-		$post['put']->construct($db,$host,$uname,$passwd);
-		$post['put']->_construct();
+		$post['put']->connect($db,$host,$uname,$passwd);
+		
 
 		$post['put']->GET($_idForward);
 		$post['put']->body="and now we're something else";
@@ -80,11 +79,11 @@
 		echo "delete \n";
 
 		$post['delete'] = new restBaseClass();
-		$post['delete']->construct($db,$host,$uname,$passwd);
-		$post['delete']->_construct();
+		$post['delete']->connect($db,$host,$uname,$passwd);
+		
 
 		$post['delete']->GET($_idForward);
-		$post['delete']->abstractPrint();
+		$post['delete']->betterAbstractPrint($post['post']);
 		$post['delete']->DELETE();
 		
 		echo "\n";

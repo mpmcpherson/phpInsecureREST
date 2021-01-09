@@ -25,7 +25,7 @@ require_once 'genericException.php';
 			$this->_rev = "";
 			$this->clean = false;
 			$this->type = "abstract";
-			$this->tags = array("testing","blogPost","mcpherson","dyer");
+			$this->tags = array();
 		}
 		function connect(string $db, string $host,string $uname,string $passwd) : void{
 			$this->newConn = $this->buildDbConnection($db,$host,5984,$uname,$passwd);

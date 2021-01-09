@@ -19,7 +19,6 @@ require_once 'genericException.php';
 		public $tags;
 
 		function __construct(){
-			//$this->ary = get_object_vars($this);
 
 			$this->_id = "";
 			$this->timestamp="";

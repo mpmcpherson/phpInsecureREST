@@ -5,13 +5,18 @@ require_once 'CouchDBRequest.php';
 require_once 'CouchDBResponse.php';
 require_once 'genericException.php';
 require_once 'abstractRestConnection.php';
+require_once '../genericView.php';
 
 	class databaseManager extends restBaseClass{
 		
 		private $dbName;
-
+		private $conf;
+		private $baseView="";
+		
 		function __construct(){
 			$this->dbName="";
+			$this->conf = loadConfigFile();
+			
 		}
 
 		function createDatabase(string $name)
@@ -50,26 +55,17 @@ require_once 'abstractRestConnection.php';
 				$this->clean=false;
 			}
 		}
-		private function handleReturns($obj) : void{
-			foreach($obj as $key => $value) {
-				if(gettype($value) == 'array'){
-					$this->{$this->recoverString($key)} = "Array";
-					$this->handleReturns($obj);
-				}else{
-					if($this->recoverString($key)=="id"){$this->_id=$this->recoverString($value);}else
-					if($this->recoverString($key)=="rev"){$this->_rev=$this->recoverString($value);}else{
-					$this->{$this->recoverString($key)} = $this->recoverString($value);}
-				}
-			}
+		
+		function loadConfigFile(){
+			return file_get_contents(file_exists('../../.couchConfig'));//this is so brittle and ugly. There's probably a real convention regarding this, but my brain is literally not working.
 		}
-
-		function load
 
 		function getMapAndIndexFile($path) {
 			$this->file = json_decode(file_get_contents($path.'.couchConfig'), true);
 
 			return $this->file['mapColumnList'];
 		}
+
 	}
 ?>
 

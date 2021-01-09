@@ -31,11 +31,11 @@
 		$post['post']->subject="<p><br />we're going to try to get this to go through to the 'put'";
 		$post['post']->body="HERE'S A BODY";
 		
-		echo $post['post']->betterAbstractPrint($post['post'],"");
+		echo $post['post']->betterAbstractPrint($post['post']);
 
 		//var_dump($post['post']);
 		$post['post']->POST();
-		echo "\n\n";
+		
 		
 		$_idForward = $post['post']->_id;
 		

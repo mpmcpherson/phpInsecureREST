@@ -13,9 +13,9 @@
 	$post = array('post' => "",'get'=>"",'put'=>"",'delete'=>"" );
 	
 	$testPost=true;
-	$testGET=false;
-	$testPUT=false;
-	$testDELETE=false;
+	$testGET=true;
+	$testPUT=true;
+	$testDELETE=true;
 	
 	$db = "test_db";
 	$host = "localhost";
@@ -48,12 +48,12 @@
 	if($testGET)
 	{
 		echo "get \n";
-		$post['get'] = new blogPost();
+		$post['get'] = new restBaseClass();
 		$post['get']->connect($db,$host,$uname,$passwd);
 		$post['get']->_construct();
 
 		$post['get']->GET($_idForward);
-		$post['get']->abstractPrint();
+		$post['get']->betterAbstractPrint($post['post']);
 		echo "\n";
 	}
 
@@ -62,7 +62,7 @@
 	{
 		echo "put \n";
 
-		$post['put'] = new blogPost();
+		$post['put'] = new restBaseClass();
 		$post['put']->construct($db,$host,$uname,$passwd);
 		$post['put']->_construct();
 
@@ -70,7 +70,7 @@
 		$post['put']->body="and now we're something else";
 		$post['put']->PUT();
 
-		$post['put']->abstractPrint();
+		$post['put']->betterAbstractPrint($post['post']);
 
 		echo "\n";
 	}
@@ -79,7 +79,7 @@
 	if($testDELETE){
 		echo "delete \n";
 
-		$post['delete'] = new blogPost();
+		$post['delete'] = new restBaseClass();
 		$post['delete']->construct($db,$host,$uname,$passwd);
 		$post['delete']->_construct();
 
@@ -94,7 +94,7 @@
 
 		$post['delete']->GET($_idForward);
 
-		$post['delete']->abstractPrint();
+		$post['delete']->betterAbstractPrint($post['post']);
 
 		echo "\n";	
 	}

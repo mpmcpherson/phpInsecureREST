@@ -12,11 +12,14 @@ require_once '../genericView.php';
 		private $dbName;
 		private $conf;
 		private $baseView="";
-		
+
 		function __construct(){
 			$this->dbName="";
 			$this->conf = loadConfigFile();
 			
+		}
+		public function print(){
+			parent::betterAbstractPrint();
 		}
 
 		function createDatabase(string $name)

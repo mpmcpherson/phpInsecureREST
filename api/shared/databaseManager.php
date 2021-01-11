@@ -73,6 +73,7 @@ require_once 'genericView.php';
 				array_push($packagedView, $packageView);
 			}
 
+			var_dump($packagedView);
 			
 		}
 		function getMapAndIndexFile($path) {

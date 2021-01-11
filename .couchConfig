@@ -4,6 +4,7 @@
   ],
   "mapColumnList": {
     "author": "string",
-    "topic": "array"
+    "topic": "array",
+    "tags": "array"
   }
 }

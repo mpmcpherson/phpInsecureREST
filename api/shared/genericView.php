@@ -11,23 +11,26 @@ namespace REST_API;
 		private $documentElemntsToIndex = array();
 
 		private $baseView = "";
-		function __construct($viewElement,$type){
 
+		private $viewElement = "";
+		private $elementType = "";
+
+		function __construct($viewElement,$type){
+			$this->viewElement = $viewElement;
+			$this->elementType = $type;
 			//this is very raw, and needs to end up taking each of the above into account and make sure to handle the proper element emission for them
-			$filter = new filterObject("type","post");
-			$this->baseView = 
-			"function(doc) {".
-			//if (doc.type === "post" && doc.tags && Array.isArray(doc.tags)) {
-				"if (".$filter->filterResult().") {
-					doc.tags.forEach(function(tag) { 
-						emit(tag.toLowerCase(), 1); 
-					}); 
-				} 
-			}";
+
+			//going to have to write some code for handling JS objects, which suuuucks
+			$filter = new filterObject($this->viewElement,$this->elementType);
+			$emitter = new emissionLoopObject($viewElement);
+			
+			$this->baseView = "function(doc) {if (".$filter->filterResult()."){".$emitter->emissionLoopResult()."}}";
 		}
 		//probably several of these. 
 		function StringBuilder(){}
-		function pack(){}
+		function pack(){
+			return json_encode(array($this->viewElement=>$this->baseView));
+		}
 	}
 
 	//the string this outputs will have to have a boolean evaluation in JS. 
@@ -36,10 +39,10 @@ namespace REST_API;
 		//I'm writing an assembler, so I'd best have something to assemble it into.
 		private $filterString = "";
 
-		function __construct($docElement = "type",$configuredTarget="post", $inputArray){
+		function __construct($viewElement,$elementType){
 			$lops = new logicalOperators();
 		
-			$this->filterString = "doc." . $docElement . " " . $lops->LAND  . " " . $configuredTarget;
+			$this->filterString = "(typeof doc." . $viewElement. $lops->NOT_EQ . "'undefined') ".$lops->LAND." typeof doc." . $viewElement . $lops->STRICT_EQ . "'" . $elementType . "'";
 		}
 
 		function filterResult(): string{
@@ -48,11 +51,11 @@ namespace REST_API;
 	}
 	class emissionLoopObject{
 		private $baseLoop="";
-		function __construct($inputArray){
-			$this->baseLoop =
-			 					"doc.".$inputArray.".forEach(function(element) { 
-									emit(element, 1); 
-								}); ";
+		function __construct($viewElement){
+			$this->baseLoop ="doc.".$viewElement.".forEach(function(element) { emit(element, 1); });";
+		}
+		function emissionLoopResult(){
+			return $this->baseLoop;
 		}
 
 	}
@@ -62,5 +65,6 @@ namespace REST_API;
 		public $LOR = "||";
 		public $STRICT_EQ = "===";
 		public $STRICT_NOT_EQ = "!==";
+		public $NOT_EQ = "!=";
 	}
 ?>

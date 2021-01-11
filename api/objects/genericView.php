@@ -17,4 +17,32 @@ namespace REST_API;
 		function StringBuilder(){}
 		
 	}
+
+	class viewObject{
+		private $docElement;
+		private $configuredTarget;
+		function __construct(){
+			$lops = logicalOperators();
+
+			$firstArgument = "doc.$docElement";
+			$secondArgument = "$configuredTarget";
+			
+			$this->baseView = 
+
+			"function(doc) {
+				if ( " . $firstArgument . " " . $lops->LAND  . " " . $secondArgument . " && doc.tags && Array.isArray(doc.tags)) {
+					doc.tags.forEach(function(tag) { 
+						emit(tag, 1); 
+					}); 
+				} 
+			}";
+		}
+	}
+
+	class logicalOperators{
+		public $LAND = "&&";
+		public $LOR = "||";
+		public $STRICT_EQ = "===";
+		public $STRICT_NOT_EQ = "!==";
+	}
 ?>

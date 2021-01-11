@@ -12,15 +12,24 @@
 
 	$post = array('post' => "",'get'=>"",'put'=>"",'delete'=>"" );
 	
-	$testPost=true;
-	$testGET=true;
-	$testPUT=true;
-	$testDELETE=true;
+	$testPost=false;
+	$testGET=false;
+	$testPUT=false;
+	$testDELETE=false;
 	
 	$db = "test_db";
 	$host = "localhost";
 	$uname = "couchAdmin";
 	$passwd = "Adein1Dva2!";
+
+	if($testGenericViewObject){}
+	if($testViewCreation){}
+	if($testFileImport){}
+	if($testPotentialViewIdentification){}
+
+
+
+
 
 	/*testing POST*/
 	if($testPost){
@@ -45,10 +54,8 @@
 		
 		echo "\n";
 	}
-
 	/*testing GET*/	
-	if($testGET)
-	{
+	if($testGET){
 		echo "get \n";
 		$post['get'] = new restBaseClass();
 		$post['get']->connect($db,$host,$uname,$passwd);
@@ -58,10 +65,8 @@
 		var_dump($post['get']);
 		echo "\n";
 	}
-
 	/*testing PUT*/	
-	if($testPUT)
-	{
+	if($testPUT){
 		echo "put \n";
 
 		$post['put'] = new restBaseClass();
@@ -77,7 +82,6 @@
 
 		echo "\n";
 	}
-
 	/*testing DELETE*/	
 	if($testDELETE){
 		echo "delete \n";
@@ -102,5 +106,4 @@
 
 		echo "\n";	
 	}
-
 ?>

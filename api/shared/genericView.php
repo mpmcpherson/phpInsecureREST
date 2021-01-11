@@ -1,7 +1,6 @@
 <?php
 namespace REST_API;
-	class genericView extends restBaseClass
-	{
+	class genericView{
 
 		//attributes to index comes from the config
 		//and they'll take the form of doc.ArrayElement
@@ -15,6 +14,8 @@ namespace REST_API;
 		private $viewElement = "";
 		private $elementType = "";
 
+		private $encodedView = "";
+
 		function __construct($viewElement,$type){
 			$this->viewElement = $viewElement;
 			$this->elementType = $type;
@@ -26,10 +27,11 @@ namespace REST_API;
 			
 			$this->baseView = "function(doc) {if (".$filter->filterResult()."){".$emitter->emissionLoopResult()."}}";
 		}
-		
+
 		function pack(){
 			return json_encode(array($this->viewElement=>$this->baseView));
 		}
+
 	}
 
 	//the string this outputs will have to have a boolean evaluation in JS. 

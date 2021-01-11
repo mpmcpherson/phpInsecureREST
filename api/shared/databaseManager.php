@@ -26,13 +26,13 @@ require_once 'genericView.php';
 		function createDatabase(string $name)
 		{
 			$this->dbName = $name;
-			$this->SubmitToDb();
+			$this->SubmitDbToDb();
 		}
 		function deleteDatabse(string $name){
 			$this->dbName = $name;
 			$this->deleteObject();
 		}
-		private function SubmitToDb() : void{
+		private function SubmitDbToDb() : void{
 			$retVal = parent::$newConn->send('/'. $this->dbName, 'PUT');
 			$responseBody = $retVal->getBody(); 
 			$decoded = json_decode($responseBody);
@@ -70,11 +70,18 @@ require_once 'genericView.php';
 				//now to start initializing all these things
 				$view = new genericView($key,$value);
 				$packageView = $view->pack();
+				
+
 				array_push($packagedView, $packageView);
 			}
 
-			var_dump($packagedView);
+
+
 			
+		}
+		function loadDatabaseIndex($viewAsJson){
+			//_design/test_document/_view/tagger
+			//_design/name_of_design_doc/_view/nameOfElement
 		}
 		function getMapAndIndexFile($path) {
 			if(file_exists($path.'.couchConfig')){
@@ -83,7 +90,6 @@ require_once 'genericView.php';
 			}else{
 				throw new \Exception("file doesn't exist. Path given: ".$path.".couchConfig");
 			}
-			
 		}
 
 	}

@@ -26,8 +26,7 @@ namespace REST_API;
 			
 			$this->baseView = "function(doc) {if (".$filter->filterResult()."){".$emitter->emissionLoopResult()."}}";
 		}
-		//probably several of these. 
-		function StringBuilder(){}
+		
 		function pack(){
 			return json_encode(array($this->viewElement=>$this->baseView));
 		}
@@ -49,6 +48,7 @@ namespace REST_API;
 			return $this->filterString;
 		}
 	}
+
 	class emissionLoopObject{
 		private $baseLoop="";
 		function __construct($viewElement){
@@ -57,7 +57,6 @@ namespace REST_API;
 		function emissionLoopResult(){
 			return $this->baseLoop;
 		}
-
 	}
 
 	class logicalOperators{

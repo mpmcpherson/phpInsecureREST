@@ -68,9 +68,9 @@ require_once 'genericView.php';
 
 			foreach($mappingColumns as $key => $value){
 				//now to start initializing all these things
-				$view = new genericView();
-
-				arary_push($packagedView, );
+				$view = new genericView($key,$value);
+				$packageView = $view->pack();
+				array_push($packagedView, $packageView);
 			}
 
 			

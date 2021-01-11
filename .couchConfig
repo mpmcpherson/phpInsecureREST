@@ -1,10 +1,9 @@
-
 {
-	"partition" : [
-		"applicationId"
-	],
-	"mapColumnList" : [
-		"author",
-		"topic"
-	] 
+  "partition": [
+    "applicationId"
+  ],
+  "mapColumnList": {
+    "author": "string",
+    "topic": "array"
+  }
 }

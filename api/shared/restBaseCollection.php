@@ -16,7 +16,7 @@ require_once 'abstractRestConnection.php';
 
 		function getAllDocs()
 		{
-			$lol = restBaseClass::GET("_all_docs"); //yeah, except this doesn't actually *parse* all the friggin documents, because of course it doesn't.
+			parent::GET("_all_docs"); //yeah, except this doesn't actually *parse* all the friggin documents, because of course it doesn't.
 		}
 
 		//Okay. Now to write all the mass-handling functions...

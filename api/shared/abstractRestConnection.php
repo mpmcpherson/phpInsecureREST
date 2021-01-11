@@ -183,7 +183,7 @@ require_once 'genericException.php';
 
 
 		private function encodeForDelivery(string $encodingMethod) : string{
-
+			$encAry = array();
 			if($encodingMethod==="POST"){
 				$encAry = array("newConn","clean","_rev","","position","ary");
 			}elseif($encodingMethod==="PUT"){

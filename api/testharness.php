@@ -5,6 +5,9 @@
 	require_once __DIR__.'/objects/blogPost.php';
 	require_once __DIR__.'/objects/user.php';
 	require_once __DIR__.'/objects/dndPlot.php';
+	require_once __DIR__.'/shared/databaseManager.php';
+	require_once __DIR__.'/shared/genericView.php';
+
 
 
 	$_idForward = "";
@@ -16,16 +19,21 @@
 	$testGET=false;
 	$testPUT=false;
 	$testDELETE=false;
+	$testbuildDatabaseIndices = true;
 	
 	$db = "test_db";
 	$host = "localhost";
 	$uname = "couchAdmin";
 	$passwd = "Adein1Dva2!";
 
-	if($testGenericViewObject){}
-	if($testViewCreation){}
-	if($testFileImport){}
-	if($testPotentialViewIdentification){}
+	if($testbuildDatabaseIndices){
+		$config = new databaseManager();
+		$config->buildDatabaseIndices();
+	}
+//	if($testGenericViewObject){}
+//	if($testViewCreation){}
+//	if($testFileImport){}
+//	if($testPotentialViewIdentification){}
 
 
 

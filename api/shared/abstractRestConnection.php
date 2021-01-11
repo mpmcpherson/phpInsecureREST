@@ -66,7 +66,7 @@ require_once 'genericException.php';
 		function GET(string $id) : void{
 			try{
 				$this->getObject($id);
-			}catch(\Exception $e){
+			}catch(genericException $e){
 				echo $e->errorMessage();
 			}
 

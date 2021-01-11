@@ -12,7 +12,7 @@ require_once 'genericView.php';
 		private $dbName;
 		private $conf;
 		private $baseView="";
-		private $configPath = "../../";
+		private $configPath = "../";
 		private $configValues = "";
 
 		function __construct(){
@@ -60,10 +60,20 @@ require_once 'genericView.php';
 		}
 		function buildDatabaseIndices(){
 			$this->configValues = $this->getMapAndIndexFile($this->configPath);
-			var_dump($this->configValues);
+			//var_dump($this->configValues);
+
+			$mappingColumns = $this->configValues['mapColumnList'];
 			
-			//now to start initializing all these things
-			$view = new genericView();
+			$packagedView = array();
+
+			foreach($mappingColumns as $key => $value){
+				//now to start initializing all these things
+				$view = new genericView();
+
+				arary_push($packagedView, );
+			}
+
+			
 		}
 		function getMapAndIndexFile($path) {
 			if(file_exists($path.'.couchConfig')){

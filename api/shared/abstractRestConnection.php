@@ -66,7 +66,7 @@ require_once 'genericException.php';
 		function GET(string $id) : void{
 			try{
 				$this->getObject($id);
-			}catch(Exception $e){
+			}catch(\Exception $e){
 				echo $e->errorMessage();
 			}
 
@@ -118,7 +118,7 @@ require_once 'genericException.php';
 				echo $e->errorMessage();
 			}
 		}
-		private function CheckRevision() {
+		function CheckRevision() {
 			//okay, this is almost certainly just me being too clever, but it's fun while it lasts
 			//right, so what I need to do here is alert the user to get a new version. The rest (the part where I functionally branch the changes) needs to be handled by certain UI elements and custom code to keep the user in control.
 
@@ -246,7 +246,7 @@ require_once 'genericException.php';
 			return $print;
 		}			
 
-		private function handleReturns($obj) : void{
+		function handleReturns($obj) : void{
 
 			$startAry = get_object_vars($obj);
 

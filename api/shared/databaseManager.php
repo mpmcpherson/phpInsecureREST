@@ -5,68 +5,74 @@ require_once 'CouchDBRequest.php';
 require_once 'CouchDBResponse.php';
 require_once 'genericException.php';
 require_once 'abstractRestConnection.php';
-require_once '../genericView.php';
+require_once 'genericView.php';
 
 	class databaseManager extends restBaseClass{
 		
 		private $dbName;
 		private $conf;
 		private $baseView="";
+		private $configPath = "../../";
+		private $configValues = "";
 
 		function __construct(){
 			$this->dbName="";
-			$this->conf = loadConfigFile();
-			
+			//the database is going to have to have a flag for "under the management of..." this program.
 		}
 		public function print(){
-			parent::betterAbstractPrint();
+			parent::betterAbstractPrint($this);
 		}
 
 		function createDatabase(string $name)
 		{
 			$this->dbName = $name;
-			SubmitToDb();
+			$this->SubmitToDb();
 		}
 		function deleteDatabse(string $name){
 			$this->dbName = $name;
-			deleteObject();
+			$this->deleteObject();
 		}
 		private function SubmitToDb() : void{
-			$retVal = $this->newConn->send('/'. $this->dbName, 'PUT');
+			$retVal = parent::$newConn->send('/'. $this->dbName, 'PUT');
 			$responseBody = $retVal->getBody(); 
 			$decoded = json_decode($responseBody);
-			$this->handleReturns($decoded);
+			parent::handleReturns($decoded);
 		}
 
 		function getAllDbs(){
-			return GET('_all_dbs');
+			parent::GET('_all_dbs');
 		}
 		private function deleteObject() : void{
-			if($this->CheckRevision()){
-				$retVal = $this->newConn->send('/'.$this->dbName, 'DELETE');
+			if(parent::CheckRevision()){
+				$retVal = parent::$newConn->send('/'.$this->dbName, 'DELETE');
 				$responseBody = $retVal->getBody();
 				$decoded = json_decode($responseBody);
 
-				//Wipe the object itself from local memory
 				foreach($this as $key => $value) {
 					if($key !== "newConn"){
 						$this->{$key} = "null";
 					}
 				}
-				$this->handleReturns($decoded);
+				parent::handleReturns($decoded);
 			}else{
 				$this->clean=false;
 			}
 		}
-		
-		function loadConfigFile(){
-			return file_get_contents(file_exists('../../.couchConfig'));//this is so brittle and ugly. There's probably a real convention regarding this, but my brain is literally not working.
+		function buildDatabaseIndices(){
+			$this->configValues = $this->getMapAndIndexFile($this->configPath);
+			var_dump($this->configValues);
+			
+			//now to start initializing all these things
+			$view = new genericView();
 		}
-
 		function getMapAndIndexFile($path) {
-			$this->file = json_decode(file_get_contents($path.'.couchConfig'), true);
-
-			return $this->file['mapColumnList'];
+			if(file_exists($path.'.couchConfig')){
+				$file = json_decode(file_get_contents($path.'.couchConfig'), true);
+				return $file;
+			}else{
+				throw new \Exception("file doesn't exist. Path given: ".$path.".couchConfig");
+			}
+			
 		}
 
 	}

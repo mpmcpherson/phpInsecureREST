@@ -10,33 +10,40 @@ namespace REST_API;
 		//and here, it will be doc.ArrayElement.forEach(documentElement)
 		private $documentElemntsToIndex = array();
 		function __construct(){
+			
 			//this is very raw, and needs to end up taking each of the above into account and make sure to handle the proper element emission for them
-			$this->baseView = "function(doc) {if (doc.type === $sometype && doc.tags && Array.isArray(doc.tags)) { doc.tags.forEach(function(tag) { emit(tag.toLowerCase(), 1); }); } }";
+			$filter = filterObject("type","post");
+			$this->baseView = 
+			"function(doc) {".
+			//if (doc.type === "post" && doc.tags && Array.isArray(doc.tags)) {
+				"if ($filter->filterResult) {
+					doc.tags.forEach(function(tag) { 
+						emit(tag.toLowerCase(), 1); 
+					}); 
+				} 
+			}";
 		}
 		//probably several of these. 
 		function StringBuilder(){}
 		
 	}
 
-	class viewObject{
-		private $docElement;
-		private $configuredTarget;
-		function __construct(){
+	class filterObject{
+
+		function __construct($docElement = "type",$configuredTarget="post", $inputArray){
 			$lops = logicalOperators();
-
-			$firstArgument = "doc.$docElement";
-			$secondArgument = "$configuredTarget";
-			
-			$this->baseView = 
-
-			"function(doc) {
-				if ( " . $firstArgument . " " . $lops->LAND  . " " . $secondArgument . " && doc.tags && Array.isArray(doc.tags)) {
-					doc.tags.forEach(function(tag) { 
-						emit(tag, 1); 
-					}); 
-				} 
-			}";
+		
+			$this->baseView = "doc." . $docElement . " " . $lops->LAND  . " " . $configuredTarget;
 		}
+	}
+	class emissionLoopObject{
+		function __construct($inputArray){
+			$this->baseLoop =
+			 					"doc.".$inputArray.".forEach(function(element) { 
+									emit(element, 1); 
+								}); ";
+		}
+
 	}
 
 	class logicalOperators{

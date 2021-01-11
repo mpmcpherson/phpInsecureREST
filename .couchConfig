@@ -1,5 +1,8 @@
 
 {
+	"partition" : [
+		"applicationId"
+	],
 	"mapColumnList" : [
 		"author",
 		"topic"

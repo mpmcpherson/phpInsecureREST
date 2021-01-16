@@ -14,6 +14,7 @@ require_once 'genericView.php';
 		private $baseView="";
 		private $configPath = "../";
 		private $configValues = "";
+		private $designDocument="";
 
 		function __construct(){
 			$this->dbName="";
@@ -26,14 +27,19 @@ require_once 'genericView.php';
 		function createDatabase(string $name)
 		{
 			$this->dbName = $name;
-			$this->SubmitDbToDb();
+			$this->SubmitDbToDb($this->dbName);
+		}
+		function createView(string $view){
+			$viewTargetingString = $this->dbName."/_design/".$this->designDocument."";
+			#http://127.0.0.1:5984/_utils/#/database/test_db/_design/test_document/_view/tagger
+			$this->SubmitDbToDb($viewTargetingString.$view);
 		}
 		function deleteDatabse(string $name){
 			$this->dbName = $name;
 			$this->deleteObject();
 		}
-		private function SubmitDbToDb() : void{
-			$retVal = parent::$newConn->send('/'. $this->dbName, 'PUT');
+		private function SubmitDbToDb($submissionTarget) : void{
+			$retVal = parent::$newConn->send('/'. $submissionTarget, 'PUT');
 			$responseBody = $retVal->getBody(); 
 			$decoded = json_decode($responseBody);
 			parent::handleReturns($decoded);
@@ -75,6 +81,10 @@ require_once 'genericView.php';
 				array_push($packagedView, $packageView);
 			}
 
+
+			foreach ($packagedView as $key => $value) {
+				# code...
+			}
 
 			var_dump($packageView);
 			

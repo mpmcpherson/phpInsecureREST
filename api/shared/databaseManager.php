@@ -76,7 +76,7 @@ require_once 'genericView.php';
 			}
 
 
-
+			var_dump($packageView);
 			
 		}
 		function loadDatabaseIndex($viewAsJson){

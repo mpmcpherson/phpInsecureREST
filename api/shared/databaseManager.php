@@ -81,7 +81,7 @@ require_once 'genericView.php';
 		}
 		function loadDatabaseIndex($viewAsJson){
 			//_design/test_document/_view/tagger
-			//_design/name_of_design_doc/_view/nameOfElement
+			//database/_design/name_of_design_doc/_view/nameOfElement
 		}
 		function getMapAndIndexFile($path) {
 			if(file_exists($path.'.couchConfig')){

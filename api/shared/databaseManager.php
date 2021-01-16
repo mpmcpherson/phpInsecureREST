@@ -4,7 +4,7 @@ require_once 'CouchDBConnection.php';
 require_once 'CouchDBRequest.php';
 require_once 'CouchDBResponse.php';
 require_once 'genericException.php';
-require_once 'abstractRestConnection.php';
+require_once 'restBaseClass.php';
 require_once 'genericView.php';
 
 	class databaseManager extends restBaseClass{
@@ -30,9 +30,8 @@ require_once 'genericView.php';
 			$this->SubmitDbToDb($this->dbName);
 		}
 		function createView(string $name, string $view){
-			$viewTargetingString = $this->dbName."/_design/".$this->configValues["designDoc"]."/_view/".$name;
-
-			#http://127.0.0.1:5984/_utils/#/database/test_db/_design/test_document/_view/tagger
+			$viewTargetingString = $this->dbName."/_design/".$this->configValues["designDoc"]."/_view/".$name."/";
+			
 			$this->SubmitDbToDb($viewTargetingString.$view);
 		}
 		function deleteDatabse(string $name){
@@ -76,19 +75,12 @@ require_once 'genericView.php';
 			foreach($mappingColumns as $key => $value){
 				//now to start initializing all these things
 				$view = new genericView($key,$value);
+				
 				$packageView = $view->pack();
 				
-
-				array_push($packagedView, $packageView);
+				$this->createView($key, $packageView);
 			}
 
-
-			foreach ($packagedView as $key => $value) {
-				# code...
-			}
-
-			var_dump($packageView);
-			
 		}
 		function loadDatabaseIndex($viewAsJson){
 			//_design/test_document/_view/tagger

@@ -4,7 +4,7 @@ require_once 'CouchDBConnection.php';
 require_once 'CouchDBRequest.php';
 require_once 'CouchDBResponse.php';
 require_once 'genericException.php';
-require_once 'abstractRestConnection.php';
+require_once 'restBaseClass.php';
 
 	class restBaseCollection extends restBaseClass{
 		

@@ -14,7 +14,7 @@ require_once 'genericView.php';
 		private $baseView="";
 		private $configPath = "../";
 		private $configValues = "";
-		private $designDocument="";
+		
 
 		function __construct(){
 			$this->dbName="";
@@ -29,8 +29,9 @@ require_once 'genericView.php';
 			$this->dbName = $name;
 			$this->SubmitDbToDb($this->dbName);
 		}
-		function createView(string $view){
-			$viewTargetingString = $this->dbName."/_design/".$this->designDocument."";
+		function createView(string $name, string $view){
+			$viewTargetingString = $this->dbName."/_design/".$this->configValues["designDoc"]."/_view/".$name;
+
 			#http://127.0.0.1:5984/_utils/#/database/test_db/_design/test_document/_view/tagger
 			$this->SubmitDbToDb($viewTargetingString.$view);
 		}

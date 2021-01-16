@@ -6,5 +6,7 @@
     "author": "string",
     "topic": "array",
     "tags": "array"
-  }
+
+  },
+  "designDoc":"testingDoc"
 }

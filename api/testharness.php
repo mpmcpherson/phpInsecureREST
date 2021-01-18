@@ -1,7 +1,7 @@
 <?php
 	namespace REST_API;
 	//echo dirname(__DIR__).'/shared/abstractRestConnection.php';
-	require_once __DIR__.'/shared/abstractRestConnection.php';
+	require_once __DIR__.'/shared/restBaseClass.php';
 	require_once __DIR__.'/objects/blogPost.php';
 	require_once __DIR__.'/objects/user.php';
 	require_once __DIR__.'/objects/dndPlot.php';
@@ -27,7 +27,7 @@
 	$passwd = "Adein1Dva2!";
 
 	if($testbuildDatabaseIndices){
-		$config = new databaseManager();
+		$config = new databaseManager($db,$host,$uname,$passwd);
 		$config->buildDatabaseIndices();
 	}
 //	if($testGenericViewObject){}

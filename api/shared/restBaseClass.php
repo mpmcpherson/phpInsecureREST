@@ -35,7 +35,16 @@ require_once 'genericException.php';
 			$this->SubmitToDb();
 		}
 
+		public function rawSend($value){
+				$retVal = $this->newConn->send($value);
+				
+				$responseBody = $retVal->getBody();
 
+				$decoded = json_decode($responseBody);
+				 
+				//testing
+				$this->handleReturns($decoded);
+		}
 		private function SubmitToDb() : void{
 				
 				//use the date for this one
@@ -247,6 +256,8 @@ require_once 'genericException.php';
 		}			
 
 		function handleReturns($obj) : void{
+
+			var_dump($obj);
 
 			$startAry = get_object_vars($obj);
 

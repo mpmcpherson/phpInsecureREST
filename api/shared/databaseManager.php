@@ -16,8 +16,11 @@ require_once 'genericView.php';
 		private $configValues = "";
 		
 
-		function __construct(){
+		function __construct(string $db, string $host,string $uname,string $passwd){
 			$this->dbName="";
+			parent::__construct();
+			parent::connect($db, $host, $uname, $passwd);
+			echo "connected\n";
 			//the database is going to have to have a flag for "under the management of..." this program.
 		}
 		public function print(){
@@ -27,20 +30,27 @@ require_once 'genericView.php';
 		function createDatabase(string $name)
 		{
 			$this->dbName = $name;
-			$this->SubmitDbToDb($this->dbName);
+			$this->SubmitElementToDb($this->dbName);
 		}
 		function createView(string $name, string $view){
+			echo "create view\n";
 			$viewTargetingString = $this->dbName."/_design/".$this->configValues["designDoc"]."/_view/".$name."/";
 			
-			$this->SubmitDbToDb($viewTargetingString.$view);
+			echo "submitting to db\n";
+			$this->SubmitElementToDb($viewTargetingString.$view);
+			echo "submitted\n";
 		}
 		function deleteDatabse(string $name){
 			$this->dbName = $name;
 			$this->deleteObject();
 		}
-		private function SubmitDbToDb($submissionTarget) : void{
-			$retVal = parent::$newConn->send('/'. $submissionTarget, 'PUT');
+		private function SubmitElementToDb($submissionTarget) : void{
+			
+			echo "sending in SubmitElementToDb";
+			$retVal = parent::rawSend('/'. $submissionTarget, 'PUT');
 			$responseBody = $retVal->getBody(); 
+			echo "response acquired\n";
+
 			$decoded = json_decode($responseBody);
 			parent::handleReturns($decoded);
 		}

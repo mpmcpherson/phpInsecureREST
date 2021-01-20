@@ -4,6 +4,34 @@
 		"selected_items":
 		[
 			[
+				"config",
+				"configValues"
+			],
+			[
+				"pack",
+				"$packagedView〔variable〕"
+			],
+			[
+				"emi",
+				"emissionLoopObject"
+			],
+			[
+				"enc",
+				"$encAry〔variable〕"
+			],
+			[
+				"requ",
+				"require_once〔keyword〕"
+			],
+			[
+				"gener",
+				"genericView〔class〕"
+			],
+			[
+				"conf",
+				"configPath〔variable〕"
+			],
+			[
 				"getobject",
 				"get_object_vars〔function〕"
 			],
@@ -148,21 +176,57 @@
 	"buffers":
 	[
 		{
-			"contents": " I LOVE YOU VERY MUCH?\n Very, very much...lol\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n",
+			"file": "api/shared/databaseManager.php",
 			"settings":
 			{
-				"buffer_size": 144,
-				"line_ending": "Unix",
-				"name": "I LOVE YOU VERY MUCH?"
+				"buffer_size": 2992,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
 			}
 		},
 		{
-			"contents": "git add -A; git commit -m \"${date}\"; git push;\n",
+			"file": "api/shared/restBaseClass.php",
 			"settings":
 			{
-				"buffer_size": 47,
+				"buffer_size": 7550,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"contents": "git add -A; git commit -m \"$(date)\"; git push;",
+			"settings":
+			{
+				"buffer_size": 46,
 				"line_ending": "Unix",
-				"name": "git add -A; git commit -m \"${date}\"; git push;"
+				"name": "git add -A; git commit -m \"$(date)\"; git push;"
+			}
+		},
+		{
+			"file": "api/testharness.php",
+			"settings":
+			{
+				"buffer_size": 2797,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "phpstan.neon",
+			"settings":
+			{
+				"buffer_size": 118,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": ".couchConfig",
+			"settings":
+			{
+				"buffer_size": 165,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
 			}
 		}
 	],
@@ -335,17 +399,33 @@
 		"/home/michaelmcpherson/src/phpInsecureREST/api/config",
 		"/home/michaelmcpherson/src/phpInsecureREST/api/documentation",
 		"/home/michaelmcpherson/src/phpInsecureREST/api/objects",
-		"/home/michaelmcpherson/src/phpInsecureREST/api/shared"
+		"/home/michaelmcpherson/src/phpInsecureREST/api/shared",
+		"/home/michaelmcpherson/src/phpInsecureREST/tests"
 	],
 	"file_history":
 	[
-		"/home/michaelmcpherson/src/phpInsecureREST/jsExamplesForObjectsToCreate.md",
-		"/home/michaelmcpherson/src/phpInsecureREST/README.md",
+		"/home/michaelmcpherson/src/phpInsecureREST/api/shared/restBaseCollection.php",
+		"/home/michaelmcpherson/src/phpInsecureREST/api/shared/CouchDBRequest.php",
+		"/home/michaelmcpherson/src/phpInsecureREST/api/shared/restBaseClass.php",
+		"/home/michaelmcpherson/src/phpInsecureREST/api/shared/genericView.php",
+		"/home/michaelmcpherson/src/phpInsecureREST/api/shared/genericException.php",
 		"/home/michaelmcpherson/src/phpInsecureREST/api/shared/databaseConfigurator.php",
+		"/home/michaelmcpherson/src/phpInsecureREST/vendor/phpunit/php-code-coverage/src/Node/AbstractNode.php",
+		"/home/michaelmcpherson/src/comnavnotes/TIMELINE FOR PHP SITE MIGRATION",
+		"/home/michaelmcpherson/src/comnavnotes/transferData/Repos/autoCadTransposer/bin",
+		"/home/michaelmcpherson/src/phpInsecureREST/api/shared/abstractRestConnection.php",
+		"/home/michaelmcpherson/src/phpInsecureREST/.couchConfig",
+		"/home/michaelmcpherson/src/phpInsecureREST/jsExamplesForObjectsToCreate.md",
+		"/home/michaelmcpherson/src/phpInsecureREST/.gitignore",
+		"/home/michaelmcpherson/src/phpInsecureREST/phpstan.neon.dist",
+		"/home/michaelmcpherson/src/phpInsecureREST/phpstan.neon",
+		"/home/michaelmcpherson/SOLAR calculations",
+		"/home/michaelmcpherson/payoneer 2fa backup",
+		"/home/michaelmcpherson/raspberry projects",
+		"/home/michaelmcpherson/src/clientSideBlogger/bloggingClientBase/frontEnd/posts/lorem1.txt",
+		"/home/michaelmcpherson/src/phpInsecureREST/README.md",
 		"/home/michaelmcpherson/src/phpInsecureREST/dbManagerTest.php",
 		"/home/michaelmcpherson/src/phpInsecureREST/api/shared/databaseManager.php",
-		"/home/michaelmcpherson/src/phpInsecureREST/.couchConfig",
-		"/home/michaelmcpherson/src/phpInsecureREST/api/shared/abstractRestConnection.php",
 		"/home/michaelmcpherson/src/phpInsecureREST/api/testharness.php",
 		"/home/michaelmcpherson/src/phpInsecureREST/api/objects/blogPost.php",
 		"/home/michaelmcpherson/src/phpInsecureREST/api/developmentResources/couchdb - Get a single value from document - Stack Overflow_files/stub.js",
@@ -356,7 +436,6 @@
 		"/home/michaelmcpherson/src/phpInsecureREST/api/shared/CouchDBConnection.php",
 		"/home/michaelmcpherson/src/phpInsecureREST/api/shared/CouchDBResponse.php",
 		"/home/michaelmcpherson/src/staggeredContact/README.md",
-		"/home/michaelmcpherson/raspberry projects",
 		"/home/michaelmcpherson/valandrinasaddress",
 		"/home/michaelmcpherson/src/toolbox/decomp/manualDecomp.sh",
 		"/home/michaelmcpherson/src/toolbox/decomp/wpa_supplicant.conf",
@@ -394,14 +473,11 @@
 		"/home/michaelmcpherson/Documents/30 day notice.odt",
 		"/home/michaelmcpherson/.config/sublime-text-3/Installed Packages/0_package_control_loader.sublime-package",
 		"/home/michaelmcpherson/.config/sublime-text-3/Packages/JSLint/JSLint.sublime-settings",
-		"/home/michaelmcpherson/src/phpInsecureREST/api/shared/restBaseCollection.php",
 		"/home/michaelmcpherson/iftop_top.json",
 		"/home/michaelmcpherson/src/betterabstractprint.php",
 		"/home/michaelmcpherson/src/phpInsecureREST/api/objects/user.php",
 		"/home/michaelmcpherson/src/phpInsecureREST/api/objects/dndPlot.php",
 		"/home/michaelmcpherson/src/phpInsecureREST/api/config/secretConfig.php",
-		"/home/michaelmcpherson/src/phpInsecureREST/api/shared/CouchDBRequest.php",
-		"/home/michaelmcpherson/src/phpInsecureREST/api/shared/genericException.php",
 		"/home/michaelmcpherson/src/phpInsecureREST/tests/Unit/shared/abstractRestConnectionTest.php.bak",
 		"/home/michaelmcpherson/src/phpInsecureREST/tests/Unit/shared/mpmcpherson.sublime-project",
 		"/home/michaelmcpherson/src/phpInsecureREST/api/testRes.txt",
@@ -441,7 +517,6 @@
 		"/home/michaelmcpherson/src/clientSideBlogger/bloggingClientBase/frontEnd/posts/loremTypical",
 		"/home/michaelmcpherson/src/clientSideBlogger/bloggingClientBase/frontEnd/posts/pirateIpsum",
 		"/home/michaelmcpherson/src/clientSideBlogger/bloggingClientBase/frontEnd/posts/worseHipster",
-		"/home/michaelmcpherson/src/clientSideBlogger/bloggingClientBase/frontEnd/posts/lorem1.txt",
 		"/home/michaelmcpherson/src/clientSideBlogger/bloggingClientBase/frontEnd/posts/kafka.txt",
 		"/home/michaelmcpherson/src/clientSideBlogger/bloggingClientBase/frontEnd/posts/hipSum.txt",
 		"/home/michaelmcpherson/src/clientSideBlogger/bloggingClientBase/frontEnd/posts/LatinCicero",
@@ -456,21 +531,11 @@
 		"/home/michaelmcpherson/src/newUIframework/uiSite/index.php",
 		"/home/michaelmcpherson/src/DnDModuleGenerator/site/index.php",
 		"/home/michaelmcpherson/src/DnDModuleGenerator/index.php",
-		"/home/michaelmcpherson/src/writtenRecords/DnD/Necromancer Nine/Plot Episode 5",
-		"/home/michaelmcpherson/src/writtenRecords/DnD/Necromancer Nine/Plot Episode 6",
-		"/home/michaelmcpherson/src/writtenRecords/DnD/Necromancer Nine/Plot Episode 4",
-		"/home/michaelmcpherson/src/writtenRecords/DnD/Necromancer Nine/Plot Episode 3",
-		"/home/michaelmcpherson/src/writtenRecords/DnD/Necromancer Nine/plot episode 1",
-		"/home/michaelmcpherson/src/writtenRecords/DnD/Necromancer Nine/Plot Episode 2",
-		"/home/michaelmcpherson/src/clientSideBlogger/bloggingClientBase/css/wysiwyg.css",
-		"/home/michaelmcpherson/src/clientSideBlogger/bloggingClientBase/css/pure-min.css",
-		"/home/michaelmcpherson/src/DnDModuleGenerator/plot types",
-		"/home/michaelmcpherson/src/DnDModuleGenerator/plot hooks",
-		"/home/michaelmcpherson/src/DnDModuleGenerator/more dnd plots"
+		"/home/michaelmcpherson/src/writtenRecords/DnD/Necromancer Nine/Plot Episode 5"
 	],
 	"find":
 	{
-		"height": 31.0
+		"height": 45.0
 	},
 	"find_in_files":
 	{
@@ -485,6 +550,13 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"new",
+			"this",
+			"exception",
+			"\t\t\t\n",
+			"\t\t\n",
+			"ary",
+			"\tvar_dump",
 			"encodeforde",
 			"parent",
 			"linter.lint.linter:phplint",
@@ -560,57 +632,94 @@
 	"groups":
 	[
 		{
-			"selected": 1,
+			"selected": 0,
 			"sheets":
 			[
 				{
 					"buffer": 0,
+					"file": "api/shared/databaseManager.php",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 144,
+						"buffer_size": 2992,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								45,
-								45
+								2470,
+								2470
 							]
 						],
 						"settings":
 						{
-							"auto_name": "I LOVE YOU VERY MUCH?",
-							"default_dir": "/home/michaelmcpherson/src/phpInsecureREST/api/shared",
-							"syntax": "Packages/Text/Plain text.tmLanguage"
+							"auto_complete": false,
+							"syntax": "Packages/PHP/PHP.sublime-syntax",
+							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 1802.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 1,
+					"stack_index": 0,
 					"type": "text"
 				},
 				{
 					"buffer": 1,
+					"file": "api/shared/restBaseClass.php",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 47,
+						"buffer_size": 7550,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								47,
-								47
+								6993,
+								6993
 							]
 						],
 						"settings":
 						{
-							"auto_name": "git add -A; git commit -m \"${date}\"; git push;",
+							"auto_complete": false,
+							"syntax": "Packages/PHP/PHP.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 3007.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				}
+			]
+		},
+		{
+			"selected": 1,
+			"sheets":
+			[
+				{
+					"buffer": 2,
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 46,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								46,
+								46
+							]
+						],
+						"settings":
+						{
+							"auto_name": "git add -A; git commit -m \"$(date)\"; git push;",
 							"default_dir": "/home/michaelmcpherson/src/phpInsecureREST/api/shared",
 							"syntax": "Packages/Text/Plain text.tmLanguage"
 						},
@@ -618,7 +727,94 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 0,
+					"stack_index": 5,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "api/testharness.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2797,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								709,
+								709
+							]
+						],
+						"settings":
+						{
+							"auto_complete": false,
+							"syntax": "Packages/PHP/PHP.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 621.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "phpstan.neon",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 118,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								117,
+								117
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": ".couchConfig",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 165,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								88,
+								88
+							]
+						],
+						"settings":
+						{
+							"auto_complete": true,
+							"syntax": "Packages/JavaScript/JSON.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
 					"type": "text"
 				}
 			]
@@ -626,7 +822,7 @@
 	],
 	"incremental_find":
 	{
-		"height": 31.0
+		"height": 32.0
 	},
 	"input":
 	{
@@ -641,6 +837,12 @@
 				0,
 				1,
 				1
+			],
+			[
+				0,
+				1,
+				1,
+				2
 			]
 		],
 		"cols":
@@ -651,6 +853,7 @@
 		"rows":
 		[
 			0.0,
+			0.691244226056,
 			1.0
 		]
 	},
@@ -687,7 +890,7 @@
 	"project": "rest.sublime-project",
 	"replace":
 	{
-		"height": 58.0
+		"height": 60.0
 	},
 	"save_all_on_build": true,
 	"select_file":

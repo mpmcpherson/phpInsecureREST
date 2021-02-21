@@ -1,6 +1,12 @@
 {
-	"mapColumnList" : [
-		"author",
-		"topic"
-	] 
+  "partition": [
+    "applicationId"
+  ],
+  "mapColumnList": {
+    "author": "string",
+    "topic": "array",
+    "tags": "array"
+
+  },
+  "designDoc":"testingDoc"
 }

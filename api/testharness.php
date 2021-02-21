@@ -1,10 +1,13 @@
 <?php
 	namespace REST_API;
 	//echo dirname(__DIR__).'/shared/abstractRestConnection.php';
-	require_once __DIR__.'/shared/abstractRestConnection.php';
+	require_once __DIR__.'/shared/restBaseClass.php';
 	require_once __DIR__.'/objects/blogPost.php';
 	require_once __DIR__.'/objects/user.php';
 	require_once __DIR__.'/objects/dndPlot.php';
+	require_once __DIR__.'/shared/databaseManager.php';
+	require_once __DIR__.'/shared/genericView.php';
+
 
 
 	$_idForward = "";
@@ -12,81 +15,91 @@
 
 	$post = array('post' => "",'get'=>"",'put'=>"",'delete'=>"" );
 	
-	$testPost=true;
+	$testPost=false;
 	$testGET=false;
 	$testPUT=false;
 	$testDELETE=false;
+	$testbuildDatabaseIndices = true;
 	
 	$db = "test_db";
 	$host = "localhost";
 	$uname = "couchAdmin";
 	$passwd = "Adein1Dva2!";
 
+	if($testbuildDatabaseIndices){
+		$config = new databaseManager($db,$host,$uname,$passwd);
+		$config->buildDatabaseIndices();
+	}
+//	if($testGenericViewObject){}
+//	if($testViewCreation){}
+//	if($testFileImport){}
+//	if($testPotentialViewIdentification){}
+
+
+
+
+
 	/*testing POST*/
 	if($testPost){
-		echo "\npost \n\n";
-		$post['post'] = new blogPost();
+		echo "\npost \n";
+		$post['post'] = new restBaseClass();
 		$post['post']->connect($db,$host,$uname,$passwd);
-		$post['post']->_construct();
-
 		$post['post']->author="Michael";
-		$post['post']->subject="we're going to try to get this to go through to the 'put'";
+		$post['post']->subject="<p><br />we're going to try to get this to go through to the 'put'";
 		$post['post']->body="HERE'S A BODY";
-		echo "\n\n";
+		$post['post']->type="post";
+		$post['post']->tags = array("testing","blogPost","mcpherson","dyer");
 		//var_dump($post['post']);
-		//echo "\n\n";
-		//$vals = $post['post']->POST();
-		//$post['post']->abstractPrint();
+		echo "\n";
+		echo $post['post']->betterAbstractPrint($post['post']);
+
+		//var_dump($post['post']);
 		$post['post']->POST();
-		//echo "\n\n";
-		//var_dump($post['post']);
-		//echo "\n\n";
+		
+		echo $post['post']->betterAbstractPrint($post['post']);		
+		
 		$_idForward = $post['post']->_id;
 		
 		echo "\n";
 	}
-
 	/*testing GET*/	
-	if($testGET)
-	{
+	if($testGET){
 		echo "get \n";
-		$post['get'] = new blogPost();
+		$post['get'] = new restBaseClass();
 		$post['get']->connect($db,$host,$uname,$passwd);
-		$post['get']->_construct();
-
+		
 		$post['get']->GET($_idForward);
-		$post['get']->abstractPrint();
+		$post['get']->betterAbstractPrint($post['get']);
+		var_dump($post['get']);
 		echo "\n";
 	}
-
 	/*testing PUT*/	
-	if($testPUT)
-	{
+	if($testPUT){
 		echo "put \n";
 
-		$post['put'] = new blogPost();
-		$post['put']->construct($db,$host,$uname,$passwd);
-		$post['put']->_construct();
+		$post['put'] = new restBaseClass();
+		$post['put']->connect($db,$host,$uname,$passwd);
+		
 
 		$post['put']->GET($_idForward);
 		$post['put']->body="and now we're something else";
 		$post['put']->PUT();
 
-		$post['put']->abstractPrint();
+		$post['put']->betterAbstractPrint($post['put']);
+		var_dump($post['put']);
 
 		echo "\n";
 	}
-
 	/*testing DELETE*/	
 	if($testDELETE){
 		echo "delete \n";
 
-		$post['delete'] = new blogPost();
-		$post['delete']->construct($db,$host,$uname,$passwd);
-		$post['delete']->_construct();
+		$post['delete'] = new restBaseClass();
+		$post['delete']->connect($db,$host,$uname,$passwd);
+		
 
 		$post['delete']->GET($_idForward);
-		$post['delete']->abstractPrint();
+		$post['delete']->betterAbstractPrint($post['delete']);
 		$post['delete']->DELETE();
 		
 		echo "\n";
@@ -96,9 +109,9 @@
 
 		$post['delete']->GET($_idForward);
 
-		$post['delete']->abstractPrint();
+		$post['delete']->betterAbstractPrint($post['delete']);
+		var_dump($post['delete']);
 
 		echo "\n";	
 	}
-
 ?>

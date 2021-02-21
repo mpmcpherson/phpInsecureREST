@@ -2,3 +2,5 @@
 secretConfig.php
 
 /vendor/
+
+phpstan.neon

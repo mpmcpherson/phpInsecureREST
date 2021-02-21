@@ -7,9 +7,9 @@ require_once 'genericException.php';
 
 	class restBaseClass {
 		
-		private $position = 0;
-		private $ary = "";
-
+		public $author;
+		public $subject;
+		public $body;
 		private $newConn;
 		public $_id;
 		public $timestamp;
@@ -18,16 +18,14 @@ require_once 'genericException.php';
 		public $type;
 		public $tags;
 
-		function _construct(){
-			$ary = get_object_vars($this);
-
+		function __construct(){
 
 			$this->_id = "";
 			$this->timestamp="";
 			$this->_rev = "";
 			$this->clean = false;
-			$this->type = "post";
-			$this->tags = array("testing","blogPost","mcpherson","dyer");
+			$this->type = "abstract";
+			$this->tags = array();
 		}
 		function connect(string $db, string $host,string $uname,string $passwd) : void{
 			$this->newConn = $this->buildDbConnection($db,$host,5984,$uname,$passwd);
@@ -37,7 +35,16 @@ require_once 'genericException.php';
 			$this->SubmitToDb();
 		}
 
+		public function rawSend($value){
+				$retVal = $this->newConn->send($value);
+				
+				$responseBody = $retVal->getBody();
 
+				$decoded = json_decode($responseBody);
+				 
+				//testing
+				$this->handleReturns($decoded);
+		}
 		private function SubmitToDb() : void{
 				
 				//use the date for this one
@@ -45,7 +52,7 @@ require_once 'genericException.php';
 				 
 				$this->timestamp = date("d-m-YTh:i:s");
 
-				$retVal = $this->newConn->send('/'. $this->_id, 'PUT', $this->encodeForDelivery("POST",$this,"",rand(0,25)));
+				$retVal = $this->newConn->send('/'. $this->_id, 'PUT', $this->encodeForDelivery("POST"));
 				
 				$responseBody = $retVal->getBody();
 
@@ -68,7 +75,7 @@ require_once 'genericException.php';
 		function GET(string $id) : void{
 			try{
 				$this->getObject($id);
-			}catch(Exception $e){
+			}catch(genericException $e){
 				echo $e->errorMessage();
 			}
 
@@ -120,7 +127,7 @@ require_once 'genericException.php';
 				echo $e->errorMessage();
 			}
 		}
-		private function CheckRevision() {
+		function CheckRevision() {
 			//okay, this is almost certainly just me being too clever, but it's fun while it lasts
 			//right, so what I need to do here is alert the user to get a new version. The rest (the part where I functionally branch the changes) needs to be handled by certain UI elements and custom code to keep the user in control.
 
@@ -142,7 +149,7 @@ require_once 'genericException.php';
 		private function SyncToDb() : void{		
 			if($this->clean){
 								
-				$retVal = $this->newConn->send('/'.$this->_id, 'PUT', $this->encodeForDelivery("PUT",$this,"",rand(26,50)));
+				$retVal = $this->newConn->send('/'.$this->_id, 'PUT', $this->encodeForDelivery("PUT"));
 
 				$responseBody = $retVal->getBody();
 				
@@ -184,33 +191,33 @@ require_once 'genericException.php';
 		}
 
 
-		private function encodeForDelivery(string $encodingMethod, $obj, $print, $tag) : string{
-
+		private function encodeForDelivery(string $encodingMethod) : string{
+			$encAry = array();
 			if($encodingMethod==="POST"){
-				$encAry = array("newConn","clean","_rev","");
+				$encAry = array("newConn","clean","_rev","","position","ary");
 			}elseif($encodingMethod==="PUT"){
-				$encAry = array("newConn","clean","");
+				$encAry = array("newConn","clean","","position","ary");
 			}
+			
+			$startAry = get_object_vars($this);
 
-			$tempSelf = array();
+			$workingAry = array();
 
-			//var_dump($this);
-
-
-			foreach($ary as $key => $value) {
-
+<<<<<<< HEAD:api/shared/abstractRestConnection.php
 				if(in_array($key, $encAry, true)===false){
 					
 					$ary->{$key} = $this->prepString($value);
 				
 				}
 				
+=======
+			foreach($startAry as $key => $value){
+					if(in_array($key, $encAry, true)===false){
+						$workingAry[$key]=$value;
+					}
+>>>>>>> 4c13e09a9cd5191c013d86f4aa9fd04ed466a96a:api/shared/restBaseClass.php
 			}
-
-
-			return $print;
-
-			
+			return json_encode($workingAry);			
 		}
 
 		private function parseHeaders(string $headerString) : array{
@@ -235,53 +242,47 @@ require_once 'genericException.php';
 
 		}
 
-		function abstractPrint() : void{
-			foreach($this as $key => $value) {
-				if($key!=="newConn"){
-					echo "key: ".$key." value: ".$value."\n";
-				}
-
-			}	
-		}
-		function betterAbstractPrint($obj,$print){
+		
+		function betterAbstractPrint($obj){
+			
+			$print = "";
 			foreach($obj as $key => $value) {
 				if($key!=="newConn"){
-					$print .= "key: ".$key;
-
+					$print .= $key.":";
 					if(gettype($value) == 'array'){
-						$print .= abstractPrint($value, $print);
+						$print .= "array()\n\t" . $this->betterAbstractPrint($value)."\n";
 					}
 					else{
-						$print .= " value: ".$value;
+						if($key === "clean"){
+							$print .= strval($value)."\n";
+						}else{
+							$print .= $value."\n";
+						}
 					}
 				}	
 			}
 			return $print;
 		}			
-		function betterHTMLAbstractPrint($obj,$print){
-			foreach($obj as $key => $value) {
-				if($key!=="newConn"){
-					$print .= "<div class='logme'> key: ".$key;
-					
-					if(gettype($value) == 'array'){
-						$print .= abstractPrint($value, $print);
-					}
-					else{
-						$print .= " value: ".$value;
-					}
-					$print .= "</div>";
-				}	
-			}
-			return $print;
-		}			
 
-		private function handleReturns($obj) : void{
-			foreach($obj as $key => $value) {
-				if($this->recoverString($key)=="id"){$this->_id=$this->recoverString($value);}else
-				if($this->recoverString($key)=="rev"){$this->_rev=$this->recoverString($value);}else{
-				$this->{$this->recoverString($key)} = $this->recoverString($value);}
-				
+		function handleReturns($obj) : void{
+
+			var_dump($obj);
+
+			$startAry = get_object_vars($obj);
+
+			$workingAry = array();
+
+			foreach($startAry as $key => $value){
+				if($key=="id")
+					{$this->_id=$value;}
+				elseif($key=="rev")
+					{$this->_rev=$value;}
+				else
+					{$this->{$key} = $value;}	
 			}
+
+
+			
 		}
 
 		private function prepString(string $string) : string{
@@ -291,58 +292,6 @@ require_once 'genericException.php';
 		private function recoverString(string $string) : string{
 			return htmlspecialchars_decode($string, ENT_QUOTES);
 		}
-
-		function getChildren():RecursiveIterator{
-			if(hasChildren()){
-				
-				$topicalVar = $this->ary[$this->position];
-
-			
-				if(is_array($topicalVar)){
-					if(count($topicalVar)>0){
-						return new RecursiveIterator($topicalVar);
-					}
-				}
-				if(is_object($topicalVar)){
-					if(count(get_object_vars($topicalVar))>0){
-						return new RecursiveIterator(get_object_vars($topicalVar));
-					}
-				}		
-			}else{
-				throw new InvalidArgumentException("Cursor at position $position has no children");
-			}
-		}
-		function hasChildren () : bool{
-			if($valid){
-				$encAry = array("String","Integer","Float","Boolean","double",NULL,"Resource");
-				$topicalVar = $this->ary[$this->position];
-
-				if( in_array(gettype($topicalVar),$encAry,true) === true ){
-					return false;
-				}else{
-					if(is_array($topicalVar)){
-						if(count($topicalVar)>0){
-							return true;
-						}
-					}
-					if(is_object($topicalVar)){
-						if(count(get_object_vars($topicalVar))>0){
-							return true;
-						}
-					}		
-					return false;
-				}
-			}else{return false;}
-		}
-		/* Inherited methods */
-		function current ( ) : mixed {return $this->ary[$this->position];}
-		function key ( ) : scalar {return $this->position;}
-		function next ( ) : void {++$this->position;}
-		function rewind ( ) : void {$this->position = 0;}
-		function valid ( ) : bool {return isset($this->ary[$this->position]);}
-
-
-		
 
 	}
 

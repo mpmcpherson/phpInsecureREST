@@ -4,61 +4,12 @@
 		"selected_items":
 		[
 			[
-<<<<<<< HEAD
 				"iterat",
 				"iterator_apply"
 			],
 			[
 				"var",
 				"var_dump"
-=======
-				"config",
-				"configValues"
-			],
-			[
-				"pack",
-				"$packagedView〔variable〕"
-			],
-			[
-				"emi",
-				"emissionLoopObject"
-			],
-			[
-				"enc",
-				"$encAry〔variable〕"
-			],
-			[
-				"requ",
-				"require_once〔keyword〕"
-			],
-			[
-				"gener",
-				"genericView〔class〕"
-			],
-			[
-				"conf",
-				"configPath〔variable〕"
-			],
-			[
-				"getobject",
-				"get_object_vars〔function〕"
-			],
-			[
-				"working",
-				"$workingAry〔variable〕"
-			],
-			[
-				"encod",
-				"$encodingMethod〔variable〕"
-			],
-			[
-				"_",
-				"_construct"
-			],
-			[
-				"var",
-				"var_dump〔function〕"
->>>>>>> 4c13e09a9cd5191c013d86f4aa9fd04ed466a96a
 			],
 			[
 				"req",
@@ -185,45 +136,6 @@
 	"buffers":
 	[
 		{
-			"file": "api/shared/databaseManager.php",
-			"settings":
-			{
-				"buffer_size": 2992,
-				"encoding": "UTF-8",
-				"line_ending": "Unix"
-			}
-		},
-		{
-<<<<<<< HEAD
-			"file": "api/testharness.php",
-			"settings":
-			{
-				"buffer_size": 2247,
-				"encoding": "UTF-8",
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"contents": "<?php\nnamespace REST_API;\nrequire_once 'CouchDBConnection.php';\nrequire_once 'CouchDBRequest.php';\nrequire_once 'CouchDBResponse.php';\nrequire_once 'genericException.php';\n\n\tclass restBaseClass {\n\t\t\n\t\tprivate $position = 0;\n\t\tprivate $ary = \"\";\n\n\t\tprivate $newConn;\n\t\tpublic $_id;\n\t\tpublic $timestamp;\n\t\tpublic $_rev;\n\t\tpublic $clean;\n\t\tpublic $type;\n\t\tpublic $tags;\n\n\t\tfunction _construct(){\n\t\t\t$ary = get_object_vars($this);\n\n\n\t\t\t$this->_id = \"\";\n\t\t\t$this->timestamp=\"\";\n\t\t\t$this->_rev = \"\";\n\t\t\t$this->clean = false;\n\t\t\t$this->type = \"post\";\n\t\t\t$this->tags = array(\"testing\",\"blogPost\",\"mcpherson\",\"dyer\");\n\t\t}\n\t\tfunction connect(string $db, string $host,string $uname,string $passwd) : void{\n\t\t\t$this->newConn = $this->buildDbConnection($db,$host,5984,$uname,$passwd);\n\t\t}\n\t\t//now POST\n\t\tfunction POST() : void{\n\t\t\t$this->SubmitToDb();\n\t\t}\n\n\n\t\tprivate function SubmitToDb() : void{\n\t\t\t\t\n\t\t\t\t//use the date for this one\n\t\t\t\t$this->_id = uniqid(\"\",true);\n\t\t\t\t \n\t\t\t\t$this->timestamp = date(\"d-m-YTh:i:s\");\n\n\t\t\t\t$retVal = $this->newConn->send('/'. $this->_id, 'PUT', $this->encodeForDelivery(\"POST\",$this,\"\",rand(0,25)));\n\t\t\t\t\n\t\t\t\t$responseBody = $retVal->getBody();\n\n\t\t\t\t$decoded = json_decode($responseBody);\n\t\t\t\t \n\t\t\t\t//testing\n\t\t\t\t$this->handleReturns($decoded);\n\t\t\t\t//we write this back up so that the target knows the value to override\n\t\t\t\t//$this->_rev = $decoded->rev;\n\n\t\t}\n\n\t\tprivate function buildDbConnection(string $db,string $host,int $port, string $uname,string $passwd) : CouchDB {\n\n\t\t\treturn new CouchDB($db,$host,$port,$uname,$passwd);\n\t\t}\n\n\t\t//now GET\n\t\t//to get something, you just need to know its ID.\n\t\tfunction GET(string $id) : void{\n\t\t\ttry{\n\t\t\t\t$this->getObject($id);\n\t\t\t}catch(Exception $e){\n\t\t\t\techo $e->errorMessage();\n\t\t\t}\n\n\t\t}\n\n\t\tprivate function getObject(string $id) : void{\n\n\t\t\t$retVal = $this->newConn->send($id);\n\t\t\t//var_dump($retVal);\n\t\t\t$responseBody = $retVal->getBody();\n\t\t\t//echo $responseBody;\n\t\t\t$dbRevVal = json_decode($responseBody);\n\n\n\t\t\t//ahhh ahahaha, this is beautiful: the means that any new classes (say, errors) will get dynamically added to the class without vomiting any errors out. \n\t\t\t//there could be issues, but as it is, this also makes this very useful.\n\t\t\t//I might write this into each of the functions...\n\t\t\t/*foreach($dbRevVal as $key => $value) {\n\t\t\t\t$this->{$this->recoverString($key)} = $this->recoverString($value);\n\t\t\t\t\n\t\t\t}*/\n\t\t\t//testing\n\t\t\t$this->handleReturns($dbRevVal);\n\t\t}\n\n\n\t\t//now PUT\n\t\tfunction PUT() : void{\n\t\t\t$this->Save();\n\t\t}\n\t\tprivate function Save() : void{\n\t\t\ttry{ //these text responses probably aren't going to work out, but they'll do for now.\n\t\t\t\t$revisionStatus = $this->CheckRevision();\n\t\t\t\tif(gettype($revisionStatus)===\"boolean\"){\n\t\t\t\t\t//this is *begging* for some horrible race condition to pop up.\n\t\t\t\t\t$this->clean = $revisionStatus;\n\t\t\t\t\tif($this->clean){\n\t\t\t\t\t\t$this->SyncToDb();\n\t\t\t\t\t\techo \"Success! Current version number is \".$this->_rev.\"\\n\";\n\t\t\t\t\t\t$this->clean = false;\n\t\t\t\t\t}\n\t\t\t\t}else{\n\t\t\t\t\tthrow new genericException(\"The version of the object you are editing is out of date. Current local version is: \" . \n\t\t\t\t\t\t$this->_rev . \" and current server version is : \" . \n\t\t\t\t\t\t$revisionStatus . \". Please back up your changes and refresh your data\\n\");\n\t\t\t\t}\n\t\t\t}\n\t\t\tcatch(genericException $e){\n\t\t\t\techo $e->errorMessage();\n\t\t\t}\n\t\t}\n\t\tprivate function CheckRevision() {\n\t\t\t//okay, this is almost certainly just me being too clever, but it's fun while it lasts\n\t\t\t//right, so what I need to do here is alert the user to get a new version. The rest (the part where I functionally branch the changes) needs to be handled by certain UI elements and custom code to keep the user in control.\n\n\t\t\t//way lighter than sending the whole damn doc over the wire. Might not work as written (probably won't work as written).\n\t\t\t//$dbRevVal = json_decode($this->newConn->send($this->_id, \"HEAD\")->getHeaders())->ETag;\n\n\t\t\t$retVal = $this->newConn->send($this->_id, \"HEAD\");\n\t\t\t$responseBody = $retVal->getHeaders();\n\t\t\t\n\t\t\t//var_dump($responseBody);\n\n\t\t\t$parsedHeaders = $this->parseHeaders($responseBody);\t\t\t\n\n\t\t\t$dbRevVal = $parsedHeaders['ETag'];\t\t\n\n\t\t\treturn strcmp($this->_rev , $dbRevVal)!==0 ? true : $dbRevVal; \n\t\t}\n\t\t\n\t\tprivate function SyncToDb() : void{\t\t\n\t\t\tif($this->clean){\n\t\t\t\t\t\t\t\t\n\t\t\t\t$retVal = $this->newConn->send('/'.$this->_id, 'PUT', $this->encodeForDelivery(\"PUT\",$this,\"\",rand(26,50)));\n\n\t\t\t\t$responseBody = $retVal->getBody();\n\t\t\t\t\n\t\t\t\t$decoded = json_decode($responseBody);\n\t\t\t\t\n\t\t\t\t//and we write this back up so that the target knows the new value to override\n\n\t\t\t\t//let's try this little thing:\n\t\t\t\t$this->handleReturns($decoded);\n\t\t\t\t\n\n\t\t\t\t//$this->_rev = $decoded->rev; //and it's rev, not _rev, because consistency is for suckers\n\t\t\t}\n\t\t}\n\n\t\t\n\t\t//now DELETE\n\t\tfunction DELETE() : void{\n\t\t\t$this->deleteObject();\n\t\t}\t\n\t\tprivate function deleteObject() : void{\n\t\t\tif($this->CheckRevision()){\n\t\t\t\t$retVal = $this->newConn->send('/'.$this->_id.\"?rev=\".$this->_rev, 'DELETE');\n\n\t\t\t\t$responseBody = $retVal->getBody();\n\n\t\t\t\t$decoded = json_decode($responseBody);\n\n\t\t\t\t//Wipe the object itself from local memory\n\t\t\t\tforeach($this as $key => $value) {\n\t\t\t\t\tif($key !== \"newConn\"){\n\t\t\t\t\t\t$this->{$key} = \"null\";\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t\t$this->handleReturns($decoded);\n\t\t\t}else{\n\t\t\t\t$this->clean=false;\n\t\t\t}\n\t\t}\n\n\n\t\tprivate function encodeForDelivery(string $encodingMethod, $obj, $print, $tag) : string{\n\n\t\t\tif($encodingMethod===\"POST\"){\n\t\t\t\t$encAry = array(\"newConn\",\"clean\",\"_rev\",\"\");\n\t\t\t}elseif($encodingMethod===\"PUT\"){\n\t\t\t\t$encAry = array(\"newConn\",\"clean\",\"\");\n\t\t\t}\n\n\t\t\t$tempSelf = array();\n\n\t\t\t//var_dump($this);\n\n\n\t\t\tforeach($ary as $key => $value) {\n\n\t\t\t\tif(in_array($key, $encAry, true)===false){\n\t\t\t\t\t\n\t\t\t\t\t$ary->{$key} = $this->prepString($value);\n\t\t\t\t\n\t\t\t\t}\n\t\t\t\t\n\t\t\t}\n\n\n\t\t\treturn $print;\n\n\t\t\t\n\t\t}\n\n\t\tprivate function parseHeaders(string $headerString) : array{\n\n\t\t\t$midVal = explode(PHP_EOL, $headerString);\n\t\t\t$lokeys = array();\n\t\t\t$hivalue = array();\n\n\t\t\t$httpResponse = $midVal[0];\n\t\t\t\n\t\t\tarray_shift($midVal);\n\n\n\t\t\tforeach($midVal as $key => $value){\n\t\t\t\t$inter = explode(':', $value);\n\t\t\t\tarray_push($lokeys, str_replace([\"\\\"\",\" \"],\"\",$inter[0]));\n\t\t\t\tarray_push($hivalue, str_replace([\"\\\"\",\" \"],\"\",$inter[1]));\n\t\t\t\t\n\t\t\t}\n\t\t\t$workingHeaders = array_combine($lokeys, $hivalue);\n\t\t\treturn $workingHeaders;\n\n\t\t}\n\n\t\tfunction abstractPrint() : void{\n\t\t\tforeach($this as $key => $value) {\n\t\t\t\tif($key!==\"newConn\"){\n\t\t\t\t\techo \"key: \".$key.\" value: \".$value.\"\\n\";\n\t\t\t\t}\n\n\t\t\t}\t\n\t\t}\n\t\tfunction betterAbstractPrint($obj,$print){\n\t\t\tforeach($obj as $key => $value) {\n\t\t\t\tif($key!==\"newConn\"){\n\t\t\t\t\t$print .= \"key: \".$key;\n\n\t\t\t\t\tif(gettype($value) == 'array'){\n\t\t\t\t\t\t$print .= abstractPrint($value, $print);\n\t\t\t\t\t}\n\t\t\t\t\telse{\n\t\t\t\t\t\t$print .= \" value: \".$value;\n\t\t\t\t\t}\n\t\t\t\t}\t\n\t\t\t}\n\t\t\treturn $print;\n\t\t}\t\t\t\n\t\tfunction betterHTMLAbstractPrint($obj,$print){\n\t\t\tforeach($obj as $key => $value) {\n\t\t\t\tif($key!==\"newConn\"){\n\t\t\t\t\t$print .= \"<div class='logme'> key: \".$key;\n\t\t\t\t\t\n\t\t\t\t\tif(gettype($value) == 'array'){\n\t\t\t\t\t\t$print .= abstractPrint($value, $print);\n\t\t\t\t\t}\n\t\t\t\t\telse{\n\t\t\t\t\t\t$print .= \" value: \".$value;\n\t\t\t\t\t}\n\t\t\t\t\t$print .= \"</div>\";\n\t\t\t\t}\t\n\t\t\t}\n\t\t\treturn $print;\n\t\t}\t\t\t\n\n\t\tprivate function handleReturns($obj) : void{\n\t\t\tforeach($obj as $key => $value) {\n\t\t\t\tif($this->recoverString($key)==\"id\"){$this->_id=$this->recoverString($value);}else\n\t\t\t\tif($this->recoverString($key)==\"rev\"){$this->_rev=$this->recoverString($value);}else{\n\t\t\t\t$this->{$this->recoverString($key)} = $this->recoverString($value);}\n\t\t\t\t\n\t\t\t}\n\t\t}\n\n\t\tprivate function prepString(string $string) : string{\n\t\t\treturn htmlspecialchars(str_replace([\"\\r\\n\", \"\\r\", \"\\n\"], '<br/>', $string), ENT_QUOTES, \"UTF-8\");\n\t\t\t\n\t\t}\n\t\tprivate function recoverString(string $string) : string{\n\t\t\treturn htmlspecialchars_decode($string, ENT_QUOTES);\n\t\t}\n\n\t\tfunction getChildren():RecursiveIterator{\n\t\t\tif(hasChildren()){\n\t\t\t\t\n\t\t\t\t$topicalVar = $this->ary[$this->position];\n\n\t\t\t\n\t\t\t\tif(is_array($topicalVar)){\n\t\t\t\t\tif(count($topicalVar)>0){\n\t\t\t\t\t\treturn new RecursiveIterator($topicalVar);\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t\tif(is_object($topicalVar)){\n\t\t\t\t\tif(count(get_object_vars($topicalVar))>0){\n\t\t\t\t\t\treturn new RecursiveIterator(get_object_vars($topicalVar));\n\t\t\t\t\t}\n\t\t\t\t}\t\t\n\t\t\t}else{\n\t\t\t\tthrow new InvalidArgumentException(\"Cursor at position $position has no children\");\n\t\t\t}\n\t\t}\n\t\tfunction hasChildren () : bool{\n\t\t\tif($valid){\n\t\t\t\t$encAry = array(\"String\",\"Integer\",\"Float\",\"Boolean\",\"double\",NULL,\"Resource\");\n\t\t\t\t$topicalVar = $this->ary[$this->position];\n\n\t\t\t\tif( in_array(gettype($topicalVar),$encAry,true) === true ){\n\t\t\t\t\treturn false;\n\t\t\t\t}else{\n\t\t\t\t\tif(is_array($topicalVar)){\n\t\t\t\t\t\tif(count($topicalVar)>0){\n\t\t\t\t\t\t\treturn true;\n\t\t\t\t\t\t}\n\t\t\t\t\t}\n\t\t\t\t\tif(is_object($topicalVar)){\n\t\t\t\t\t\tif(count(get_object_vars($topicalVar))>0){\n\t\t\t\t\t\t\treturn true;\n\t\t\t\t\t\t}\n\t\t\t\t\t}\t\t\n\t\t\t\t\treturn false;\n\t\t\t\t}\n\t\t\t}else{return false;}\n\t\t}\n\t\t/* Inherited methods */\n\t\tfunction current ( ) : mixed {return $this->ary[$this->position];}\n\t\tfunction key ( ) : scalar {return $this->position;}\n\t\tfunction next ( ) : void {++$this->position;}\n\t\tfunction rewind ( ) : void {$this->position = 0;}\n\t\tfunction valid ( ) : bool {return isset($this->ary[$this->position]);}\n\n\n\t\t\n\n\t}\n\n\n?>\n\n",
-			"file": "api/shared/abstractRestConnection.php",
-			"file_size": 9208,
-			"file_write_time": 132542705479907027,
-			"settings":
-			{
-				"buffer_size": 9219,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"contents": "spPBNGGFLWJ\nspPBNGGFLWJ\nspPBNGGFLWJ\nspPBNGGFLWJ\nspPBNGGFLWJ\nspPBNGGFLWJ\nspPBNGGFLWJ\nspPBNGGFLWJ\nspPBNGGFLWJ\n",
-			"settings":
-			{
-				"buffer_size": 108,
-				"line_ending": "Unix",
-				"name": "spPBNGGFLWJ"
-			}
-		},
-		{
 			"contents": "I LOVE YOU!!\nI love you, too, Buddy! I had a good time hanging out with you today. I hope you had a good time hanging out with me, too!\nI ",
 			"settings":
 			{
@@ -233,67 +145,27 @@
 			}
 		},
 		{
-			"file": "/home/michael/cert",
+			"file": "/home/michael/repo token",
 			"settings":
 			{
-				"buffer_size": 826,
-=======
-			"file": "api/shared/restBaseClass.php",
+				"buffer_size": 40,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/home/michael/src/gitrecurse/gitLoc.sh",
 			"settings":
 			{
-				"buffer_size": 7550,
->>>>>>> 4c13e09a9cd5191c013d86f4aa9fd04ed466a96a
+				"buffer_size": 350,
 				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
 		},
 		{
-<<<<<<< HEAD
-			"file": "/home/michael/nas1.ovpn",
+			"file": "/home/michael/src/webvacuum/vacuum.php",
 			"settings":
 			{
-				"buffer_size": 8365,
-				"encoding": "UTF-8",
-				"line_ending": "Unix",
-				"name": "##############################################"
-			}
-		},
-		{
-			"file": "api/shared/databaseConfigurator.php",
-=======
-			"contents": "git add -A; git commit -m \"$(date)\"; git push;",
->>>>>>> 4c13e09a9cd5191c013d86f4aa9fd04ed466a96a
-			"settings":
-			{
-				"buffer_size": 46,
-				"line_ending": "Unix",
-				"name": "git add -A; git commit -m \"$(date)\"; git push;"
-			}
-		},
-		{
-			"file": "api/testharness.php",
-			"settings":
-			{
-				"buffer_size": 2797,
-				"encoding": "UTF-8",
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "phpstan.neon",
-			"settings":
-			{
-				"buffer_size": 118,
-				"encoding": "UTF-8",
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": ".couchConfig",
-			"settings":
-			{
-				"buffer_size": 165,
-				"encoding": "UTF-8",
+				"buffer_size": 1220,
 				"line_ending": "Unix"
 			}
 		}
@@ -462,17 +334,18 @@
 	},
 	"expanded_folders":
 	[
-		"/home/michaelmcpherson/src/phpInsecureREST",
-		"/home/michaelmcpherson/src/phpInsecureREST/api",
-		"/home/michaelmcpherson/src/phpInsecureREST/api/config",
-		"/home/michaelmcpherson/src/phpInsecureREST/api/documentation",
-		"/home/michaelmcpherson/src/phpInsecureREST/api/objects",
-		"/home/michaelmcpherson/src/phpInsecureREST/api/shared",
-		"/home/michaelmcpherson/src/phpInsecureREST/tests"
+		"/home/michael/src/phpInsecureREST",
+		"/home/michael/src/phpInsecureREST/api",
+		"/home/michael/src/phpInsecureREST/api/objects",
+		"/home/michael/src/phpInsecureREST/api/shared"
 	],
 	"file_history":
 	[
-<<<<<<< HEAD
+		"/home/michael/src/phpInsecureREST/api/shared/databaseConfigurator.php",
+		"/home/michael/nas1.ovpn",
+		"/home/michael/cert",
+		"/home/michael/src/phpInsecureREST/README.md",
+		"/home/michael/src/phpInsecureREST/api/testharness.php",
 		"/home/michael/src/phpInsecureREST/api/shared/abstractRestConnection.php",
 		"/home/michael/src/phpInsecureREST/vendor/jetbrains/phpstorm-stubs/Core/Core.php",
 		"/home/michael/src/phpInsecureREST/vendor/jetbrains/phpstorm-stubs/SPL/SPL.php",
@@ -482,41 +355,11 @@
 		"/home/michael/src/phpInsecureREST/api/shared/databaseManager.php",
 		"/home/michael/src/phpInsecureREST/api/shared/CouchDBConnection.php",
 		"/home/michael/src/phpInsecureREST/jsExamplesForObjectsToCreate.md",
-=======
-		"/home/michaelmcpherson/src/phpInsecureREST/api/shared/restBaseCollection.php",
-		"/home/michaelmcpherson/src/phpInsecureREST/api/shared/CouchDBRequest.php",
-		"/home/michaelmcpherson/src/phpInsecureREST/api/shared/restBaseClass.php",
-		"/home/michaelmcpherson/src/phpInsecureREST/api/shared/genericView.php",
-		"/home/michaelmcpherson/src/phpInsecureREST/api/shared/genericException.php",
-		"/home/michaelmcpherson/src/phpInsecureREST/api/shared/databaseConfigurator.php",
-		"/home/michaelmcpherson/src/phpInsecureREST/vendor/phpunit/php-code-coverage/src/Node/AbstractNode.php",
-		"/home/michaelmcpherson/src/comnavnotes/TIMELINE FOR PHP SITE MIGRATION",
-		"/home/michaelmcpherson/src/comnavnotes/transferData/Repos/autoCadTransposer/bin",
-		"/home/michaelmcpherson/src/phpInsecureREST/api/shared/abstractRestConnection.php",
-		"/home/michaelmcpherson/src/phpInsecureREST/.couchConfig",
->>>>>>> 4c13e09a9cd5191c013d86f4aa9fd04ed466a96a
 		"/home/michaelmcpherson/src/phpInsecureREST/jsExamplesForObjectsToCreate.md",
-		"/home/michaelmcpherson/src/phpInsecureREST/.gitignore",
-		"/home/michaelmcpherson/src/phpInsecureREST/phpstan.neon.dist",
-		"/home/michaelmcpherson/src/phpInsecureREST/phpstan.neon",
-		"/home/michaelmcpherson/SOLAR calculations",
-		"/home/michaelmcpherson/payoneer 2fa backup",
-		"/home/michaelmcpherson/raspberry projects",
-		"/home/michaelmcpherson/src/clientSideBlogger/bloggingClientBase/frontEnd/posts/lorem1.txt",
-		"/home/michaelmcpherson/src/phpInsecureREST/README.md",
-		"/home/michaelmcpherson/src/phpInsecureREST/dbManagerTest.php",
-		"/home/michaelmcpherson/src/phpInsecureREST/api/shared/databaseManager.php",
-		"/home/michaelmcpherson/src/phpInsecureREST/api/testharness.php",
-		"/home/michaelmcpherson/src/phpInsecureREST/api/objects/blogPost.php",
-		"/home/michaelmcpherson/src/phpInsecureREST/api/developmentResources/couchdb - Get a single value from document - Stack Overflow_files/stub.js",
-		"/home/michaelmcpherson/src/phpInsecureREST/vendor/symfony/console/Helper/Helper.php",
-		"/home/michaelmcpherson/src/phpInsecureREST/vendor/jetbrains/phpstorm-stubs/event/event.php",
-		"/opt/couchdb/etc/local.d/10-admins.ini",
-		"/home/michaelmcpherson/src/phpInsecureREST/api/config/databaseClassification.json",
-		"/home/michaelmcpherson/src/phpInsecureREST/api/shared/CouchDBConnection.php",
-		"/home/michaelmcpherson/src/phpInsecureREST/api/shared/CouchDBResponse.php",
 		"/home/michaelmcpherson/src/staggeredContact/README.md",
+		"/home/michaelmcpherson/raspberry projects",
 		"/home/michaelmcpherson/valandrinasaddress",
+		"/home/michaelmcpherson/src/phpInsecureREST/api/shared/abstractRestConnection.php",
 		"/home/michaelmcpherson/src/toolbox/decomp/manualDecomp.sh",
 		"/home/michaelmcpherson/src/toolbox/decomp/wpa_supplicant.conf",
 		"/media/michaelmcpherson/boot/wpa_supplicant.conf",
@@ -539,6 +382,7 @@
 		"/home/michaelmcpherson/.config/sublime-text-3/Cache/SublimeLinter/panel/home/michaelmcpherson/.config/sublime-text-3/Packages/Anaconda/anaconda_lib/linting/linter.py",
 		"/home/michaelmcpherson/src/phpInsecureREST/composer.json",
 		"/home/michaelmcpherson/.eslintrc.js",
+		"/home/michaelmcpherson/src/phpInsecureREST/README.md",
 		"/home/michaelmcpherson/Downloads/rss",
 		"/home/michaelmcpherson/.cache/.fr-yqfHjM/dependency-metadata.json",
 		"/home/michaelmcpherson/.cache/.fr-t8NhHX/README.md",
@@ -549,15 +393,24 @@
 		"/home/michaelmcpherson/Documents/20-newterm.py",
 		"/home/michaelmcpherson/Documents/10-shellenv.py",
 		"/home/michaelmcpherson/Documents/10-psutil.py",
+		"/home/michaelmcpherson/src/phpInsecureREST/api/config/databaseClassification.json",
 		"/home/michaelmcpherson/Documents/00-package_control.py",
 		"/home/michaelmcpherson/Documents/30 day notice.odt",
 		"/home/michaelmcpherson/.config/sublime-text-3/Installed Packages/0_package_control_loader.sublime-package",
 		"/home/michaelmcpherson/.config/sublime-text-3/Packages/JSLint/JSLint.sublime-settings",
+		"/home/michaelmcpherson/src/phpInsecureREST/api/shared/restBaseCollection.php",
+		"/home/michaelmcpherson/src/phpInsecureREST/api/shared/databaseManager.php",
+		"/home/michaelmcpherson/src/phpInsecureREST/api/objects/blogPost.php",
 		"/home/michaelmcpherson/iftop_top.json",
 		"/home/michaelmcpherson/src/betterabstractprint.php",
 		"/home/michaelmcpherson/src/phpInsecureREST/api/objects/user.php",
 		"/home/michaelmcpherson/src/phpInsecureREST/api/objects/dndPlot.php",
 		"/home/michaelmcpherson/src/phpInsecureREST/api/config/secretConfig.php",
+		"/home/michaelmcpherson/src/phpInsecureREST/api/shared/CouchDBResponse.php",
+		"/home/michaelmcpherson/src/phpInsecureREST/api/shared/CouchDBConnection.php",
+		"/home/michaelmcpherson/src/phpInsecureREST/api/shared/CouchDBRequest.php",
+		"/home/michaelmcpherson/src/phpInsecureREST/api/testharness.php",
+		"/home/michaelmcpherson/src/phpInsecureREST/api/shared/genericException.php",
 		"/home/michaelmcpherson/src/phpInsecureREST/tests/Unit/shared/abstractRestConnectionTest.php.bak",
 		"/home/michaelmcpherson/src/phpInsecureREST/tests/Unit/shared/mpmcpherson.sublime-project",
 		"/home/michaelmcpherson/src/phpInsecureREST/api/testRes.txt",
@@ -597,6 +450,7 @@
 		"/home/michaelmcpherson/src/clientSideBlogger/bloggingClientBase/frontEnd/posts/loremTypical",
 		"/home/michaelmcpherson/src/clientSideBlogger/bloggingClientBase/frontEnd/posts/pirateIpsum",
 		"/home/michaelmcpherson/src/clientSideBlogger/bloggingClientBase/frontEnd/posts/worseHipster",
+		"/home/michaelmcpherson/src/clientSideBlogger/bloggingClientBase/frontEnd/posts/lorem1.txt",
 		"/home/michaelmcpherson/src/clientSideBlogger/bloggingClientBase/frontEnd/posts/kafka.txt",
 		"/home/michaelmcpherson/src/clientSideBlogger/bloggingClientBase/frontEnd/posts/hipSum.txt",
 		"/home/michaelmcpherson/src/clientSideBlogger/bloggingClientBase/frontEnd/posts/LatinCicero",
@@ -611,27 +465,14 @@
 		"/home/michaelmcpherson/src/newUIframework/uiSite/index.php",
 		"/home/michaelmcpherson/src/DnDModuleGenerator/site/index.php",
 		"/home/michaelmcpherson/src/DnDModuleGenerator/index.php",
-<<<<<<< HEAD
 		"/home/michaelmcpherson/src/writtenRecords/DnD/Necromancer Nine/Plot Episode 5",
 		"/home/michaelmcpherson/src/writtenRecords/DnD/Necromancer Nine/Plot Episode 6",
 		"/home/michaelmcpherson/src/writtenRecords/DnD/Necromancer Nine/Plot Episode 4",
-		"/home/michaelmcpherson/src/writtenRecords/DnD/Necromancer Nine/Plot Episode 3",
-		"/home/michaelmcpherson/src/writtenRecords/DnD/Necromancer Nine/plot episode 1",
-		"/home/michaelmcpherson/src/writtenRecords/DnD/Necromancer Nine/Plot Episode 2",
-		"/home/michaelmcpherson/src/clientSideBlogger/bloggingClientBase/css/wysiwyg.css",
-		"/home/michaelmcpherson/src/clientSideBlogger/bloggingClientBase/css/pure-min.css",
-		"/home/michaelmcpherson/src/DnDModuleGenerator/plot types"
+		"/home/michaelmcpherson/src/writtenRecords/DnD/Necromancer Nine/Plot Episode 3"
 	],
 	"find":
 	{
 		"height": 39.0
-=======
-		"/home/michaelmcpherson/src/writtenRecords/DnD/Necromancer Nine/Plot Episode 5"
-	],
-	"find":
-	{
-		"height": 45.0
->>>>>>> 4c13e09a9cd5191c013d86f4aa9fd04ed466a96a
 	},
 	"find_in_files":
 	{
@@ -646,21 +487,10 @@
 		"case_sensitive": false,
 		"find_history":
 		[
-<<<<<<< HEAD
 			"echo",
 			"var_dump",
 			"abstract public",
 			"RecursiveIteratorIterator",
-=======
-			"new",
-			"this",
-			"exception",
-			"\t\t\t\n",
-			"\t\t\n",
-			"ary",
-			"\tvar_dump",
-			"encodeforde",
->>>>>>> 4c13e09a9cd5191c013d86f4aa9fd04ed466a96a
 			"parent",
 			"linter.lint.linter:phplint",
 			"path",
@@ -715,6 +545,7 @@
 		"regex": true,
 		"replace_history":
 		[
+			"function",
 			"delete",
 			"$post['post']",
 			">_id",
@@ -735,157 +566,11 @@
 	"groups":
 	[
 		{
-<<<<<<< HEAD
-			"selected": 5,
-=======
-			"selected": 0,
->>>>>>> 4c13e09a9cd5191c013d86f4aa9fd04ed466a96a
+			"selected": 3,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "api/shared/databaseManager.php",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 2992,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								2470,
-								2470
-							]
-						],
-						"settings":
-						{
-							"auto_complete": false,
-							"syntax": "Packages/PHP/PHP.sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 1802.0,
-						"zoom_level": 1.0
-					},
-<<<<<<< HEAD
-					"stack_index": 6,
-=======
-					"stack_index": 0,
->>>>>>> 4c13e09a9cd5191c013d86f4aa9fd04ed466a96a
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-<<<<<<< HEAD
-					"file": "api/testharness.php",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 2247,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								962,
-								962
-							]
-						],
-						"settings":
-						{
-							"function_name_status_row": 36,
-							"syntax": "Packages/PHP/PHP.sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 5,
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "api/shared/abstractRestConnection.php",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 9219,
-=======
-					"file": "api/shared/restBaseClass.php",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 7550,
->>>>>>> 4c13e09a9cd5191c013d86f4aa9fd04ed466a96a
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-<<<<<<< HEAD
-								9218,
-								9218
-=======
-								6993,
-								6993
->>>>>>> 4c13e09a9cd5191c013d86f4aa9fd04ed466a96a
-							]
-						],
-						"settings":
-						{
-<<<<<<< HEAD
-							"function_name_status_row": 350,
-=======
-							"auto_complete": false,
->>>>>>> 4c13e09a9cd5191c013d86f4aa9fd04ed466a96a
-							"syntax": "Packages/PHP/PHP.sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-<<<<<<< HEAD
-						"translation.y": 4831.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 4,
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 108,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								108,
-								108
-							]
-						],
-						"settings":
-						{
-							"auto_name": "spPBNGGFLWJ",
-							"default_dir": "/home/michael/src/phpInsecureREST/api/shared",
-							"function_name_status_row": 9,
-							"syntax": "Packages/Text/Plain text.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 3,
-					"type": "text"
-				},
-				{
-					"buffer": 4,
 					"semi_transient": false,
 					"settings":
 					{
@@ -911,55 +596,75 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 2,
+					"stack_index": 3,
 					"type": "text"
 				},
 				{
-					"buffer": 5,
-					"file": "/home/michael/cert",
+					"buffer": 1,
+					"file": "/home/michael/repo token",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 826,
+						"buffer_size": 40,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								826,
-								826
+								40,
+								40
 							]
 						],
 						"settings":
 						{
-							"function_name_status_row": 24,
+							"function_name_status_row": 0,
 							"syntax": "Packages/Text/Plain text.tmLanguage"
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
-=======
-						"translation.y": 3007.0,
->>>>>>> 4c13e09a9cd5191c013d86f4aa9fd04ed466a96a
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "/home/michael/src/gitrecurse/gitLoc.sh",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 350,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								254,
+								254
+							]
+						],
+						"settings":
+						{
+							"function_name_status_row": 15,
+							"syntax": "Packages/ShellScript/Bash.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 1,
 					"type": "text"
-				}
-			]
-		},
-		{
-			"selected": 1,
-			"sheets":
-			[
+				},
 				{
-<<<<<<< HEAD
-					"buffer": 6,
-					"file": "/home/michael/nas1.ovpn",
+					"buffer": 3,
+					"file": "/home/michael/src/webvacuum/vacuum.php",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 8365,
+						"buffer_size": 1220,
 						"regions":
 						{
 						},
@@ -972,137 +677,15 @@
 						],
 						"settings":
 						{
-							"auto_name": "##############################################",
 							"function_name_status_row": 0,
-							"syntax": "Packages/Text/Plain text.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 1,
-					"type": "text"
-				},
-				{
-					"buffer": 7,
-					"file": "api/shared/databaseConfigurator.php",
-=======
-					"buffer": 2,
->>>>>>> 4c13e09a9cd5191c013d86f4aa9fd04ed466a96a
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 46,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								46,
-								46
-							]
-						],
-						"settings":
-						{
-							"auto_name": "git add -A; git commit -m \"$(date)\"; git push;",
-							"default_dir": "/home/michaelmcpherson/src/phpInsecureREST/api/shared",
-							"syntax": "Packages/Text/Plain text.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 5,
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"file": "api/testharness.php",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 2797,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								709,
-								709
-							]
-						],
-						"settings":
-						{
-							"auto_complete": false,
 							"syntax": "Packages/PHP/PHP.sublime-syntax",
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 621.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 7,
-					"type": "text"
-				},
-				{
-					"buffer": 4,
-					"file": "phpstan.neon",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 118,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								117,
-								117
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Text/Plain text.tmLanguage"
-						},
-						"translation.x": 0.0,
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 3,
-					"type": "text"
-				},
-				{
-					"buffer": 5,
-					"file": ".couchConfig",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 165,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								88,
-								88
-							]
-						],
-						"settings":
-						{
-							"auto_complete": true,
-							"syntax": "Packages/JavaScript/JSON.sublime-syntax"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 4,
+					"stack_index": 0,
 					"type": "text"
 				}
 			]
@@ -1110,7 +693,7 @@
 	],
 	"incremental_find":
 	{
-		"height": 32.0
+		"height": 31.0
 	},
 	"input":
 	{
@@ -1125,12 +708,6 @@
 				0,
 				1,
 				1
-			],
-			[
-				0,
-				1,
-				1,
-				2
 			]
 		],
 		"cols":
@@ -1141,7 +718,6 @@
 		"rows":
 		[
 			0.0,
-			0.691244226056,
 			1.0
 		]
 	},
@@ -1178,7 +754,7 @@
 	"project": "rest.sublime-project",
 	"replace":
 	{
-		"height": 60.0
+		"height": 69.0
 	},
 	"save_all_on_build": true,
 	"select_file":
@@ -1216,7 +792,7 @@
 	"show_open_files": true,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 268.0,
+	"side_bar_width": 218.0,
 	"status_bar_visible": true,
 	"template_settings":
 	{

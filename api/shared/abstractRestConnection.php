@@ -200,7 +200,9 @@ require_once 'genericException.php';
 			foreach($ary as $key => $value) {
 
 				if(in_array($key, $encAry, true)===false){
+					
 					$ary->{$key} = $this->prepString($value);
+				
 				}
 				
 			}

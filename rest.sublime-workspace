@@ -151,23 +151,6 @@
 				"buffer_size": 40,
 				"line_ending": "Unix"
 			}
-		},
-		{
-			"file": "/home/michael/src/gitrecurse/gitLoc.sh",
-			"settings":
-			{
-				"buffer_size": 350,
-				"encoding": "UTF-8",
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "/home/michael/src/webvacuum/vacuum.php",
-			"settings":
-			{
-				"buffer_size": 1220,
-				"line_ending": "Unix"
-			}
 		}
 	],
 	"build_system": "",
@@ -341,8 +324,11 @@
 	],
 	"file_history":
 	[
-		"/home/michael/src/phpInsecureREST/api/shared/databaseConfigurator.php",
+		"/home/michael/repo token",
+		"/home/michael/src/webvacuum/vacuum.php",
 		"/home/michael/nas1.ovpn",
+		"/home/michael/src/gitrecurse/gitLoc.sh",
+		"/home/michael/src/phpInsecureREST/api/shared/databaseConfigurator.php",
 		"/home/michael/cert",
 		"/home/michael/src/phpInsecureREST/README.md",
 		"/home/michael/src/phpInsecureREST/api/testharness.php",
@@ -465,10 +451,7 @@
 		"/home/michaelmcpherson/src/newUIframework/uiSite/index.php",
 		"/home/michaelmcpherson/src/DnDModuleGenerator/site/index.php",
 		"/home/michaelmcpherson/src/DnDModuleGenerator/index.php",
-		"/home/michaelmcpherson/src/writtenRecords/DnD/Necromancer Nine/Plot Episode 5",
-		"/home/michaelmcpherson/src/writtenRecords/DnD/Necromancer Nine/Plot Episode 6",
-		"/home/michaelmcpherson/src/writtenRecords/DnD/Necromancer Nine/Plot Episode 4",
-		"/home/michaelmcpherson/src/writtenRecords/DnD/Necromancer Nine/Plot Episode 3"
+		"/home/michaelmcpherson/src/writtenRecords/DnD/Necromancer Nine/Plot Episode 5"
 	],
 	"find":
 	{
@@ -566,7 +549,7 @@
 	"groups":
 	[
 		{
-			"selected": 3,
+			"selected": 1,
 			"sheets":
 			[
 				{
@@ -596,7 +579,7 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 3,
+					"stack_index": 1,
 					"type": "text"
 				},
 				{
@@ -612,7 +595,7 @@
 						"selection":
 						[
 							[
-								40,
+								0,
 								40
 							]
 						],
@@ -620,66 +603,6 @@
 						{
 							"function_name_status_row": 0,
 							"syntax": "Packages/Text/Plain text.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 2,
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "/home/michael/src/gitrecurse/gitLoc.sh",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 350,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								254,
-								254
-							]
-						],
-						"settings":
-						{
-							"function_name_status_row": 15,
-							"syntax": "Packages/ShellScript/Bash.sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 1,
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"file": "/home/michael/src/webvacuum/vacuum.php",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1220,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"function_name_status_row": 0,
-							"syntax": "Packages/PHP/PHP.sublime-syntax",
-							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,

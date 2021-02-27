@@ -135,23 +135,6 @@
 	},
 	"buffers":
 	[
-		{
-			"contents": "I LOVE YOU!!\nI love you, too, Buddy! I had a good time hanging out with you today. I hope you had a good time hanging out with me, too!\nI ",
-			"settings":
-			{
-				"buffer_size": 138,
-				"line_ending": "Unix",
-				"name": "I LOVE YOU!!"
-			}
-		},
-		{
-			"file": "/home/michael/repo token",
-			"settings":
-			{
-				"buffer_size": 40,
-				"line_ending": "Unix"
-			}
-		}
 	],
 	"build_system": "",
 	"build_system_choices":
@@ -549,68 +532,8 @@
 	"groups":
 	[
 		{
-			"selected": 1,
 			"sheets":
 			[
-				{
-					"buffer": 0,
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 138,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								138,
-								138
-							]
-						],
-						"settings":
-						{
-							"auto_name": "I LOVE YOU!!",
-							"default_dir": "/home/michael/src/phpInsecureREST/api/shared",
-							"function_name_status_row": 2,
-							"syntax": "Packages/Text/Plain text.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 1,
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"file": "/home/michael/repo token",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 40,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								40
-							]
-						],
-						"settings":
-						{
-							"function_name_status_row": 0,
-							"syntax": "Packages/Text/Plain text.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 0,
-					"type": "text"
-				}
 			]
 		}
 	],
